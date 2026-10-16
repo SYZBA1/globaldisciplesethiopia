@@ -22,7 +22,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 30) {
+      if (window.scrollY > 15) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -45,12 +45,12 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-out ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-md py-2.5 sm:py-3 border-b border-slate-100 text-slate-900'
+          ? 'bg-white/95 backdrop-blur-md shadow-md py-2 sm:py-2.5 border-b border-slate-100 text-slate-900'
           : isHomePage
-          ? 'bg-gradient-to-b from-black/80 via-black/45 to-transparent py-3.5 sm:py-4 text-white'
-          : 'bg-white py-3 border-b border-slate-100 shadow-sm text-slate-900'
+          ? 'bg-gradient-to-b from-black/80 via-black/45 to-transparent py-4 sm:py-5 text-white'
+          : 'bg-white/95 backdrop-blur-sm py-4 sm:py-5 border-b border-slate-100/60 shadow-sm text-slate-900'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -163,6 +163,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center justify-center shrink-0">
             <Logo
               theme={isScrolled || !isHomePage ? 'light' : 'dark'}
+              compact={isScrolled}
               showSubtitle={false}
             />
           </div>
