@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
-import { MAIN_NAVIGATION } from '../../data/navigation';
+import { Menu, X } from 'lucide-react';
 import { Logo } from '../ui/Logo';
 
 interface HeaderProps {
@@ -17,6 +16,7 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const headerRef = useRef<HTMLElement | null>(null);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
@@ -33,18 +33,41 @@ export const Header: React.FC<HeaderProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close dropdown on route change
   useEffect(() => {
     setActiveDropdown(null);
   }, [location.pathname]);
 
-  // Pill style classes matching globaldisciples.org
-  const pillClassDark = "px-5 py-2 rounded-full text-xs font-bold tracking-wide transition-all bg-black/40 hover:bg-black/60 text-white border border-white/15 backdrop-blur-md";
-  const pillClassLight = "px-5 py-2 rounded-full text-xs font-bold tracking-wide transition-all bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 shadow-sm";
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+        setActiveDropdown(null);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, []);
 
-  const activePillClass = isScrolled || !isHomePage ? pillClassLight : pillClassDark;
+  // Pill style classes matching reference screenshots
+  const pillClassDark = "px-5 py-2 rounded-full text-xs font-bold tracking-wide transition-all bg-black/40 hover:bg-black/60 text-white border border-white/15 backdrop-blur-md flex items-center gap-1.5 cursor-pointer";
+  const pillClassLight = "px-5 py-2 rounded-full text-xs font-bold tracking-wide transition-all bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 shadow-sm flex items-center gap-1.5 cursor-pointer";
+  
+  // Signature Active Blue Pill matching Image 1 & Image 2: "bg-[#0073E6] text-white" with "×"
+  const pillClassActive = "px-5 py-2 rounded-full text-xs font-bold tracking-wide transition-all bg-[#0073E6] text-white shadow-md flex items-center gap-2 cursor-pointer";
+
+  const getPillClass = (dropdownKey: string) => {
+    if (activeDropdown === dropdownKey) return pillClassActive;
+    return isScrolled || !isHomePage ? pillClassLight : pillClassDark;
+  };
+
+  const toggleDropdown = (key: string) => {
+    setActiveDropdown(prev => (prev === key ? null : key));
+  };
 
   return (
     <header
+      ref={headerRef}
       className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-out ${
         isScrolled
           ? 'bg-white/95 backdrop-blur-md shadow-md py-2 sm:py-2.5 border-b border-slate-100 text-slate-900'
@@ -55,105 +78,139 @@ export const Header: React.FC<HeaderProps> = ({
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
+          
           {/* Left Pill Menu (Why Least-reached, About Us, Stories/Blog) */}
           <nav className="hidden lg:flex items-center gap-2.5" aria-label="Left Navigation">
-            {/* Why Least-reached Pill */}
+            
+            {/* 1. Why Least-reached Pill matching Reference Image 1 */}
             <div
-              className="relative group"
+              className="relative"
               onMouseEnter={() => setActiveDropdown('why')}
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              <Link
-                to="/why-least-reached/one-third"
-                className={`inline-flex items-center gap-1 ${activePillClass}`}
+              <button
+                type="button"
+                onClick={() => toggleDropdown('why')}
+                className={getPillClass('why')}
+                aria-expanded={activeDropdown === 'why'}
               >
                 <span>Why Least-reached</span>
-                <ChevronDown className="w-3 h-3 opacity-70" />
-              </Link>
+                {activeDropdown === 'why' ? (
+                  <X className="w-3.5 h-3.5 text-white" />
+                ) : (
+                  <span className="text-[10px] opacity-60">▼</span>
+                )}
+              </button>
+
+              {/* Dropdown Card matching Reference Image 1 */}
               {activeDropdown === 'why' && (
-                <div className="absolute top-full left-0 w-64 pt-2 animate-fade-in z-50">
-                  <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-2 text-slate-800 text-xs font-medium">
+                <div className="absolute top-full left-0 pt-1.5 animate-fade-in z-50 min-w-[200px]">
+                  {/* Top Caret Pointer Triangle */}
+                  <div className="flex justify-center -mb-1 relative z-20">
+                    <div className="w-2.5 h-2.5 bg-white rotate-45 border-l border-t border-slate-100" />
+                  </div>
+
+                  {/* Clean White Card with Horizontal Dividers */}
+                  <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden divide-y divide-slate-100 text-left">
                     <Link
                       to="/why-least-reached/one-third"
-                      className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
                     >
-                      <div className="font-bold text-brand-navy">One Third</div>
-                      <div className="text-[11px] text-slate-500">Why we focus on zero-access communities</div>
+                      One Third
                     </Link>
                     <Link
                       to="/approach"
-                      className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
                     >
-                      <div className="font-bold text-brand-navy">Our Approach</div>
-                      <div className="text-[11px] text-slate-500">The 5-stage multiplying church model</div>
+                      Our Approach
                     </Link>
                     <Link
                       to="/about/story"
-                      className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
                     >
-                      <div className="font-bold text-brand-navy">Our Beginnings</div>
-                      <div className="text-[11px] text-slate-500">Our history & founding vision</div>
+                      Our Beginnings
                     </Link>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* About Us Pill */}
+            {/* 2. About Us Pill */}
             <div
-              className="relative group"
+              className="relative"
               onMouseEnter={() => setActiveDropdown('about')}
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              <Link
-                to="/about"
-                className={`inline-flex items-center gap-1 ${activePillClass}`}
+              <button
+                type="button"
+                onClick={() => toggleDropdown('about')}
+                className={getPillClass('about')}
+                aria-expanded={activeDropdown === 'about'}
               >
                 <span>About Us</span>
-                <ChevronDown className="w-3 h-3 opacity-70" />
-              </Link>
+                {activeDropdown === 'about' ? (
+                  <X className="w-3.5 h-3.5 text-white" />
+                ) : (
+                  <span className="text-[10px] opacity-60">▼</span>
+                )}
+              </button>
+
               {activeDropdown === 'about' && (
-                <div className="absolute top-full left-0 w-64 pt-2 animate-fade-in z-50">
-                  <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-2 text-slate-800 text-xs font-medium">
+                <div className="absolute top-full left-0 pt-1.5 animate-fade-in z-50 min-w-[210px]">
+                  {/* Top Caret Pointer Triangle */}
+                  <div className="flex justify-center -mb-1 relative z-20">
+                    <div className="w-2.5 h-2.5 bg-white rotate-45 border-l border-t border-slate-100" />
+                  </div>
+
+                  {/* Card with Dividers */}
+                  <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden divide-y divide-slate-100 text-left">
                     <Link
                       to="/about"
-                      className="block px-3.5 py-2 rounded-xl hover:bg-slate-50 transition-colors"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
                     >
-                      <div className="font-bold text-brand-navy">Alliance Overview</div>
+                      Alliance Overview
                     </Link>
                     <Link
                       to="/about/story"
-                      className="block px-3.5 py-2 rounded-xl hover:bg-slate-50 transition-colors"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
                     >
-                      <div className="font-bold text-brand-navy">Our Story & Timeline</div>
+                      Our Story & Timeline
                     </Link>
                     <Link
                       to="/about/vision-mission"
-                      className="block px-3.5 py-2 rounded-xl hover:bg-slate-50 transition-colors"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
                     >
-                      <div className="font-bold text-brand-navy">Vision, Mission & Values</div>
+                      Vision, Mission & Values
                     </Link>
                     <Link
                       to="/about/leadership"
-                      className="block px-3.5 py-2 rounded-xl hover:bg-slate-50 transition-colors"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
                     >
-                      <div className="font-bold text-brand-navy">Leadership & Trustees</div>
+                      Leadership & Trustees
                     </Link>
                     <Link
                       to="/about/partners"
-                      className="block px-3.5 py-2 rounded-xl hover:bg-slate-50 transition-colors"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
                     >
-                      <div className="font-bold text-brand-navy">Partner Denominations</div>
+                      Partner Denominations
                     </Link>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Blog / Stories Pill */}
+            {/* 3. Blog / Stories Pill */}
             <Link
               to="/stories"
-              className={activePillClass}
+              className={isScrolled || !isHomePage ? pillClassLight : pillClassDark}
             >
               <span>Blog</span>
             </Link>
@@ -170,54 +227,89 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Right Pill Menu (Get Involved & Bright Yellow Give Button) */}
           <div className="flex items-center gap-2.5">
-            {/* Get Involved Dropdown Pill */}
+            
+            {/* 4. Get Involved Pill matching Reference Image 2 */}
             <div
-              className="relative hidden lg:block group"
+              className="relative hidden lg:block"
               onMouseEnter={() => setActiveDropdown('involved')}
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              <Link
-                to="/get-involved"
-                className={`inline-flex items-center gap-1 ${activePillClass}`}
+              <button
+                type="button"
+                onClick={() => toggleDropdown('involved')}
+                className={getPillClass('involved')}
+                aria-expanded={activeDropdown === 'involved'}
               >
                 <span>Get Involved</span>
-                <ChevronDown className="w-3 h-3 opacity-70" />
-              </Link>
+                {activeDropdown === 'involved' ? (
+                  <X className="w-3.5 h-3.5 text-white" />
+                ) : (
+                  <span className="text-[10px] opacity-60">▼</span>
+                )}
+              </button>
+
+              {/* Dropdown Card matching Reference Image 2 */}
               {activeDropdown === 'involved' && (
-                <div className="absolute top-full right-0 w-64 pt-2 animate-fade-in z-50">
-                  <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-2 text-slate-800 text-xs font-medium">
+                <div className="absolute top-full right-0 pt-1.5 animate-fade-in z-50 min-w-[190px]">
+                  {/* Top Caret Pointer Triangle */}
+                  <div className="flex justify-center -mb-1 relative z-20">
+                    <div className="w-2.5 h-2.5 bg-white rotate-45 border-l border-t border-slate-100" />
+                  </div>
+
+                  {/* Clean White Card with Horizontal Dividers */}
+                  <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden divide-y divide-slate-100 text-left">
+                    {/* Item 1: Pray (Highlighted in Brand Blue) */}
                     <Link
                       to="/get-involved/pray"
-                      className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-6 py-3 text-[13px] font-bold text-[#0073E6] hover:bg-slate-50 transition-colors"
                     >
-                      <div className="font-bold text-brand-navy">Pray With Us</div>
-                      <div className="text-[11px] text-slate-500">Intercession for unreached peoples</div>
+                      Pray
                     </Link>
+
+                    {/* Item 2: Give (Muted Slate) */}
                     <Link
-                      to="/get-involved/partner"
-                      className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                      to="/give"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-6 py-3 text-[13px] font-bold text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
                     >
-                      <div className="font-bold text-brand-navy">Partner as a Church</div>
-                      <div className="text-[11px] text-slate-500">Cluster your congregation for mission</div>
+                      Give
                     </Link>
-                    <Link
-                      to="/get-involved/volunteer"
-                      className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
-                    >
-                      <div className="font-bold text-brand-navy">Serve & Volunteer</div>
-                      <div className="text-[11px] text-slate-500">Offer professional and trade skills</div>
-                    </Link>
+
+                    {/* Item 3: Events (Muted Slate) */}
                     <Link
                       to="/events"
-                      className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-6 py-3 text-[13px] font-bold text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
                     >
-                      <div className="font-bold text-brand-navy">Events & Summits</div>
+                      Events
                     </Link>
+
+                    {/* Item 4: Pledge (Muted Slate) */}
+                    <Link
+                      to="/give#pledge"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-6 py-3 text-[13px] font-bold text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
+                    >
+                      Pledge
+                    </Link>
+
+                    {/* Item 5: Join Us (Muted Slate) */}
+                    <Link
+                      to="/get-involved/volunteer"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-6 py-3 text-[13px] font-bold text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
+                    >
+                      Join Us
+                    </Link>
+
+                    {/* Item 6: Discover More (Muted Slate) */}
                     <Link
                       to="/resources"
-                      className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-6 py-3 text-[13px] font-bold text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
                     >
-                      <div className="font-bold text-brand-navy">Resource Downloads</div>
+                      Discover More
                     </Link>
                   </div>
                 </div>
