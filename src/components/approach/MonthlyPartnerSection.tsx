@@ -170,7 +170,7 @@ export const MonthlyPartnerSection: React.FC = () => {
         </div>
 
         {/* 3. Concave Bottom Arch Wave dividing the Blue Banner and the Footer */}
-        <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-none z-10 pointer-events-none">
+        <div className="absolute -bottom-1 left-0 right-0 w-full overflow-hidden leading-none z-10 pointer-events-none">
           <svg
             viewBox="0 0 1440 90"
             fill="none"
@@ -180,8 +180,8 @@ export const MonthlyPartnerSection: React.FC = () => {
           >
             {/* The upward arch curve: higher in center, lower on flanks */}
             <path
-              d="M 0,90 Q 720,0 1440,90 L 1440,90 L 0,90 Z"
-              fill="#062217"
+              d="M 0,0 L 1440,0 L 1440,90 Q 720,10 0,90 Z"
+              fill="#0073E6"
             />
           </svg>
         </div>
