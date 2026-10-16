@@ -1,0 +1,390 @@
+/* Reset & Base Fonts */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #0f172a;
+  background-color: #ffffff;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* 1. Sticky Navigation Bar & Sinking Blur */
+.header-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 2rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  transition: padding 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+
+.header-nav.compact {
+  padding: 0.65rem 2rem;
+  box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.07);
+}
+
+.nav-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #0f172a;
+  transition: transform 0.3s ease-out;
+}
+
+.nav-umbrella {
+  width: 40px;
+  height: 20px;
+  border-top-left-radius: 9999px;
+  border-top-right-radius: 9999px;
+  background-color: #1EA5FC;
+  margin-bottom: 2px;
+  transition: all 0.3s ease-out;
+}
+
+.header-nav.compact .nav-umbrella {
+  width: 30px;
+  height: 15px;
+}
+
+.nav-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 800;
+  font-size: 1.35rem;
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+  text-align: center;
+  transition: font-size 0.3s ease-out;
+}
+
+.header-nav.compact .nav-title {
+  font-size: 1.1rem;
+}
+
+.nav-links, .nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav-pill {
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: #1e293b;
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  transition: background-color 0.2s;
+}
+
+.nav-pill:hover {
+  background-color: #e2e8f0;
+}
+
+.btn-give {
+  background-color: #FFCC00;
+  color: #020617;
+  border: none;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btn-give:hover {
+  background-color: #f5b82e;
+}
+
+/* 2. Top Title Banner */
+.page-title-banner {
+  padding: 8rem 1.5rem 4rem;
+  background-color: #F4F9FB;
+  text-align: center;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+}
+
+.eyebrow-accent {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #1EA5FC;
+  margin-bottom: 1rem;
+}
+
+.main-serif-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 4rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.title-dot {
+  width: 1rem;
+  height: 1rem;
+  border-top-left-radius: 9999px;
+  background-color: #1EA5FC;
+}
+
+/* 3. Main Content Animation (Two-Column Layout) */
+.gdc-content-animation {
+  display: grid;
+  grid-template-columns: 1fr;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .gdc-content-animation {
+    grid-template-columns: 7fr 5fr;
+    gap: 2.5rem;
+  }
+}
+
+/* Left Column (div.section.col-1) */
+.section.col-1 {
+  padding: 4rem 0 12rem;
+}
+
+.text-block-item {
+  margin-bottom: 14rem;
+  opacity: 0.35;
+  transform: translateY(15px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.text-block-item.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.block-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #1EA5FC;
+  margin-bottom: 1rem;
+}
+
+.block-tag-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #1EA5FC;
+}
+
+.block-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: #0f172a;
+  margin-bottom: 1.5rem;
+}
+
+.block-paragraph {
+  font-size: 1.1rem;
+  color: #475569;
+  line-height: 1.75;
+  margin-bottom: 1rem;
+  max-width: 600px;
+}
+
+.block-btn {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.85rem 2.25rem;
+  border-radius: 9999px;
+  background-color: #FFCC00;
+  color: #020617;
+  font-weight: 800;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.block-btn:hover {
+  background-color: #f5b82e;
+  transform: scale(1.04);
+}
+
+/* Right Column (section.col-2) */
+section.col-2 {
+  position: sticky;
+  top: 22vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  z-index: 20;
+  padding: 2rem 0;
+  pointer-events: none;
+}
+
+/* Circular Mask Container matching exact DevTools inspection */
+.circle-mask {
+  width: 440px;
+  height: 440px;
+  max-width: 85vw;
+  max-height: 85vw;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px transparent solid;
+  position: relative;
+  background-color: #0B63CE;
+  box-shadow: 0 25px 50px -12px rgba(11, 99, 206, 0.35), 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+}
+
+/* Inner Images matching exact IDs & class */
+.scroll-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  object-fit: cover;
+  object-position: top center;
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: height, opacity;
+}
+
+.scroll-img.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+/* The Blue Fill Overlay matching exact DevTools element */
+.fill.percentage {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #0B63CE;
+  z-index: 3;
+  transition: top 0.15s ease-out;
+  will-change: top;
+}
+
+.placeholder-animate {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  object-fit: cover;
+  object-position: top center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 4. Full-Width Approach Section with Floating Portraits */
+.approach-reveal-section {
+  position: relative;
+  background-color: #0B63CE;
+  color: #ffffff;
+  padding: 7rem 1.5rem 9rem;
+  overflow: hidden;
+}
+
+.floating-portraits-wrapper {
+  position: relative;
+  min-height: 520px;
+  max-width: 1200px;
+  margin: 0 auto 3rem;
+}
+
+.floating-portrait {
+  position: absolute;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  border: 4px solid rgba(255, 255, 255, 0.25);
+  opacity: 0;
+  transform: scale(0.65) translateY(40px);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
+}
+
+.floating-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.floating-portrait:hover img {
+  transform: scale(1.08);
+}
+
+.approach-text-content {
+  text-align: center;
+  max-width: 750px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.approach-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 3.25rem;
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 1.25rem;
+}
+
+.approach-title em {
+  font-style: italic;
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+.approach-desc {
+  font-size: 1.15rem;
+  color: #bfdbfe;
+  margin-bottom: 2rem;
+}
+
+.btn-learn-more {
+  display: inline-block;
+  padding: 0.95rem 2.5rem;
+  border-radius: 9999px;
+  background-color: #FFCC00;
+  color: #020617;
+  font-weight: 800;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-learn-more:hover {
+  background-color: #f5b82e;
+  transform: scale(1.05);
+}

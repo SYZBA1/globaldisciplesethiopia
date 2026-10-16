@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One Third | Backend-Driven Sticky Circle & Dynamic Reveal Animation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- 1. Navigation (Navbar) with Sinking & Blur Transition -->
+  <header class="header-nav">
+    <div class="nav-links">
+      <a href="#" class="nav-pill">Why Least-reached</a>
+      <a href="#" class="nav-pill">About Us</a>
+      <a href="#" class="nav-pill">Blog</a>
+    </div>
+
+    <!-- Center Curved Umbrella Logo -->
+    <a href="#" class="nav-logo" aria-label="Global Disciples Home">
+      <div class="nav-umbrella"></div>
+      <div class="nav-title">
+        <div>global</div>
+        <div>disciples</div>
+      </div>
+    </a>
+
+    <div class="nav-actions">
+      <a href="#" class="nav-pill">Get Involved</a>
+      <a href="#" class="nav-pill btn-give">Give</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- 2. Page Title Banner -->
+    <section class="page-title-banner">
+      <div class="eyebrow-accent">WHY LEAST-REACHED</div>
+      <h1 class="main-serif-title">
+        <span>One Third</span>
+        <span class="title-dot"></span>
+      </h1>
+    </section>
+
+    <!-- 3. Exact DevTools Architecture: div.gdc-content-animation -->
+    <div class="gdc-content-animation">
+      
+      <!-- Left Column: div.section.col-1 (4 Sequential Text Blocks dynamically populated) -->
+      <div class="section col-1">
+        <!-- Rendered dynamically by script.js from data.json -->
+      </div>
+
+      <!-- Right Column: section.col-2 (Sticky pinned container) -->
+      <section class="col-2">
+        <figure>
+          <!-- Circular Mask Container matching exact DevTools DOM -->
+          <div class="circle-mask" style="border-radius: 50%; overflow: hidden; border: 1px transparent solid; position: relative;">
+            <!-- Rendered dynamically by script.js:
+                 - img#block-1.scroll-img (height: 29.0984%)
+                 - img#block-2.scroll-img (height: 29.0984%)
+                 - img#block-3.scroll-img (height: 29.0984%)
+                 - img#block-4.scroll-img (height: 29.0984%)
+                 - div.fill.percentage (top: 29.0984%)
+                 - img.placeholder-animate (height: 29.0984%)
+            -->
+          </div>
+        </figure>
+      </section>
+    </div>
+
+    <!-- 4. Full-Width Approach Section with Floating Portraits -->
+    <section class="approach-reveal-section">
+      <div class="floating-portraits-wrapper">
+        <!-- Populated dynamically with floating round portraits -->
+      </div>
+
+      <div class="approach-text-content">
+        <div class="eyebrow-accent" style="color: #ffffff;">Our Approach</div>
+        <h2 class="approach-title">
+          Equipping People to Reach <em>Their</em> Nations.
+        </h2>
+        <p class="approach-desc">
+          We train leaders living near least-reached communities to multiply disciples.
+        </p>
+        <a href="#" class="btn-learn-more">Learn More</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

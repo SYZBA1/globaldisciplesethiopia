@@ -1,0 +1,99 @@
+{
+  "eyebrow": "WHY LEAST-REACHED",
+  "mainTitle": "One Third",
+  "initialPercentage": 29.0984,
+  "blocks": [
+    {
+      "id": "block-1",
+      "eyebrow": "THE ONE-THIRD REALITY",
+      "title": "A third of our world has not yet heard the good news of Jesus.",
+      "paragraphs": [
+        "Global Disciples refers to this third of the world as \"least-reached\". We live in a time where many of these people are within reach of a local church.",
+        "Through our simple and effective strategy of training and coaching, believers share the Gospel in their own nations and cultures.",
+        "We understand it's impossible to accomplish this mission alone. That's why we partner with hundreds of clusters of churches across Ethiopia and 2,541 clusters globally."
+      ],
+      "image": "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1200&q=85",
+      "alt": "Children in least-reached community"
+    },
+    {
+      "id": "block-2",
+      "eyebrow": "WHY LEAST-REACHED",
+      "title": "Why we focus on the least-reached",
+      "paragraphs": [
+        "We believe every person should have an opportunity to hear and respond to the Gospel of Jesus Christ. And we live in a time when many of those least-reached with the Good News of Jesus are within reach of a local church.",
+        "Rather than sending traditional cross-oceanic missionaries who face language barriers and high costs, we believe the church closest to the least-reached is God's primary instrument for transformation."
+      ],
+      "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1200&q=85",
+      "alt": "Elderly Ethiopian man with beard and colorful scarf smiling"
+    },
+    {
+      "id": "block-3",
+      "eyebrow": "EQUIPPING NEAR-NEIGHBORS",
+      "title": "How we reach the least-reached",
+      "paragraphs": [
+        "We do this by equipping \"near-culture\" mission workers—those who share the same or a similar culture with those they are working to reach.",
+        "We come alongside the local church to train ordinary men and women to share the Gospel, make disciples, and plant churches in their own nations."
+      ],
+      "image": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=85",
+      "alt": "Joyful smiling young Ethiopian girl with headscarf"
+    },
+    {
+      "id": "block-4",
+      "eyebrow": "SUSTAINABLE MULTIPLICATION",
+      "title": "Equipping Churches for Reproducible Movements",
+      "paragraphs": [
+        "By pairing frontline discipleship with small business development and servant leadership, local fellowships thrive without continuous foreign dependency.",
+        "We partner with more than 2,541 clusters of churches in 79 nations to train, send, and sustain workers who establish living fellowships in zero-access communities."
+      ],
+      "buttonText": "Our Approach",
+      "buttonLink": "/approach",
+      "image": "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=85",
+      "alt": "Community leaders gathering for discipleship training"
+    }
+  ],
+  "approachReveal": {
+    "eyebrow": "Our Approach",
+    "title": "Equipping People to Reach Their Nations.",
+    "subtitle": "We train leaders living near least-reached communities to multiply disciples.",
+    "buttonText": "Learn More",
+    "buttonLink": "/approach",
+    "floatingPortraits": [
+      {
+        "id": "fp-1",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=85",
+        "alt": "Joyful elder leader",
+        "pos": "left: 4%; top: 8%; width: 260px; height: 260px;"
+      },
+      {
+        "id": "fp-2",
+        "image": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=85",
+        "alt": "Woman in yellow scarf",
+        "pos": "left: 50%; transform: translateX(-50%); top: -20px; width: 190px; height: 190px;"
+      },
+      {
+        "id": "fp-3",
+        "image": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
+        "alt": "Elderly disciple maker",
+        "pos": "left: 55%; top: 60px; width: 110px; height: 110px;"
+      },
+      {
+        "id": "fp-4",
+        "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80",
+        "alt": "Near-culture worker",
+        "pos": "left: 32%; bottom: 30px; width: 120px; height: 120px;"
+      },
+      {
+        "id": "fp-5",
+        "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80",
+        "alt": "Leader in green turban",
+        "pos": "left: 50%; bottom: 10px; width: 130px; height: 130px;"
+      },
+      {
+        "id": "fp-6",
+        "image": "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=800&q=85",
+        "alt": "Young boy in community",
+        "pos": "right: 4%; top: 20px; width: 300px; height: 300px;"
+      }
+    ]
+  }
+}
