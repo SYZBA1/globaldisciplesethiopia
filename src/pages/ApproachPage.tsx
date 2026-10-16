@@ -3,6 +3,7 @@ import { SEO } from '../components/ui/SEO';
 import { MultiplicationMatrix } from '../components/approach/MultiplicationMatrix';
 import { TrainingCycleDiagram } from '../components/approach/TrainingCycleDiagram';
 import { SustainabilitySlider } from '../components/approach/SustainabilitySlider';
+import { MonthlyPartnerSection } from '../components/approach/MonthlyPartnerSection';
 
 interface MultiplicationStep {
   number: number;
@@ -285,6 +286,9 @@ export const ApproachPage: React.FC = () => {
 
         </div>
       </section>
+
+      {/* 7. "Consider becoming a monthly partner" Floating Portraits & CTA Banner matching Image 5 */}
+      <MonthlyPartnerSection />
     </div>
   );
 };
