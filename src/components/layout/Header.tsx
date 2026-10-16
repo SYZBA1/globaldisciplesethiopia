@@ -45,11 +45,11 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header
-      className={`sticky top-0 z-40 w-full transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-card py-3 border-b border-slate-100'
+          ? 'bg-white/95 backdrop-blur-md shadow-md py-2.5 sm:py-3 border-b border-slate-100 text-slate-900'
           : isHomePage
-          ? 'bg-gradient-to-b from-black/70 via-black/40 to-transparent py-4 text-white'
+          ? 'bg-gradient-to-b from-black/80 via-black/45 to-transparent py-3.5 sm:py-4 text-white'
           : 'bg-white py-3 border-b border-slate-100 shadow-sm text-slate-900'
       }`}
     >
@@ -64,7 +64,7 @@ export const Header: React.FC<HeaderProps> = ({
               onMouseLeave={() => setActiveDropdown(null)}
             >
               <Link
-                to="/why/least-reached"
+                to="/why-least-reached/one-third"
                 className={`inline-flex items-center gap-1 ${activePillClass}`}
               >
                 <span>Why Least-reached</span>
@@ -74,18 +74,11 @@ export const Header: React.FC<HeaderProps> = ({
                 <div className="absolute top-full left-0 w-64 pt-2 animate-fade-in z-50">
                   <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-2 text-slate-800 text-xs font-medium">
                     <Link
-                      to="/why/least-reached"
+                      to="/why-least-reached/one-third"
                       className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
                     >
-                      <div className="font-bold text-brand-navy">The One-Third</div>
+                      <div className="font-bold text-brand-navy">One Third</div>
                       <div className="text-[11px] text-slate-500">Why we focus on zero-access communities</div>
-                    </Link>
-                    <Link
-                      to="/why/ethiopia-context"
-                      className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
-                    >
-                      <div className="font-bold text-brand-navy">Ethiopia Context</div>
-                      <div className="text-[11px] text-slate-500">Strategic opportunities across 5 corridors</div>
                     </Link>
                     <Link
                       to="/approach"
@@ -93,6 +86,13 @@ export const Header: React.FC<HeaderProps> = ({
                     >
                       <div className="font-bold text-brand-navy">Our Approach</div>
                       <div className="text-[11px] text-slate-500">The 5-stage multiplying church model</div>
+                    </Link>
+                    <Link
+                      to="/about/story"
+                      className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="font-bold text-brand-navy">Our Beginnings</div>
+                      <div className="text-[11px] text-slate-500">Our history & founding vision</div>
                     </Link>
                   </div>
                 </div>
@@ -160,10 +160,12 @@ export const Header: React.FC<HeaderProps> = ({
           </nav>
 
           {/* Center: Global Disciples Logo matching Image 1 */}
-          <Logo
-            theme={isScrolled || !isHomePage ? 'light' : 'dark'}
-            showSubtitle={false}
-          />
+          <div className="flex items-center justify-center shrink-0">
+            <Logo
+              theme={isScrolled || !isHomePage ? 'light' : 'dark'}
+              showSubtitle={false}
+            />
+          </div>
 
           {/* Right Pill Menu (Get Involved & Bright Yellow Give Button) */}
           <div className="flex items-center gap-2.5">

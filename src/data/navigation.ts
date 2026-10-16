@@ -18,10 +18,11 @@ export const MAIN_NAVIGATION: NavItem[] = [
   },
   {
     label: "Why Least-Reached",
-    href: "/why/least-reached",
+    href: "/why-least-reached/one-third",
     children: [
-      { label: "The One-Third Focus", href: "/why/least-reached", description: "Why we focus on communities with zero access" },
-      { label: "Ethiopia Context", href: "/why/ethiopia-context", description: "The strategic opportunity in the Horn of Africa" },
+      { label: "One Third", href: "/why-least-reached/one-third", description: "Why we focus on communities with zero access" },
+      { label: "Our Approach", href: "/approach", description: "The 5-stage multiplying church model" },
+      { label: "Our Beginnings", href: "/about/story", description: "Our history & founding vision" },
     ],
   },
   {

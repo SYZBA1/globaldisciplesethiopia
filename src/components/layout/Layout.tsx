@@ -29,13 +29,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         Skip to main content
       </a>
 
-      {/* Announcement Bar (Inner Pages only) */}
-      {!isHomePage && (
-        <AnnouncementBar
-          currentLang={currentLang}
-          onLanguageToggle={handleLanguageToggle}
-        />
-      )}
 
       {/* Main Header */}
       <Header
@@ -53,7 +46,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       />
 
       {/* Main Content Area */}
-      <main id="main-content" className="flex-grow focus:outline-none">
+      <main id="main-content" className={`flex-grow focus:outline-none ${!isHomePage ? 'pt-[76px]' : ''}`}>
         {children}
       </main>
 
