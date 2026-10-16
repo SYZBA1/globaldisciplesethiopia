@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { AnnouncementBar } from './AnnouncementBar';
 import { Header } from './Header';
 import { MobileMenu } from './MobileMenu';
@@ -11,6 +12,8 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentLang, setCurrentLang] = useState<'en' | 'am'>('en');
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   const handleLanguageToggle = (lang: 'en' | 'am') => {
     setCurrentLang(lang);
@@ -26,11 +29,13 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         Skip to main content
       </a>
 
-      {/* Announcement Bar */}
-      <AnnouncementBar
-        currentLang={currentLang}
-        onLanguageToggle={handleLanguageToggle}
-      />
+      {/* Announcement Bar (Inner Pages only) */}
+      {!isHomePage && (
+        <AnnouncementBar
+          currentLang={currentLang}
+          onLanguageToggle={handleLanguageToggle}
+        />
+      )}
 
       {/* Main Header */}
       <Header

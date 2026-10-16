@@ -4,6 +4,7 @@ import { X, ChevronDown, Heart, Phone, Mail, Globe2 } from 'lucide-react';
 import { MAIN_NAVIGATION } from '../../data/navigation';
 import { SITE_CONFIG } from '../../data/siteData';
 import { CTAButton } from '../ui/CTAButton';
+import { Logo } from '../ui/Logo';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -39,24 +40,9 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
     >
       {/* Top Header */}
       <div className="flex items-center justify-between p-4 border-b border-white/10">
-        <Link to="/" onClick={onClose} className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-lg bg-brand-navy border border-white/20 flex items-center justify-center">
-            <svg className="w-5 h-5 text-white" viewBox="0 0 48 48" fill="none">
-              <circle cx="24" cy="24" r="18" stroke="currentColor" strokeWidth="2.5" strokeOpacity="0.4" />
-              <path d="M24 10V38" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-              <path d="M12 21H36" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-              <circle cx="32" cy="18" r="4.5" fill="#E28723" />
-            </svg>
-          </div>
-          <div>
-            <div className="font-display font-extrabold text-sm tracking-tight text-white">
-              GLOBAL DISCIPLES
-            </div>
-            <div className="text-[10px] font-bold tracking-widest text-brand-gold uppercase">
-              {currentLang === 'am' ? 'አሊያንስ ኢትዮጵያ' : 'ALLIANCE ETHIOPIA'}
-            </div>
-          </div>
-        </Link>
+        <div onClick={onClose}>
+          <Logo theme="dark" showSubtitle={false} />
+        </div>
 
         <button
           onClick={onClose}

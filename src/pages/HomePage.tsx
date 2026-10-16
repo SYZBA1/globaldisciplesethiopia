@@ -5,16 +5,12 @@ import { InvestModelSection } from '../components/home/InvestModelSection';
 import { BigVideoSection } from '../components/home/BigVideoSection';
 import { ImpactSection } from '../components/home/ImpactSection';
 import { TransformationSection } from '../components/home/TransformationSection';
-import { EthiopiaContextSection } from '../components/home/EthiopiaContextSection';
-import { ProgramsSection } from '../components/home/ProgramsSection';
-import { StoriesSection } from '../components/home/StoriesSection';
-import { GetInvolvedSection } from '../components/home/GetInvolvedSection';
-import { FinalCTASection } from '../components/home/FinalCTASection';
+import { OurApproachCalloutSection } from '../components/home/OurApproachCalloutSection';
 import { VideoModal } from '../components/ui/VideoModal';
 
 export const HomePage: React.FC = () => {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('Global Disciples Alliance Ethiopia Documentary');
+  const [modalTitle, setModalTitle] = useState('Global Disciples Mission Video');
 
   const handleOpenVideo = (title?: string) => {
     if (title) setModalTitle(title);
@@ -24,39 +20,27 @@ export const HomePage: React.FC = () => {
   return (
     <>
       <SEO
-        title="Equipping Churches, Reaching the Least-Reached"
+        title="Equipping People to Reach Their Nations"
         description="A third of our world has not yet heard the Good News of Jesus. Global Disciples Alliance Ethiopia equips local churches to train and send disciple-makers to least-reached communities."
       />
 
-      {/* 1. Hero Section matching Screenshot 1 */}
+      {/* 1. Hero: "A Third of Our World has not yet heard the Good News of Jesus." + Blue circle with laughing woman */}
       <HeroSection onPlayVideo={() => handleOpenVideo('A Third of Our World — Global Disciples Mission')} />
 
-      {/* 2. Season of Giving Banner & 2-Card Video Models matching Screenshot 2 */}
+      {/* 2. "A Season of Giving" banner + 2 Video Model Cards */}
       <InvestModelSection onPlayVideo={handleOpenVideo} />
 
-      {/* 3. Big 16:9 Cinematic Video Feature matching Screenshot 3 */}
+      {/* 3. "30 Years of Mission" Cinematic Centered Video Feature */}
       <BigVideoSection />
 
-      {/* 4. Impact Statistics: "Mobilize Their People" matching Screenshot 4 */}
+      {/* 4. Impact Statistics: "Global Disciples comes alongside the local church to help mobilize their people." */}
       <ImpactSection />
 
-      {/* 5. "How Communities Are Transformed" (1-2-3 + Faces Collage) matching Screenshot 5 */}
+      {/* 5. "How Communities Are Transformed" (1-2-3 Steps) */}
       <TransformationSection />
 
-      {/* 6. Strategic Regional Corridors in Ethiopia */}
-      <EthiopiaContextSection />
-
-      {/* 7. Core Training Programs */}
-      <ProgramsSection />
-
-      {/* 8. Field Stories & Dispatches */}
-      <StoriesSection />
-
-      {/* 9. Get Involved (Pray, Partner, Serve, Give) */}
-      <GetInvolvedSection />
-
-      {/* 10. Final Call to Action */}
-      <FinalCTASection />
+      {/* 6. Overlapping Faces Collage over Blue Curve: "Our Approach: Equipping People to Reach Their Nations." */}
+      <OurApproachCalloutSection />
 
       {/* Interactive Video Modal */}
       <VideoModal

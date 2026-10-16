@@ -7,7 +7,7 @@ interface HeroSectionProps {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onPlayVideo }) => {
   return (
-    <section className="relative min-h-[90vh] lg:min-h-[96vh] flex flex-col justify-between bg-slate-950 text-white overflow-hidden -mt-24 pt-28 sm:pt-36">
+    <section className="relative min-h-[92vh] lg:min-h-[98vh] flex flex-col justify-between bg-slate-950 text-white overflow-hidden -mt-24 pt-36 sm:pt-44 lg:pt-48">
       {/* Background African Ministry Photography with Dark Vignette */}
       <div className="absolute inset-0 z-0">
         <img

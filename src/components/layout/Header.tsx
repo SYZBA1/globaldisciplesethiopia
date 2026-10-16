@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { MAIN_NAVIGATION } from '../../data/navigation';
+import { Logo } from '../ui/Logo';
 
 interface HeaderProps {
   onOpenMobileMenu: () => void;
@@ -158,34 +159,11 @@ export const Header: React.FC<HeaderProps> = ({
             </Link>
           </nav>
 
-          {/* Center: Global Disciples Logo with Blue Arch Semi-Circle */}
-          <Link
-            to="/"
-            className="flex flex-col items-center group focus:outline-none"
-            aria-label="Global Disciples Alliance Ethiopia Home"
-          >
-            {/* The signature blue semi-circle arch dome */}
-            <div className="w-8 h-4 rounded-t-full bg-gd-blue transition-transform group-hover:scale-110 mb-0.5" />
-            <div className="flex flex-col items-center">
-              <span
-                className={`font-serif font-black text-xl sm:text-2xl tracking-tighter leading-[0.88] ${
-                  isScrolled || !isHomePage ? 'text-slate-900' : 'text-white'
-                }`}
-              >
-                global
-              </span>
-              <span
-                className={`font-serif font-black text-xl sm:text-2xl tracking-tighter leading-[0.88] ${
-                  isScrolled || !isHomePage ? 'text-slate-900' : 'text-white'
-                }`}
-              >
-                disciples
-              </span>
-              <span className="text-[9px] font-bold tracking-widest text-brand-gold uppercase mt-0.5">
-                {currentLang === 'am' ? 'አሊያንስ ኢትዮጵያ' : 'ALLIANCE ETHIOPIA'}
-              </span>
-            </div>
-          </Link>
+          {/* Center: Global Disciples Logo matching Image 1 */}
+          <Logo
+            theme={isScrolled || !isHomePage ? 'light' : 'dark'}
+            showSubtitle={false}
+          />
 
           {/* Right Pill Menu (Get Involved & Bright Yellow Give Button) */}
           <div className="flex items-center gap-2.5">
