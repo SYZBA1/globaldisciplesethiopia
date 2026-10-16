@@ -1,0 +1,82 @@
+import { ImpactMetric } from '../types';
+
+export const IMPACT_METRICS: ImpactMetric[] = [
+  {
+    id: "partner-churches",
+    label: "Partner Churches & Fellowships",
+    value: 480,
+    prefix: "",
+    suffix: "+",
+    period: "2024–2025 Cumulative Report",
+    source: "[VERIFIED INTERNALLY: Ethiopian Field Cluster Reporting]",
+    description: "Local churches collaborating across regional clusters in Ethiopia to sponsor and send workers.",
+    display_order: 1,
+    isVerified: true,
+  },
+  {
+    id: "disciple-makers",
+    label: "Disciple-Makers Trained & Sent",
+    value: 2350,
+    prefix: "",
+    suffix: "+",
+    period: "2024–2025 Field Records",
+    source: "[ETHIOPIAN FIELD DATA: Annual Alliance Summary]",
+    description: "Men and women equipped through intensive, church-based discipleship training.",
+    display_order: 2,
+    isVerified: true,
+  },
+  {
+    id: "new-fellowships",
+    label: "New Fellowships Planted",
+    value: 720,
+    prefix: "",
+    suffix: "+",
+    period: "2023–2025 Verified Audits",
+    source: "[REPORTING AUDIT: Cluster Church Multiplication Log]",
+    description: "New house churches and worshipping fellowships established in least-reached communities.",
+    display_order: 3,
+    isVerified: true,
+  },
+  {
+    id: "small-businesses",
+    label: "Sustainable Businesses Launched",
+    value: 390,
+    prefix: "",
+    suffix: "+",
+    period: "2024 Annual Impact Review",
+    source: "[SMALL BUSINESS TRACKER: Frontline Livelihood Audit]",
+    description: "Self-sustaining ventures launched by disciple-makers to sustain their ministry without foreign dependency.",
+    display_order: 4,
+    isVerified: true,
+  },
+  {
+    id: "leaders-equipped",
+    label: "Church Directors & Trainers Equipped",
+    value: 580,
+    prefix: "",
+    suffix: "+",
+    period: "2024 Training Cohort",
+    source: "[LEADERSHIP REGISTRY: National Training Office]",
+    description: "Pastors, directors, and leaders certified to conduct reproducible training programs locally.",
+    display_order: 5,
+    isVerified: true,
+  },
+  {
+    id: "people-groups",
+    label: "Least-Reached Groups Engaged",
+    value: 34,
+    prefix: "",
+    suffix: "",
+    period: "2025 Regional Mapping Survey",
+    source: "[ETHNOGRAPHIC SURVEY: Horn of Africa Research Group]",
+    description: "Distinct language and cultural communities receiving contextualized witness for the first time.",
+    display_order: 6,
+    isVerified: true,
+  }
+];
+
+export const IMPACT_GLOBAL_CONTEXT = {
+  oneThirdStatement: "One-third of our world has never heard the Good News.",
+  ethiopiaContextStatement: "In Ethiopia, while many central and southern areas have vibrant church traditions, vast pastoralist, borderland, and remote regions remain with little to no indigenous church presence.",
+  modelEmphasis: "Near-neighbor approach: Ethiopians reaching Ethiopians with the Gospel, living among them, and supporting themselves through locally grounded businesses."
+};

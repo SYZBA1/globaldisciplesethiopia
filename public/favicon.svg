@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <rect width="120" height="120" rx="28" fill="#0D2744"/>
+  <circle cx="60" cy="60" r="40" stroke="#FAF7F2" stroke-width="4" stroke-opacity="0.3"/>
+  <circle cx="60" cy="60" r="26" stroke="#FAF7F2" stroke-width="3" stroke-opacity="0.5"/>
+  <!-- Cross + Globe Dynamic Motif -->
+  <path d="M60 28V92" stroke="#FAF7F2" stroke-width="5" stroke-linecap="round"/>
+  <path d="M38 52H82" stroke="#FAF7F2" stroke-width="5" stroke-linecap="round"/>
+  <!-- Ethiopia Accent Dot in Ochre/Gold -->
+  <circle cx="76" cy="44" r="8" fill="#E28723"/>
+</svg>
