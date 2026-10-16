@@ -56,18 +56,15 @@ export const MultiplicationMatrix: React.FC<MultiplicationMatrixProps> = ({ acti
         xmlns="http://www.w3.org/2000/svg"
         className="w-full h-full"
       >
-        {/* Layer 1: The Hexagonal Lattice for Steps 1, 2, and 3 */}
-        <g
-          className="transition-opacity duration-700 ease-in-out"
-          style={{ opacity: activeStep === 3 ? 0.08 : 1 }}
-        >
+        {/* Layer 1: The Hexagonal Lattice for Steps 1, 2, 3, and background for 4 */}
+        <g>
           {LATTICE_DOTS.map((dot) => {
             const isCenter = dot.id === CENTER_DOT_ID;
             let fillColor = '#EEF2F6'; // Default faint grey
             let radius = 19;
 
-            if (isCenter) {
-              fillColor = '#E11D48'; // Red director circle
+            if (activeStep < 3 && isCenter) {
+              fillColor = '#E11D48'; // Red director circle for steps 1-3
               radius = 21;
             } else if (activeStep === 1 && STEP_2_IDS.has(dot.id)) {
               fillColor = '#0073E6'; // Vibrant blue for 15 disciple makers
@@ -82,7 +79,10 @@ export const MultiplicationMatrix: React.FC<MultiplicationMatrixProps> = ({ acti
                 cy={dot.y}
                 r={radius}
                 fill={fillColor}
-                className="transition-all duration-500 ease-in-out"
+                style={{
+                  fill: fillColor,
+                  transition: 'fill 450ms ease, r 450ms ease',
+                }}
               />
             );
           })}
@@ -90,11 +90,12 @@ export const MultiplicationMatrix: React.FC<MultiplicationMatrixProps> = ({ acti
 
         {/* Layer 2: The 3 Church Shapes for Step 4 */}
         <g
-          className="transition-all duration-700 ease-in-out"
           style={{
             opacity: activeStep === 3 ? 1 : 0,
-            transform: activeStep === 3 ? 'scale(1)' : 'scale(0.95)',
-            transformOrigin: 'center center',
+            transform: activeStep === 3 ? 'scale(1)' : 'scale(0.92)',
+            transformOrigin: '310px 240px',
+            transition: 'opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1)',
+            pointerEvents: activeStep === 3 ? 'auto' : 'none',
           }}
         >
           {ALL_CHURCH_DOTS.map((dot) => (
@@ -104,7 +105,11 @@ export const MultiplicationMatrix: React.FC<MultiplicationMatrixProps> = ({ acti
               cy={dot.y}
               r={7.5}
               fill="#0073E6"
-              className="transition-transform duration-300 hover:scale-125"
+              style={{
+                fill: '#0073E6',
+                transition: 'transform 300ms ease',
+              }}
+              className="hover:scale-125"
             />
           ))}
         </g>
