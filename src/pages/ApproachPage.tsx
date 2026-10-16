@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { SEO } from '../components/ui/SEO';
 import { MultiplicationMatrix } from '../components/approach/MultiplicationMatrix';
+import { TrainingCycleDiagram } from '../components/approach/TrainingCycleDiagram';
+import { SustainabilitySlider } from '../components/approach/SustainabilitySlider';
 
 interface MultiplicationStep {
   number: number;
@@ -136,6 +138,151 @@ export const ApproachPage: React.FC = () => {
               <MultiplicationMatrix activeStep={activeStep} />
             </div>
           </div>
+        </div>
+      </section>
+      {/* 4. Panoramic Sunset Bridge Silhouette Banner matching Image 1 */}
+      <section className="bg-white pt-8 pb-16 sm:pb-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl aspect-[16/7] sm:aspect-[21/9] w-full bg-slate-900">
+            <img
+              src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=1800&q=85"
+              alt="Near-culture workers and believers silhouetted at golden sunset"
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 5. "Our Training." Overview + 4-Circle Interlocking Diagram matching Image 1 & 2 */}
+      <section className="bg-white pb-20 sm:pb-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Top 2-Column: Headline + Narrative vs Interlocking Circle Diagram */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center mb-16 sm:mb-24">
+            {/* Left Column: Heading and narrative text */}
+            <div className="lg:col-span-6">
+              <h2 className="font-serif font-black text-4xl sm:text-5xl lg:text-[52px] text-slate-900 tracking-tight leading-[1.1] mb-6">
+                Our <br />
+                Training.
+              </h2>
+              <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl">
+                We see three aspects of training as interlocking parts in a greater strategy to multiply disciples and churches among least-reached people. A group or cluster of churches can start with one and add the other two. When all three trainings work together, we see the most significant and lasting multiplication.
+              </p>
+            </div>
+
+            {/* Right Column: Interlocking Circular Diagram */}
+            <div className="lg:col-span-6 flex justify-center items-center">
+              <TrainingCycleDiagram />
+            </div>
+          </div>
+
+          {/* Bottom 3-Column Detailed Breakdown matching Image 2 top */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 pt-8 border-t border-slate-100">
+            {/* Col 1 */}
+            <div>
+              <h3 className="font-serif font-bold text-xl sm:text-2xl text-slate-900 mb-3">
+                Discipleship-Mission Training
+              </h3>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                Discipleship-mission training prepares the disciple to go to a least-reached people group, make new disciples, and plant a locally sustainable, new fellowship of believers.
+              </p>
+            </div>
+
+            {/* Col 2 */}
+            <div>
+              <h3 className="font-serif font-bold text-xl sm:text-2xl text-slate-900 mb-3">
+                Small Business Training
+              </h3>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                Small business training provides the church planter with a means of support. It also gives him or her an identity—or reason—to be in a community unreached with the Gospel.
+              </p>
+            </div>
+
+            {/* Col 3 */}
+            <div>
+              <h3 className="font-serif font-bold text-xl sm:text-2xl text-slate-900 mb-3">
+                Leadership Training
+              </h3>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                Leadership training ensures that the church planter and the new fellowships established will grow and mature spiritually under Christ-like leaders and mentors.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Three Distinct Pillars: Locally Owned, Reproducible, and Sustainable matching Image 2 & 3 */}
+      <section className="bg-[#F4F9FB] py-20 sm:py-28 border-t border-slate-200/60">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20 sm:space-y-28">
+          
+          {/* Pillar 1: Locally Owned. */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            {/* Left: Narrative */}
+            <div className="lg:col-span-6">
+              <h3 className="font-serif font-black text-3xl sm:text-4xl lg:text-[42px] text-slate-900 tracking-tight leading-tight mb-4">
+                Locally Owned.
+              </h3>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-xl">
+                All discipleship-mission and leadership programs are owned and operated by indigenous local churches. Global Disciples requires at least 3 churches to launch and fund a training program. This promotes local accountability, increases potential for support, and broadens the level of engagement. Program directors and trainers are selected from the supporting churches and then trained by Global Disciples.
+              </p>
+            </div>
+
+            {/* Right: Photograph */}
+            <div className="lg:col-span-6 flex justify-center">
+              <div className="rounded-2xl overflow-hidden shadow-lg aspect-[4/3] w-full max-w-[500px] border-4 border-white bg-slate-100">
+                <img
+                  src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1000&q=85"
+                  alt="Indigenous church leaders gathering outdoors in fellowship and prayer"
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Pillar 2: Reproducible. */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            {/* Left: Narrative */}
+            <div className="lg:col-span-6">
+              <h3 className="font-serif font-black text-3xl sm:text-4xl lg:text-[42px] text-slate-900 tracking-tight leading-tight mb-4">
+                Reproducible.
+              </h3>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-xl">
+                The discipleship-mission and leadership model can be reproduced by those who've participated in the training. So graduates who plant churches can reproduce the discipleship mission training with the new believers in their churches. They then equip and send out a new wave of disciple making church planters. A growing number of Global Disciples-affiliated programs now have second and even third generation programs. This facilitates rapid multiplication and increases impact.
+              </p>
+            </div>
+
+            {/* Right: Photograph */}
+            <div className="lg:col-span-6 flex justify-center">
+              <div className="rounded-2xl overflow-hidden shadow-lg aspect-[4/3] w-full max-w-[500px] border-4 border-white bg-slate-100">
+                <img
+                  src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1000&q=85"
+                  alt="Local disciple makers and church planters training together"
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Pillar 3: Sustainable. */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            {/* Left: Narrative */}
+            <div className="lg:col-span-6">
+              <h3 className="font-serif font-black text-3xl sm:text-4xl lg:text-[42px] text-slate-900 tracking-tight leading-tight mb-4">
+                Sustainable.
+              </h3>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-4 max-w-xl">
+                The goal is that every program will be sustainable through the resources of the local church cluster which owns and operates it. The cluster provides at least 55% of the training expense starting the first year. For three years, Global Disciples offers a decreasing percentage in seed funds each year. By year four, local resources fully support the training.
+              </p>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-xl">
+                Discipleship-mission and small business development trainings use this track to sustainability; leadership development programs are self-funded from the beginning.
+              </p>
+            </div>
+
+            {/* Right: Interactive Year-by-Year Sustainability Slider */}
+            <div className="lg:col-span-6 flex justify-center items-center">
+              <SustainabilitySlider />
+            </div>
+          </div>
+
         </div>
       </section>
     </div>
