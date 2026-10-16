@@ -48,6 +48,7 @@ export const App: React.FC = () => {
 
         {/* Approach */}
         <Route path="/approach" element={<ApproachPage />} />
+        <Route path="/why-least-reached/approach" element={<ApproachPage />} />
 
         {/* Programs */}
         <Route path="/programs" element={<ProgramsPage />} />

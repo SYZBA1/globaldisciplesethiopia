@@ -1,186 +1,176 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { SEO } from '../components/ui/SEO';
-import { Breadcrumb } from '../components/ui/Breadcrumb';
-import { CTAButton } from '../components/ui/CTAButton';
-import { ApproachProcessSection } from '../components/home/ApproachProcessSection';
-import { FAQ_DATA } from '../data/faqData';
-import { Church, CheckCircle2, Repeat, TrendingUp, ShieldCheck, HelpCircle, ArrowRight, ChevronDown } from 'lucide-react';
+import { MultiplicationMatrix } from '../components/approach/MultiplicationMatrix';
+
+interface MultiplicationStep {
+  number: number;
+  text: string;
+}
+
+const STEPS: MultiplicationStep[] = [
+  {
+    number: 1,
+    text: 'A local church cluster selects a director.',
+  },
+  {
+    number: 2,
+    text: 'The director annually trains 15 disciples makers.',
+  },
+  {
+    number: 3,
+    text: 'These 15 disciple makers reach 71 new disciples.',
+  },
+  {
+    number: 4,
+    text: 'This results in three new churches planted, with an average of 25 new disciples in each church.',
+  },
+];
 
 export const ApproachPage: React.FC = () => {
-  const [openFaq, setOpenFaq] = useState<string | null>(null);
+  const [activeStep, setActiveStep] = useState<number>(0);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const approachFaqs = FAQ_DATA.filter((f) => f.category === 'Programs & Training' || f.category === 'About the Alliance');
+  // Scroll synchronization: update active step as user scrolls past each step
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const vh = window.innerHeight;
+          const halfway = vh * 0.52;
+
+          let current = 0;
+          stepRefs.current.forEach((el, index) => {
+            if (el) {
+              const rect = el.getBoundingClientRect();
+              if (rect.top <= halfway) {
+                current = index;
+              }
+            }
+          });
+          setActiveStep(current);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <>
+    <div className="bg-white text-slate-900 overflow-x-hidden selection:bg-gd-blue selection:text-white">
       <SEO
-        title="Our Approach & Ministry Model"
-        description="Discover the Global Disciples approach: church clustering, near-neighbor missions, small business sustainability, and reproducible disciple-making."
+        title="Our Approach | Global Disciples"
+        description="We train ordinary men and women to share the Gospel, make disciples, and plant churches among least-reached people."
       />
 
-      {/* Hero */}
-      <section className="bg-brand-navy-dark text-white py-16 lg:py-24">
+      {/* 1. Page Title Banner matching Screenshot 1 */}
+      <section className="bg-[#F4F9FB] pt-16 pb-20 sm:pt-20 sm:pb-24 border-b border-slate-200/50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#1EA5FC] mb-4 block">
+            WHY LEAST-REACHED
+          </span>
+          <h1 className="font-serif font-black text-5xl sm:text-6xl md:text-7xl text-slate-900 tracking-tight leading-none inline-flex items-baseline justify-center">
+            <span>Our Approach</span>
+            {/* Signature sky-blue accent motif */}
+            <span className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-tl-full bg-[#1EA5FC] ml-2 inline-block shrink-0 shadow-sm" />
+          </h1>
+        </div>
+      </section>
+
+      {/* 2. First Content Section matching Screenshot 1: Equipping People to Reach Their Nations */}
+      <section className="bg-white py-16 sm:py-24 border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Breadcrumb
-            items={[{ label: 'Our Approach' }]}
-            className="text-slate-400 mb-6"
-          />
-          <div className="max-w-3xl">
-            <span className="text-xs font-bold uppercase tracking-widest text-brand-gold mb-3 block">
-              OUR PROVEN MODEL
-            </span>
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight mb-4">
-              How Local Churches Reach the Unreached
-            </h1>
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-              We equip clusters of Ethiopian congregations to train and send their own disciple-makers. A low-cost, self-funding, and spiritually reproducible approach.
-            </p>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* Left Column: Heading and narrative text */}
+            <div className="lg:col-span-7">
+              <h2 className="text-3xl sm:text-4xl lg:text-[46px] font-extrabold text-slate-900 tracking-tight leading-[1.15] mb-6">
+                Equipping <br />
+                People to Reach <br />
+                <span className="font-serif italic font-bold">Their Nations</span>
+              </h2>
+
+              <p className="text-base sm:text-lg text-slate-600 leading-relaxed mb-6 max-w-xl">
+                As we engage in conversation with churches that are interested in our services, we always want to know what vision they have for reaching least-reached people. We are not there to do the work for them, but to help equip their own gifted leaders to do the teaching, training and coaching for their near-culture workers. Together we learn and grow.
+              </p>
+
+              <span className="text-sm font-serif italic text-slate-500 block">
+                The Global Disciples Approach
+              </span>
+            </div>
+
+            {/* Right Column: Rounded training photograph */}
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="rounded-2xl overflow-hidden shadow-2xl aspect-[4/3] w-full max-w-[500px] border-4 border-white bg-slate-100">
+                <img
+                  src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1000&q=85"
+                  alt="Leaders learning and growing in discipleship training"
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Main Pillars */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
-        {/* Core Philosophy Section */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-6 space-y-5">
-            <span className="text-xs font-bold uppercase tracking-widest text-brand-gold">
-              MINISTRY PHILOSOPHY
-            </span>
-            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-brand-navy">
-              No Buildings. No Dependency. Just the Church on Mission.
-            </h2>
-            <p className="text-sm sm:text-base text-brand-muted leading-relaxed">
-              For over a century, traditional missions often required huge physical campuses, foreign budgets, and professional western missionaries. While God used these in previous eras, the unreached world cannot wait for costly infrastructure.
-            </p>
-            <p className="text-sm sm:text-base text-brand-muted leading-relaxed">
-              Our philosophy places the indigenous local church at the center. Churches meet in existing spaces, use their own vernacular languages, select their own spiritual sons and daughters, and fund the effort with local resources.
-            </p>
-          </div>
-
-          <div className="lg:col-span-6">
-            <div className="p-8 sm:p-10 rounded-3xl bg-brand-cream border border-brand-sand space-y-4">
-              <h3 className="font-display text-xl font-bold text-brand-navy mb-4">
-                The 4 Cornerstones of Our Approach:
-              </h3>
-              <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
-                <div className="text-sm">
-                  <strong className="text-brand-navy block">1. The Church Cluster:</strong>
-                  <span className="text-brand-muted">Pastors join hands across denominations to sponsor and oversee sending cohorts.</span>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
-                <div className="text-sm">
-                  <strong className="text-brand-navy block">2. Church-Based Training:</strong>
-                  <span className="text-brand-muted">Training is modular and local, preventing candidates from becoming detached from their communities.</span>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
-                <div className="text-sm">
-                  <strong className="text-brand-navy block">3. Small Business Livelihoods:</strong>
-                  <span className="text-brand-muted">Workers are equipped with marketplace skills to generate their own family livelihood in the field.</span>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
-                <div className="text-sm">
-                  <strong className="text-brand-navy block">4. Rapid Multiplication:</strong>
-                  <span className="text-brand-muted">New fellowships reproduce from day one by training every new convert to share Jesus immediately.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* The 5-Stage Interactive Section */}
-        <ApproachProcessSection />
-
-        {/* Sustainability & Tentmaking Spotlight */}
-        <section className="p-8 sm:p-12 rounded-3xl bg-brand-navy text-white shadow-elevated">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8 space-y-4">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-gold">
-                <TrendingUp className="w-4 h-4" />
-                <span>ECONOMIC SUSTAINABILITY</span>
-              </div>
-              <h2 className="font-display text-2xl sm:text-3xl font-extrabold">
-                Tentmaking: The Apostolic Model for Unreached Regions
-              </h2>
-              <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-                Like the Apostle Paul who sustained his missionary journeys by crafting tents, Ethiopian frontline disciple-makers are trained in small business management. A worker running an honest grain shop, repair service, or clinic is warmly welcomed in conservative or resistant villages. They earn daily respect, build organic friendships, and provide for their family without depending on foreign checks.
-              </p>
-            </div>
-            <div className="lg:col-span-4 text-center lg:text-right">
-              <CTAButton to="/programs/small-business" variant="primary" size="md">
-                <span>Explore Small Business Program</span>
-                <ArrowRight className="w-4 h-4 ml-1" />
-              </CTAButton>
-            </div>
-          </div>
-        </section>
-
-        {/* Model FAQs */}
-        <section>
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <span className="text-xs font-bold uppercase tracking-widest text-brand-gold mb-2 block">
-              QUESTIONS & ANSWERS
-            </span>
-            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-brand-navy">
-              Frequently Asked Questions About the Approach
+      {/* 3. The Interactive Multiplication Visualizer matching Screenshots 2, 3, 4, 5 */}
+      <section className="bg-white py-20 sm:py-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Main Headline */}
+          <div className="max-w-4xl mx-auto mb-16 sm:mb-24 text-center lg:text-left">
+            <h2 className="font-serif font-bold text-3xl sm:text-4xl lg:text-[42px] text-slate-900 tracking-tight leading-[1.2]">
+              We train ordinary men and women to share the Gospel, make disciples, and plant churches among least-reached people.
             </h2>
           </div>
 
-          <div className="max-w-3xl mx-auto space-y-3">
-            {approachFaqs.map((faq) => {
-              const isOpen = openFaq === faq.id;
-              return (
-                <div
-                  key={faq.id}
-                  className="rounded-2xl border border-brand-sand bg-white overflow-hidden shadow-subtle transition-all"
-                >
-                  <button
-                    onClick={() => setOpenFaq(isOpen ? null : faq.id)}
-                    className="w-full flex items-center justify-between p-5 sm:p-6 text-left font-display font-bold text-base sm:text-lg text-brand-navy hover:text-brand-gold transition-colors"
+          {/* Grid Layout: Left Steps + Right Sticky Matrix Diagram */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start relative">
+            
+            {/* Left Column: 4 Numbered Sequential Steps */}
+            <div className="lg:col-span-6 space-y-20 sm:space-y-28 lg:space-y-36 py-8 sm:py-12">
+              {STEPS.map((step, idx) => {
+                const isActive = activeStep === idx;
+                return (
+                  <div
+                    key={step.number}
+                    ref={(el) => (stepRefs.current[idx] = el)}
+                    onClick={() => setActiveStep(idx)}
+                    className="flex items-start gap-6 sm:gap-8 cursor-pointer group transition-all duration-300"
                   >
-                    <span>{faq.question}</span>
-                    <ChevronDown
-                      className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 ${
-                        isOpen ? 'rotate-180 text-brand-gold' : ''
+                    {/* Step Numeral (1, 2, 3, 4) */}
+                    <span
+                      className={`font-serif text-5xl sm:text-6xl font-black leading-none shrink-0 transition-colors duration-300 select-none ${
+                        isActive ? 'text-[#0073E6]' : 'text-slate-300 group-hover:text-slate-400'
                       }`}
-                    />
-                  </button>
-                  {isOpen && (
-                    <div className="px-5 pb-6 sm:px-6 text-sm text-brand-muted leading-relaxed border-t border-slate-100 pt-3">
-                      {faq.answer}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </section>
+                    >
+                      {step.number}
+                    </span>
 
-        {/* Bottom CTA */}
-        <div className="p-10 rounded-3xl bg-brand-cream border border-brand-sand text-center max-w-3xl mx-auto">
-          <h3 className="font-display text-2xl font-bold text-brand-navy mb-3">
-            Ready to Implement This in Your Church?
-          </h3>
-          <p className="text-sm text-brand-muted mb-6">
-            We offer consultation, curriculum, and facilitator coaching to help your church fellowship adopt the cluster model.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <CTAButton to="/get-involved/partner" variant="primary" size="md">
-              <span>Partner as a Church</span>
-            </CTAButton>
-            <CTAButton to="/contact" variant="outline" size="md">
-              <span>Contact Us</span>
-            </CTAButton>
+                    {/* Step Description */}
+                    <p
+                      className={`text-base sm:text-lg font-bold leading-snug pt-2 transition-colors duration-300 ${
+                        isActive ? 'text-[#0073E6]' : 'text-slate-400 group-hover:text-slate-500'
+                      }`}
+                    >
+                      {step.text}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Right Column: Sticky Cluster Multiplication Matrix */}
+            <div className="lg:col-span-6 sticky top-24 sm:top-28 lg:top-[20vh] z-20 flex justify-center items-center py-6 sm:py-10">
+              <MultiplicationMatrix activeStep={activeStep} />
+            </div>
           </div>
         </div>
-      </div>
-    </>
+      </section>
+    </div>
   );
 };
