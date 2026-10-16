@@ -1,6 +1,5 @@
 import React from 'react';
-import { Play, Heart, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
-import { CTAButton } from '../ui/CTAButton';
+import { Link } from 'react-router-dom';
 
 interface HeroSectionProps {
   onPlayVideo: () => void;
@@ -8,91 +7,88 @@ interface HeroSectionProps {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onPlayVideo }) => {
   return (
-    <section className="relative min-h-[85vh] sm:min-h-[90vh] flex items-center bg-brand-navy-dark overflow-hidden">
-      {/* Background Image with Dark Vignette Gradient */}
+    <section className="relative min-h-[90vh] lg:min-h-[96vh] flex flex-col justify-between bg-slate-950 text-white overflow-hidden -mt-24 pt-28 sm:pt-36">
+      {/* Background African Ministry Photography with Dark Vignette */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=2000&q=85"
-          alt="Ethiopian church community gathering"
-          className="w-full h-full object-cover object-center opacity-30 scale-105 transition-transform duration-1000 ease-out"
+          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=2000&q=85"
+          alt="African church leader in natural light"
+          className="w-full h-full object-cover object-center opacity-40 brightness-75 scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-navy-dark via-brand-navy-dark/85 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-navy-dark via-transparent to-brand-navy-dark/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
-        <div className="max-w-3xl">
-          {/* Tagline Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-semibold text-brand-gold mb-6 animate-fade-in">
-            <Sparkles className="w-3.5 h-3.5 text-brand-gold" />
-            <span className="uppercase tracking-widest text-[11px] font-bold">
-              Global Disciples Alliance Ethiopia
-            </span>
+      {/* Main Content Grid */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16 w-full flex-grow flex items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center w-full">
+          {/* Left Column: Headline, Narrative & Buttons */}
+          <div className="lg:col-span-7 max-w-2xl">
+            {/* Main Editorial Headline matching Screenshot 1 */}
+            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.12] mb-6">
+              A Third of Our World <br />
+              has not yet heard the <br />
+              Good News of Jesus.
+            </h1>
+
+            {/* Paragraph 1 */}
+            <p className="text-sm sm:text-base text-slate-200 leading-relaxed mb-4">
+              <strong className="text-white font-semibold">Global Disciples Alliance Ethiopia</strong> refers to this third of the world as <em className="italic">least-reached</em>. We live in a time where many of these people are within reach of a local church. Through our simple and effective strategy of training and coaching, believers share the Gospel in their own nations and cultures.
+            </p>
+
+            {/* Paragraph 2 */}
+            <p className="text-sm sm:text-base text-slate-300 leading-relaxed mb-8">
+              We understand it's impossible to accomplish this mission alone. That's why we partner with hundreds of clusters of churches across Ethiopia and 2,541 clusters globally.
+            </p>
+
+            {/* Two Signature Pill Buttons matching Screenshot 1 */}
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                onClick={onPlayVideo}
+                className="px-8 py-3 rounded-full text-sm font-extrabold bg-gd-yellow hover:bg-gd-yellow-hover text-slate-950 transition-all shadow-md hover:scale-105 active:scale-95"
+              >
+                Play Video
+              </button>
+
+              <Link
+                to="/stories"
+                className="px-8 py-3 rounded-full text-sm font-extrabold bg-gd-blue hover:bg-gd-blue-dark text-white transition-all shadow-md hover:scale-105 active:scale-95"
+              >
+                Stories
+              </Link>
+            </div>
           </div>
 
-          {/* Primary Editorial Headline (PRD Section 13) */}
-          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] mb-6">
-            Equipping Churches. <br className="hidden sm:inline" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold via-amber-300 to-amber-100">
-              Reaching the Least-Reached.
-            </span>
-          </h1>
-
-          {/* Supporting Statement */}
-          <p className="text-base sm:text-lg md:text-xl text-slate-200 leading-relaxed font-normal mb-8 max-w-2xl">
-            We partner with local Ethiopian congregations to train disciple-makers, launch sustainable businesses, and plant reproducible worshipping fellowships among communities with no access to the Gospel.
-          </p>
-
-          {/* CTAs & Video Trigger */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
-            <CTAButton
-              to="/approach"
-              variant="primary"
-              size="lg"
-              className="font-bold shadow-accent tracking-wide"
-            >
-              <span>Explore Our Approach</span>
-              <ArrowRight className="w-4 h-4 ml-1" />
-            </CTAButton>
-
-            <CTAButton
-              to="/give"
-              variant="outline-white"
-              size="lg"
-              className="font-semibold"
-            >
-              <Heart className="w-4 h-4 text-brand-gold fill-brand-gold mr-1" />
-              <span>Give to Frontline Workers</span>
-            </CTAButton>
-
-            <button
-              onClick={onPlayVideo}
-              className="inline-flex items-center justify-center gap-2.5 px-4 py-3 rounded-md text-sm font-semibold text-white hover:text-brand-gold transition-colors group"
-              aria-label="Watch field documentary"
-            >
-              <span className="w-10 h-10 rounded-full bg-white/15 border border-white/20 flex items-center justify-center group-hover:scale-110 group-hover:bg-brand-gold group-hover:border-brand-gold transition-all">
-                <Play className="w-4 h-4 text-white fill-white ml-0.5" />
-              </span>
-              <span>Watch Field Story (8 min)</span>
-            </button>
-          </div>
-
-          {/* Trust Highlights */}
-          <div className="mt-12 pt-8 border-t border-white/10 grid grid-cols-2 sm:grid-cols-3 gap-6 text-xs text-slate-300">
-            <div className="flex items-center gap-2.5">
-              <ShieldCheck className="w-5 h-5 text-brand-gold flex-shrink-0" />
-              <span>100% Church-Based Local Training</span>
-            </div>
-            <div className="flex items-center gap-2.5">
-              <span className="w-2 h-2 rounded-full bg-ethiopia-green flex-shrink-0" />
-              <span>Near-Neighbor Indigenous Model</span>
-            </div>
-            <div className="flex items-center gap-2.5 col-span-2 sm:col-span-1">
-              <span className="w-2 h-2 rounded-full bg-brand-gold flex-shrink-0" />
-              <span>Zero Foreign Subsidy Dependency</span>
+          {/* Right Column: The Signature Blue Circle with Laughing Woman in Red Headwrap */}
+          <div className="lg:col-span-5 flex justify-center lg:justify-end relative">
+            {/* The Big Vibrant Blue Circle Motif */}
+            <div className="relative w-[300px] h-[300px] sm:w-[420px] sm:h-[420px] lg:w-[480px] lg:h-[480px] rounded-full bg-gd-blue shadow-2xl overflow-hidden flex items-end justify-center border-4 border-white/10">
+              {/* Inner Circular Portrait of Laughing Woman with Bright Red Headscarf */}
+              <div className="w-[240px] h-[240px] sm:w-[340px] sm:h-[340px] lg:w-[390px] lg:h-[390px] rounded-full overflow-hidden shadow-2xl relative translate-y-4">
+                <img
+                  src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=85"
+                  alt="Joyful Ethiopian woman laughing in red headwrap"
+                  className="w-full h-full object-cover object-top scale-110"
+                />
+              </div>
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Bottom Wave Transition Curve matching Screenshot 1 */}
+      <div className="relative z-10 w-full overflow-hidden leading-none">
+        <svg
+          viewBox="0 0 1440 120"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-12 sm:h-20 lg:h-28 text-[#F4F9FB] preserve-3d"
+        >
+          <path
+            d="M0 60C320 120 720 0 1080 60C1260 90 1380 90 1440 80V120H0V60Z"
+            fill="currentColor"
+          />
+        </svg>
       </div>
     </section>
   );

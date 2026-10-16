@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Heart } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { MAIN_NAVIGATION } from '../../data/navigation';
-import { CTAButton } from '../ui/CTAButton';
 
 interface HeaderProps {
   onOpenMobileMenu: () => void;
@@ -18,10 +17,11 @@ export const Header: React.FC<HeaderProps> = ({
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
+      if (window.scrollY > 30) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -32,155 +32,236 @@ export const Header: React.FC<HeaderProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close dropdowns on route change
   useEffect(() => {
     setActiveDropdown(null);
   }, [location.pathname]);
+
+  // Pill style classes matching globaldisciples.org
+  const pillClassDark = "px-5 py-2 rounded-full text-xs font-bold tracking-wide transition-all bg-black/40 hover:bg-black/60 text-white border border-white/15 backdrop-blur-md";
+  const pillClassLight = "px-5 py-2 rounded-full text-xs font-bold tracking-wide transition-all bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 shadow-sm";
+
+  const activePillClass = isScrolled || !isHomePage ? pillClassLight : pillClassDark;
 
   return (
     <header
       className={`sticky top-0 z-40 w-full transition-all duration-300 ${
         isScrolled
-          ? 'bg-brand-navy/95 backdrop-blur-md shadow-card py-3 border-b border-white/10'
-          : 'bg-brand-navy py-4 border-b border-white/5'
+          ? 'bg-white/95 backdrop-blur-md shadow-card py-3 border-b border-slate-100'
+          : isHomePage
+          ? 'bg-gradient-to-b from-black/70 via-black/40 to-transparent py-4 text-white'
+          : 'bg-white py-3 border-b border-slate-100 shadow-sm text-slate-900'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* Brand Logo */}
-          <Link
-            to="/"
-            className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold rounded-lg p-1"
-            aria-label="Global Disciples Alliance Ethiopia Home"
-          >
-            {/* Logo Icon Mark */}
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-brand-navy-light to-brand-navy-dark border border-white/20 flex items-center justify-center shadow-md group-hover:border-brand-gold transition-colors flex-shrink-0">
-              <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" viewBox="0 0 48 48" fill="none">
-                <circle cx="24" cy="24" r="18" stroke="currentColor" strokeWidth="2.5" strokeOpacity="0.4" />
-                <path d="M24 10V38" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-                <path d="M12 21H36" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-                <circle cx="32" cy="18" r="4.5" fill="#E28723" />
-              </svg>
+          {/* Left Pill Menu (Why Least-reached, About Us, Stories/Blog) */}
+          <nav className="hidden lg:flex items-center gap-2.5" aria-label="Left Navigation">
+            {/* Why Least-reached Pill */}
+            <div
+              className="relative group"
+              onMouseEnter={() => setActiveDropdown('why')}
+              onMouseLeave={() => setActiveDropdown(null)}
+            >
+              <Link
+                to="/why/least-reached"
+                className={`inline-flex items-center gap-1 ${activePillClass}`}
+              >
+                <span>Why Least-reached</span>
+                <ChevronDown className="w-3 h-3 opacity-70" />
+              </Link>
+              {activeDropdown === 'why' && (
+                <div className="absolute top-full left-0 w-64 pt-2 animate-fade-in z-50">
+                  <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-2 text-slate-800 text-xs font-medium">
+                    <Link
+                      to="/why/least-reached"
+                      className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="font-bold text-brand-navy">The One-Third</div>
+                      <div className="text-[11px] text-slate-500">Why we focus on zero-access communities</div>
+                    </Link>
+                    <Link
+                      to="/why/ethiopia-context"
+                      className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="font-bold text-brand-navy">Ethiopia Context</div>
+                      <div className="text-[11px] text-slate-500">Strategic opportunities across 5 corridors</div>
+                    </Link>
+                    <Link
+                      to="/approach"
+                      className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="font-bold text-brand-navy">Our Approach</div>
+                      <div className="text-[11px] text-slate-500">The 5-stage multiplying church model</div>
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* Typography */}
-            <div className="flex flex-col">
-              <span className="font-display font-extrabold text-base sm:text-lg tracking-tight text-white leading-tight">
-                GLOBAL DISCIPLES
+            {/* About Us Pill */}
+            <div
+              className="relative group"
+              onMouseEnter={() => setActiveDropdown('about')}
+              onMouseLeave={() => setActiveDropdown(null)}
+            >
+              <Link
+                to="/about"
+                className={`inline-flex items-center gap-1 ${activePillClass}`}
+              >
+                <span>About Us</span>
+                <ChevronDown className="w-3 h-3 opacity-70" />
+              </Link>
+              {activeDropdown === 'about' && (
+                <div className="absolute top-full left-0 w-64 pt-2 animate-fade-in z-50">
+                  <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-2 text-slate-800 text-xs font-medium">
+                    <Link
+                      to="/about"
+                      className="block px-3.5 py-2 rounded-xl hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="font-bold text-brand-navy">Alliance Overview</div>
+                    </Link>
+                    <Link
+                      to="/about/story"
+                      className="block px-3.5 py-2 rounded-xl hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="font-bold text-brand-navy">Our Story & Timeline</div>
+                    </Link>
+                    <Link
+                      to="/about/vision-mission"
+                      className="block px-3.5 py-2 rounded-xl hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="font-bold text-brand-navy">Vision, Mission & Values</div>
+                    </Link>
+                    <Link
+                      to="/about/leadership"
+                      className="block px-3.5 py-2 rounded-xl hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="font-bold text-brand-navy">Leadership & Trustees</div>
+                    </Link>
+                    <Link
+                      to="/about/partners"
+                      className="block px-3.5 py-2 rounded-xl hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="font-bold text-brand-navy">Partner Denominations</div>
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Blog / Stories Pill */}
+            <Link
+              to="/stories"
+              className={activePillClass}
+            >
+              <span>Blog</span>
+            </Link>
+          </nav>
+
+          {/* Center: Global Disciples Logo with Blue Arch Semi-Circle */}
+          <Link
+            to="/"
+            className="flex flex-col items-center group focus:outline-none"
+            aria-label="Global Disciples Alliance Ethiopia Home"
+          >
+            {/* The signature blue semi-circle arch dome */}
+            <div className="w-8 h-4 rounded-t-full bg-gd-blue transition-transform group-hover:scale-110 mb-0.5" />
+            <div className="flex flex-col items-center">
+              <span
+                className={`font-serif font-black text-xl sm:text-2xl tracking-tighter leading-[0.88] ${
+                  isScrolled || !isHomePage ? 'text-slate-900' : 'text-white'
+                }`}
+              >
+                global
               </span>
-              <div className="flex items-center gap-1.5">
-                <span className="text-[10px] sm:text-[11px] font-bold tracking-widest uppercase text-brand-gold">
-                  {currentLang === 'am' ? 'አሊያንስ ኢትዮጵያ' : 'ALLIANCE ETHIOPIA'}
-                </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-ethiopia-green inline-block" title="Ethiopia Alliance" />
-              </div>
+              <span
+                className={`font-serif font-black text-xl sm:text-2xl tracking-tighter leading-[0.88] ${
+                  isScrolled || !isHomePage ? 'text-slate-900' : 'text-white'
+                }`}
+              >
+                disciples
+              </span>
+              <span className="text-[9px] font-bold tracking-widest text-brand-gold uppercase mt-0.5">
+                {currentLang === 'am' ? 'አሊያንስ ኢትዮጵያ' : 'ALLIANCE ETHIOPIA'}
+              </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden xl:flex items-center gap-1.5" aria-label="Main Navigation">
-            {MAIN_NAVIGATION.map((item) => {
-              if (item.isCta) return null;
-
-              const hasChildren = item.children && item.children.length > 0;
-              const isActive =
-                location.pathname === item.href ||
-                (hasChildren && item.children?.some((c) => location.pathname.startsWith(c.href)));
-
-              if (hasChildren) {
-                return (
-                  <div
-                    key={item.label}
-                    className="relative group"
-                    onMouseEnter={() => setActiveDropdown(item.label)}
-                    onMouseLeave={() => setActiveDropdown(null)}
-                  >
-                    <button
-                      className={`inline-flex items-center gap-1 px-3 py-2 text-xs 2xl:text-sm font-semibold tracking-wide rounded-md transition-colors ${
-                        isActive
-                          ? 'text-brand-gold bg-white/5'
-                          : 'text-slate-200 hover:text-white hover:bg-white/5'
-                      }`}
-                      aria-expanded={activeDropdown === item.label}
-                      onClick={() => setActiveDropdown(activeDropdown === item.label ? null : item.label)}
-                    >
-                      <span>{item.label}</span>
-                      <ChevronDown
-                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                          activeDropdown === item.label ? 'rotate-180 text-brand-gold' : 'text-slate-400'
-                        }`}
-                      />
-                    </button>
-
-                    {/* Dropdown Menu */}
-                    {activeDropdown === item.label && (
-                      <div className="absolute top-full left-0 w-72 pt-2 animate-fade-in z-50">
-                        <div className="bg-brand-navy-dark border border-white/15 rounded-xl shadow-2xl p-2 backdrop-blur-lg">
-                          {item.children?.map((child) => (
-                            <Link
-                              key={child.label}
-                              to={child.href}
-                              className={`block px-3.5 py-2.5 rounded-lg text-xs 2xl:text-sm transition-colors ${
-                                location.pathname === child.href
-                                  ? 'bg-brand-gold text-white font-bold'
-                                  : 'text-slate-200 hover:text-white hover:bg-white/10'
-                              }`}
-                            >
-                              <div className="font-semibold">{child.label}</div>
-                              {child.description && (
-                                <div className="text-[11px] text-slate-400 mt-0.5 line-clamp-1">
-                                  {child.description}
-                                </div>
-                              )}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              }
-
-              return (
-                <Link
-                  key={item.label}
-                  to={item.href}
-                  className={`px-3 py-2 text-xs 2xl:text-sm font-semibold tracking-wide rounded-md transition-colors ${
-                    isActive
-                      ? 'text-brand-gold bg-white/5'
-                      : 'text-slate-200 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* Right Action: Give CTA Button & Mobile Hamburger */}
-          <div className="flex items-center gap-3">
-            <CTAButton
-              to="/give"
-              variant="primary"
-              size="sm"
-              className="hidden sm:inline-flex shadow-accent gap-1.5 font-bold"
+          {/* Right Pill Menu (Get Involved & Bright Yellow Give Button) */}
+          <div className="flex items-center gap-2.5">
+            {/* Get Involved Dropdown Pill */}
+            <div
+              className="relative hidden lg:block group"
+              onMouseEnter={() => setActiveDropdown('involved')}
+              onMouseLeave={() => setActiveDropdown(null)}
             >
-              <Heart className="w-3.5 h-3.5 fill-white text-white" />
-              <span>GIVE</span>
-            </CTAButton>
+              <Link
+                to="/get-involved"
+                className={`inline-flex items-center gap-1 ${activePillClass}`}
+              >
+                <span>Get Involved</span>
+                <ChevronDown className="w-3 h-3 opacity-70" />
+              </Link>
+              {activeDropdown === 'involved' && (
+                <div className="absolute top-full right-0 w-64 pt-2 animate-fade-in z-50">
+                  <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-2 text-slate-800 text-xs font-medium">
+                    <Link
+                      to="/get-involved/pray"
+                      className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="font-bold text-brand-navy">Pray With Us</div>
+                      <div className="text-[11px] text-slate-500">Intercession for unreached peoples</div>
+                    </Link>
+                    <Link
+                      to="/get-involved/partner"
+                      className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="font-bold text-brand-navy">Partner as a Church</div>
+                      <div className="text-[11px] text-slate-500">Cluster your congregation for mission</div>
+                    </Link>
+                    <Link
+                      to="/get-involved/volunteer"
+                      className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="font-bold text-brand-navy">Serve & Volunteer</div>
+                      <div className="text-[11px] text-slate-500">Offer professional and trade skills</div>
+                    </Link>
+                    <Link
+                      to="/events"
+                      className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="font-bold text-brand-navy">Events & Summits</div>
+                    </Link>
+                    <Link
+                      to="/resources"
+                      className="block px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="font-bold text-brand-navy">Resource Downloads</div>
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
 
-            {/* Mobile / Tablet Menu Trigger */}
+            {/* The signature bright golden-yellow Give pill button */}
+            <Link
+              to="/give"
+              className="px-6 py-2 rounded-full text-xs font-extrabold tracking-wider uppercase bg-gd-yellow hover:bg-gd-yellow-hover text-slate-950 transition-all shadow-sm hover:scale-105 active:scale-95"
+            >
+              Give
+            </Link>
+
+            {/* Mobile Hamburger */}
             <button
               onClick={onOpenMobileMenu}
-              className="xl:hidden p-2 rounded-lg text-slate-200 hover:text-white hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
+              className={`lg:hidden p-2 rounded-full transition-colors ${
+                isScrolled || !isHomePage
+                  ? 'text-slate-800 hover:bg-slate-100'
+                  : 'text-white hover:bg-white/20'
+              }`}
               aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={isMobileMenuOpen}
             >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6 text-brand-gold" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+              {isMobileMenuOpen ? <X className="w-6 h-6 text-brand-gold" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>

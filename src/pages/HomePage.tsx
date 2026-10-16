@@ -1,70 +1,68 @@
 import React, { useState } from 'react';
 import { SEO } from '../components/ui/SEO';
 import { HeroSection } from '../components/home/HeroSection';
-import { MissionNeedSection } from '../components/home/MissionNeedSection';
-import { WhoWeAreSection } from '../components/home/WhoWeAreSection';
-import { EthiopiaContextSection } from '../components/home/EthiopiaContextSection';
-import { ApproachProcessSection } from '../components/home/ApproachProcessSection';
-import { ProgramsSection } from '../components/home/ProgramsSection';
+import { InvestModelSection } from '../components/home/InvestModelSection';
+import { BigVideoSection } from '../components/home/BigVideoSection';
 import { ImpactSection } from '../components/home/ImpactSection';
-import { StoriesSection } from '../components/home/StoriesSection';
-import { VideoDocSection } from '../components/home/VideoDocSection';
 import { TransformationSection } from '../components/home/TransformationSection';
+import { EthiopiaContextSection } from '../components/home/EthiopiaContextSection';
+import { ProgramsSection } from '../components/home/ProgramsSection';
+import { StoriesSection } from '../components/home/StoriesSection';
 import { GetInvolvedSection } from '../components/home/GetInvolvedSection';
 import { FinalCTASection } from '../components/home/FinalCTASection';
 import { VideoModal } from '../components/ui/VideoModal';
 
 export const HomePage: React.FC = () => {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('Global Disciples Alliance Ethiopia Documentary');
+
+  const handleOpenVideo = (title?: string) => {
+    if (title) setModalTitle(title);
+    setIsVideoModalOpen(true);
+  };
 
   return (
     <>
       <SEO
         title="Equipping Churches, Reaching the Least-Reached"
-        description="Global Disciples Alliance Ethiopia partners with local churches to equip, train, and send disciple-makers to communities with no access to the Gospel."
+        description="A third of our world has not yet heard the Good News of Jesus. Global Disciples Alliance Ethiopia equips local churches to train and send disciple-makers to least-reached communities."
       />
 
-      {/* Section 1: Hero (PRD Section 13) */}
-      <HeroSection onPlayVideo={() => setIsVideoModalOpen(true)} />
+      {/* 1. Hero Section matching Screenshot 1 */}
+      <HeroSection onPlayVideo={() => handleOpenVideo('A Third of Our World — Global Disciples Mission')} />
 
-      {/* Section 2: Mission / Need (PRD Section 14) */}
-      <MissionNeedSection />
+      {/* 2. Season of Giving Banner & 2-Card Video Models matching Screenshot 2 */}
+      <InvestModelSection onPlayVideo={handleOpenVideo} />
 
-      {/* Section 3: Who We Are (PRD Section 15) */}
-      <WhoWeAreSection />
+      {/* 3. Big 16:9 Cinematic Video Feature matching Screenshot 3 */}
+      <BigVideoSection />
 
-      {/* Section 4: Why Ethiopia / Least-Reached (PRD Section 16) */}
-      <EthiopiaContextSection />
-
-      {/* Section 5: Our Approach (PRD Section 17) */}
-      <ApproachProcessSection />
-
-      {/* Section 6: Programs (PRD Section 18) */}
-      <ProgramsSection />
-
-      {/* Section 7: Impact (PRD Section 19) */}
+      {/* 4. Impact Statistics: "Mobilize Their People" matching Screenshot 4 */}
       <ImpactSection />
 
-      {/* Section 8: Stories (PRD Section 20) */}
-      <StoriesSection />
-
-      {/* Section 9: Video / Documentary (PRD Section 21) */}
-      <VideoDocSection onPlayVideo={() => setIsVideoModalOpen(true)} />
-
-      {/* Section 10: Transformation (PRD Section 22) */}
+      {/* 5. "How Communities Are Transformed" (1-2-3 + Faces Collage) matching Screenshot 5 */}
       <TransformationSection />
 
-      {/* Section 11: Get Involved (PRD Section 23) */}
+      {/* 6. Strategic Regional Corridors in Ethiopia */}
+      <EthiopiaContextSection />
+
+      {/* 7. Core Training Programs */}
+      <ProgramsSection />
+
+      {/* 8. Field Stories & Dispatches */}
+      <StoriesSection />
+
+      {/* 9. Get Involved (Pray, Partner, Serve, Give) */}
       <GetInvolvedSection />
 
-      {/* Section 12: Final CTA (PRD Section 24) */}
+      {/* 10. Final Call to Action */}
       <FinalCTASection />
 
-      {/* Video Modal Player */}
+      {/* Interactive Video Modal */}
       <VideoModal
         isOpen={isVideoModalOpen}
         onClose={() => setIsVideoModalOpen(false)}
-        title="Global Disciples Alliance Ethiopia — Field Documentary"
+        title={modalTitle}
       />
     </>
   );

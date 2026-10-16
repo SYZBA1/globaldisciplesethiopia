@@ -1,81 +1,89 @@
 import React from 'react';
-import { ShieldCheck, BarChart3, Info } from 'lucide-react';
-import { IMPACT_METRICS } from '../../data/impactData';
+import { Link } from 'react-router-dom';
 import { ImpactCounter } from '../ui/ImpactCounter';
 
 export const ImpactSection: React.FC = () => {
   return (
-    <section className="py-20 lg:py-28 bg-brand-navy-dark text-white relative overflow-hidden">
-      {/* Decorative Grid Pattern */}
-      <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#FAF7F2_1px,transparent_1px)] [background-size:24px_24px]" />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-gold mb-3">
-            <BarChart3 className="w-4 h-4" />
-            <span>MEASURING FRUITFULNESS</span>
-          </div>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
-            Verified Ministry Impact in Ethiopia
+    <section className="bg-[#F2F9FA] py-20 lg:py-28 border-b border-slate-200/60">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Editorial Heading matching Screenshot 4 */}
+        <div className="max-w-4xl mb-14">
+          <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight leading-[1.15]">
+            Global Disciples comes alongside the local church to help{' '}
+            <span className="text-gd-pink font-serif italic font-bold">
+              mobilize their people.
+            </span>
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed">
-            Behind every number is a local church mobilized, a worker sent, and a community hearing the Gospel for the first time.
-          </p>
         </div>
 
-        {/* 6 Large Impact Metrics Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {IMPACT_METRICS.map((metric) => (
-            <div
-              key={metric.id}
-              className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-brand-gold/40 transition-all duration-300 backdrop-blur-sm flex flex-col justify-between"
-            >
-              <div>
-                {/* Metric Reporting Period */}
-                <div className="flex items-center justify-between text-xs text-slate-400 mb-4 pb-3 border-b border-white/10">
-                  <span className="font-semibold text-brand-gold">{metric.period}</span>
-                  <span className="flex items-center gap-1 text-[11px] text-emerald-400">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                    Verified
-                  </span>
-                </div>
+        {/* Subhead label */}
+        <div className="mb-8">
+          <span className="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-slate-900">
+            A Year in Action:
+          </span>
+        </div>
 
-                {/* Animated Value */}
-                <div className="font-display text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight mb-2">
-                  <ImpactCounter
-                    value={metric.value}
-                    prefix={metric.prefix}
-                    suffix={metric.suffix}
-                  />
-                </div>
-
-                {/* Label */}
-                <h3 className="font-display text-lg sm:text-xl font-bold text-slate-100 mb-2">
-                  {metric.label}
-                </h3>
-
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  {metric.description}
-                </p>
-              </div>
-
-              {/* Source Attribution (PRD Section 19) */}
-              <div className="mt-6 pt-4 border-t border-white/10 flex items-center gap-1.5 text-[11px] text-slate-400">
-                <Info className="w-3.5 h-3.5 text-brand-gold flex-shrink-0" />
-                <span className="truncate" title={metric.source}>
-                  Source: {metric.source}
-                </span>
-              </div>
+        {/* 4 Large Blue Statistics Grid matching Screenshot 4 */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12 mb-14">
+          {/* Stat 1 */}
+          <div className="flex flex-col">
+            <div className="font-serif font-bold text-4xl sm:text-5xl lg:text-6xl text-gd-blue tracking-tight mb-2">
+              <ImpactCounter value={41004} />
             </div>
-          ))}
+            <h3 className="font-sans font-bold text-sm sm:text-base text-slate-900 leading-snug">
+              Disciple-Makers <br />Trained
+            </h3>
+            <span className="text-[11px] text-slate-400 mt-1">2,350+ in Ethiopia</span>
+          </div>
+
+          {/* Stat 2 */}
+          <div className="flex flex-col">
+            <div className="font-serif font-bold text-4xl sm:text-5xl lg:text-6xl text-gd-blue tracking-tight mb-2">
+              <ImpactCounter value={95305} />
+            </div>
+            <h3 className="font-sans font-bold text-sm sm:text-base text-slate-900 leading-snug">
+              New Believers in <br />Fellowships
+            </h3>
+            <span className="text-[11px] text-slate-400 mt-1">Verified Field Audits</span>
+          </div>
+
+          {/* Stat 3 */}
+          <div className="flex flex-col">
+            <div className="font-serif font-bold text-4xl sm:text-5xl lg:text-6xl text-gd-blue tracking-tight mb-2">
+              <ImpactCounter value={4685} />
+            </div>
+            <h3 className="font-sans font-bold text-sm sm:text-base text-slate-900 leading-snug">
+              New Churches <br />Planted
+            </h3>
+            <span className="text-[11px] text-slate-400 mt-1">720+ in Ethiopia</span>
+          </div>
+
+          {/* Stat 4 */}
+          <div className="flex flex-col">
+            <div className="font-serif font-bold text-4xl sm:text-5xl lg:text-6xl text-gd-blue tracking-tight mb-2">
+              <ImpactCounter value={79} />
+            </div>
+            <h3 className="font-sans font-bold text-sm sm:text-base text-slate-900 leading-snug">
+              Countries <br />Impacted
+            </h3>
+            <span className="text-[11px] text-slate-400 mt-1">34 Least-Reached in Ethiopia</span>
+          </div>
         </div>
 
-        {/* Accountability Statement */}
-        <div className="p-6 rounded-2xl bg-white/5 border border-white/10 text-xs sm:text-sm text-slate-300 text-center max-w-2xl mx-auto">
-          <p>
-            * All statistics reflect verifiable reporting from participating Ethiopian church clusters, field supervisors, and annual alliance audits. No projections or inflated figures are used.
-          </p>
+        {/* Two Outline Pill Buttons matching Screenshot 4 */}
+        <div className="flex flex-wrap items-center gap-4">
+          <Link
+            to="/approach"
+            className="px-8 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-white text-gd-blue border-2 border-gd-blue hover:bg-gd-blue hover:text-white transition-all shadow-sm"
+          >
+            Our Approach
+          </Link>
+          <Link
+            to="/resources"
+            className="px-8 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-white text-gd-blue border-2 border-gd-blue hover:bg-gd-blue hover:text-white transition-all shadow-sm"
+          >
+            2026 Annual Report
+          </Link>
         </div>
       </div>
     </section>

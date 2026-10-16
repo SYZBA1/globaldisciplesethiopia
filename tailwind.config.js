@@ -26,11 +26,22 @@ export default {
           green: '#1E6B38',
           yellow: '#EAB308',
           red: '#B91C1C',
+        },
+        gd: {
+          blue: '#006CD8',
+          'blue-dark': '#0053A8',
+          'blue-light': '#EBF5FF',
+          yellow: '#F2BA13',
+          'yellow-hover': '#DBA408',
+          pink: '#DE3654',
+          ice: '#F2F9FA',
+          slate: '#2C3E50',
         }
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-        display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+        serif: ['Lora', 'Georgia', 'serif'],
+        display: ['Lora', 'Plus Jakarta Sans', 'Georgia', 'serif'],
         ethiopic: ['"Noto Sans Ethiopic"', 'sans-serif'],
       },
       maxWidth: {
