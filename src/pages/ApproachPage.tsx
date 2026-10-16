@@ -28,28 +28,35 @@ const STEPS: MultiplicationStep[] = [
 
 export const ApproachPage: React.FC = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
-  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
-  // Scroll synchronization: update active step as user scrolls past each step
+  // Scroll synchronization: seamlessly interpolate active step as user scrolls through the sticky section
   useEffect(() => {
     let ticking = false;
 
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          const vh = window.innerHeight;
-          const halfway = vh * 0.52;
+          if (containerRef.current) {
+            const rect = containerRef.current.getBoundingClientRect();
+            const totalScrollable = rect.height - window.innerHeight;
 
-          let current = 0;
-          stepRefs.current.forEach((el, index) => {
-            if (el) {
-              const rect = el.getBoundingClientRect();
-              if (rect.top <= halfway) {
-                current = index;
+            if (totalScrollable > 0) {
+              const currentOffset = -rect.top;
+              const ratio = Math.min(1, Math.max(0, currentOffset / totalScrollable));
+
+              // Map ratio across 4 distinct step intervals
+              if (ratio < 0.25) {
+                setActiveStep(0);
+              } else if (ratio < 0.50) {
+                setActiveStep(1);
+              } else if (ratio < 0.75) {
+                setActiveStep(2);
+              } else {
+                setActiveStep(3);
               }
             }
-          });
-          setActiveStep(current);
+          }
           ticking = false;
         });
         ticking = true;
@@ -61,6 +68,18 @@ export const ApproachPage: React.FC = () => {
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleStepClick = (idx: number) => {
+    setActiveStep(idx);
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const totalScrollable = rect.height - window.innerHeight;
+      const targetOffset = (idx / 3) * totalScrollable;
+      const targetY = currentScrollY + rect.top + targetOffset;
+      window.scrollTo({ top: targetY, behavior: 'smooth' });
+    }
+  };
 
   return (
     <div className="bg-white text-slate-900 overflow-x-hidden selection:bg-gd-blue selection:text-white">
@@ -119,54 +138,55 @@ export const ApproachPage: React.FC = () => {
       </section>
 
       {/* 3. The Interactive Multiplication Visualizer matching Screenshots 2, 3, 4, 5 */}
-      <section className="bg-white py-20 sm:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Main Headline */}
-          <div className="max-w-4xl mx-auto mb-16 sm:mb-24 text-center lg:text-left">
-            <h2 className="font-serif font-bold text-3xl sm:text-4xl lg:text-[42px] text-slate-900 tracking-tight leading-[1.2]">
-              We train ordinary men and women to share the Gospel, make disciples, and plant churches among least-reached people.
-            </h2>
-          </div>
-
-          {/* Grid Layout: Left Steps + Right Sticky Matrix Diagram */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start relative">
-            
-            {/* Left Column: 4 Numbered Sequential Steps */}
-            <div className="lg:col-span-6 space-y-20 sm:space-y-28 lg:space-y-36 py-8 sm:py-12">
-              {STEPS.map((step, idx) => {
-                const isActive = activeStep === idx;
-                return (
-                  <div
-                    key={step.number}
-                    ref={(el) => (stepRefs.current[idx] = el)}
-                    onClick={() => setActiveStep(idx)}
-                    className="flex items-start gap-6 sm:gap-8 cursor-pointer group transition-all duration-300"
-                  >
-                    {/* Step Numeral (1, 2, 3, 4) */}
-                    <span
-                      className={`font-serif text-5xl sm:text-6xl font-black leading-none shrink-0 transition-colors duration-300 select-none ${
-                        isActive ? 'text-[#0073E6]' : 'text-slate-300 group-hover:text-slate-400'
-                      }`}
-                    >
-                      {step.number}
-                    </span>
-
-                    {/* Step Description */}
-                    <p
-                      className={`text-base sm:text-lg font-bold leading-snug pt-2 transition-colors duration-300 ${
-                        isActive ? 'text-[#0073E6]' : 'text-slate-400 group-hover:text-slate-500'
-                      }`}
-                    >
-                      {step.text}
-                    </p>
-                  </div>
-                );
-              })}
+      <section ref={containerRef} className="relative bg-white h-[260vh] sm:h-[300vh]">
+        <div className="sticky top-16 sm:top-20 h-[calc(100vh-4rem)] sm:h-[calc(100vh-5rem)] flex items-center overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            {/* Main Headline */}
+            <div className="max-w-2xl lg:max-w-3xl mb-8 sm:mb-10 lg:mb-12">
+              <h2 className="font-serif font-bold text-2xl sm:text-3xl lg:text-[36px] text-slate-900 tracking-tight leading-[1.25]">
+                We train ordinary men and women to share the Gospel, make disciples, and plant churches among least-reached people.
+              </h2>
             </div>
 
-            {/* Right Column: Sticky Cluster Multiplication Matrix */}
-            <div className="lg:col-span-6 sticky top-24 sm:top-28 lg:top-[20vh] z-20 flex justify-center items-center py-6 sm:py-10">
-              <MultiplicationMatrix activeStep={activeStep} />
+            {/* Grid Layout: Compact 4-Step List + Matrix Diagram */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              
+              {/* Left Column: 4 Numbered Sequential Steps with Reduced Gap */}
+              <div className="lg:col-span-5 space-y-4 sm:space-y-5 lg:space-y-6">
+                {STEPS.map((step, idx) => {
+                  const isActive = activeStep === idx;
+                  return (
+                    <div
+                      key={step.number}
+                      onClick={() => handleStepClick(idx)}
+                      className="flex items-baseline gap-4 sm:gap-5 cursor-pointer group transition-all duration-300 select-none"
+                    >
+                      {/* Step Numeral (1, 2, 3, 4) */}
+                      <span
+                        className={`font-serif text-3xl sm:text-4xl font-bold leading-none shrink-0 transition-colors duration-300 ${
+                          isActive ? 'text-[#0073E6]' : 'text-slate-300 group-hover:text-slate-400'
+                        }`}
+                      >
+                        {step.number}
+                      </span>
+
+                      {/* Step Description */}
+                      <p
+                        className={`text-sm sm:text-base leading-snug transition-colors duration-300 ${
+                          isActive ? 'text-[#0073E6] font-bold' : 'text-slate-400 font-medium group-hover:text-slate-500'
+                        }`}
+                      >
+                        {step.text}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Right Column: Cluster Multiplication Matrix */}
+              <div className="lg:col-span-7 flex justify-center items-center">
+                <MultiplicationMatrix activeStep={activeStep} />
+              </div>
             </div>
           </div>
         </div>
