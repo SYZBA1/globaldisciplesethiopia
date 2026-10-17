@@ -36,6 +36,7 @@ export const App: React.FC = () => {
 
         {/* About Section */}
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/get-to-know-us/about-us" element={<AboutPage />} />
         <Route path="/about/story" element={<AboutStoryPage />} />
         <Route path="/about/vision-mission" element={<AboutVisionMissionPage />} />
         <Route path="/about/leadership" element={<AboutLeadershipPage />} />

@@ -139,74 +139,19 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </div>
 
-            {/* 2. About Us Pill */}
-            <div
-              className="relative"
-              onMouseEnter={() => setActiveDropdown('about')}
-              onMouseLeave={() => setActiveDropdown(null)}
+            {/* 2. About Us Direct Pill (No mega menu, matches reference images) */}
+            <Link
+              to="/about"
+              className={
+                location.pathname === '/about' || location.pathname === '/get-to-know-us/about-us'
+                  ? pillClassActive
+                  : isScrolled || !isHomePage
+                  ? pillClassLight
+                  : pillClassDark
+              }
             >
-              <button
-                type="button"
-                onClick={() => toggleDropdown('about')}
-                className={getPillClass('about')}
-                aria-expanded={activeDropdown === 'about'}
-              >
-                <span>{t('About Us', 'ስለ እኛ')}</span>
-                {activeDropdown === 'about' ? (
-                  <X className="w-3.5 h-3.5 text-white" />
-                ) : (
-                  <span className="text-[10px] opacity-60">▼</span>
-                )}
-              </button>
-
-              {activeDropdown === 'about' && (
-                <div className="absolute top-full left-0 pt-1.5 animate-fade-in z-50 min-w-[210px]">
-                  {/* Top Caret Pointer Triangle */}
-                  <div className="flex justify-center -mb-1 relative z-20">
-                    <div className="w-2.5 h-2.5 bg-white rotate-45 border-l border-t border-slate-100" />
-                  </div>
-
-                  {/* Card with Dividers */}
-                  <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden divide-y divide-slate-100 text-left">
-                    <Link
-                      to="/about"
-                      onClick={() => setActiveDropdown(null)}
-                      className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
-                    >
-                      {t('Alliance Overview', 'የሕብረት አጠቃላይ እይታ')}
-                    </Link>
-                    <Link
-                      to="/why-least-reached/our-beginnings"
-                      onClick={() => setActiveDropdown(null)}
-                      className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
-                    >
-                      {t('Our Story & Timeline', 'ታሪካችንና የጊዜ ሰሌዳ')}
-                    </Link>
-                    <Link
-                      to="/about/vision-mission"
-                      onClick={() => setActiveDropdown(null)}
-                      className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
-                    >
-                      {t('Vision, Mission & Values', 'ራዕይ፣ ተልዕኮና እሴቶች')}
-                    </Link>
-                    <Link
-                      to="/about/leadership"
-                      onClick={() => setActiveDropdown(null)}
-                      className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
-                    >
-                      {t('Leadership & Trustees', 'አመራርና ቦርድ')}
-                    </Link>
-                    <Link
-                      to="/about/partners"
-                      onClick={() => setActiveDropdown(null)}
-                      className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
-                    >
-                      {t('Partner Denominations', 'አጋር አብያተ ክርስቲያናት')}
-                    </Link>
-                  </div>
-                </div>
-              )}
-            </div>
+              <span>{t('About Us', 'ስለ እኛ')}</span>
+            </Link>
 
             {/* 3. Blog / Stories Pill */}
             <Link
