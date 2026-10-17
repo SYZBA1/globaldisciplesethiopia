@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/ui/SEO';
 import { Play, X } from 'lucide-react';
@@ -7,14 +7,33 @@ import { useLanguage } from '../context/LanguageContext';
 export const AboutPage: React.FC = () => {
   const { language, t } = useLanguage();
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [isPartnerVisible, setIsPartnerVisible] = useState(false);
+  const partnerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsPartnerVisible(true);
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    if (partnerRef.current) {
+      observer.observe(partnerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="bg-[#F4F9FB] text-slate-900 selection:bg-[#0073E6] selection:text-white">
       <SEO
         title={t('About Us | Global Disciples', 'ስለ እኛ | ግሎባል ዲሳይፕልስ')}
         description={t(
-          'Get to know Global Disciples: our vision, prayer, mission, central focus, philosophy, and core values.',
-          'ስለ ግሎባል ዲሳይፕልስ ይወቁ፡ ራዕያችን፣ ጸሎታችን፣ ተልዕኳችን፣ ዋና ትኩረታችን፣ ፍልስፍናችን እና መሰረታዊ እሴቶቻችን።'
+          'Get to know Global Disciples: our vision, prayer, mission, central focus, philosophy, core values, and how to become a monthly partner.',
+          'ስለ ግሎባል ዲሳይፕልስ ይወቁ፡ ራዕያችን፣ ጸሎታችን፣ ተልዕኳችን፣ ዋና ትኩረታችን፣ ፍልስፍናችን፣ እሴቶቻችን እና ወርሃዊ አጋር የመሆን ዕድል።'
         )}
       />
 
@@ -77,11 +96,10 @@ export const AboutPage: React.FC = () => {
               {/* Bottom 68% portion is the child photo */}
               <div className="relative z-10 w-full h-[68%] overflow-hidden">
                 <img
-                  src="https://globaldisciples.org/wp-content/uploads/2022/04/boy-looking.jpg"
+                  src="https://globaldisciples.org/wp-content/uploads/2022/04/GettyImages-497749324-768x1152.jpg"
                   alt="Boy looking directly at camera"
                   className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700 ease-out"
                   onError={(e) => {
-                    // Reliable high-resolution fallback matching exact expression
                     e.currentTarget.src =
                       'https://images.unsplash.com/photo-1543332164-6e82f355badc?auto=format&fit=crop&w=800&q=80';
                   }}
@@ -96,59 +114,83 @@ export const AboutPage: React.FC = () => {
       {/* SECTION 2: FLOATING PORTRAITS & THREE PILLARS (Image 2)   */}
       {/* ========================================================= */}
       <section className="pt-12 pb-20 lg:pt-16 lg:pb-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        {/* Floating Circular Portraits Cluster (Matching Image 2 layout) */}
+        {/* Floating Circular Portraits Cluster (Matching Image 2 layout with exact official assets) */}
         <div className="relative w-full max-w-6xl mx-auto h-[260px] sm:h-[340px] md:h-[420px] lg:h-[480px] mb-12 sm:mb-16 overflow-hidden sm:overflow-visible">
           {/* 1. Large Left Circle: Yellow colonial door & barred window */}
           <div className="absolute left-[-20px] sm:left-[-10px] lg:left-0 top-[10%] sm:top-[5%] w-[160px] h-[160px] sm:w-[240px] sm:h-[240px] md:w-[320px] md:h-[320px] lg:w-[370px] lg:h-[370px] rounded-full overflow-hidden shadow-xl border-4 border-white">
             <img
-              src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=700&q=80"
+              src="https://globaldisciples.org/wp-content/uploads/2022/01/25cd915a4189c74df48625e187a45aca-768x512.jpg"
               alt="Yellow wall and wooden door"
               className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+              onError={(e) => {
+                e.currentTarget.src =
+                  'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=700&q=80';
+              }}
             />
           </div>
 
           {/* 2. Small Top-Left Circle: Smiling Asian woman */}
           <div className="absolute left-[36%] sm:left-[30%] lg:left-[27%] top-[6%] sm:top-[4%] w-[65px] h-[65px] sm:w-[90px] sm:h-[90px] md:w-[110px] md:h-[110px] lg:w-[125px] lg:h-[125px] rounded-full overflow-hidden shadow-lg border-2 sm:border-3 border-white">
             <img
-              src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80"
+              src="https://globaldisciples.org/wp-content/uploads/2022/01/e2175d6cead18e6f6759aea0b416dd3b-768x513.jpg"
               alt="Smiling woman in blue"
               className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+              onError={(e) => {
+                e.currentTarget.src =
+                  'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80';
+              }}
             />
           </div>
 
           {/* 3. Center-Left Circle: Indigenous woman with hat & colorful poncho */}
           <div className="absolute left-[32%] sm:left-[33%] lg:left-[30%] top-[45%] sm:top-[42%] w-[85px] h-[85px] sm:w-[125px] sm:h-[125px] md:w-[160px] md:h-[160px] lg:w-[185px] lg:h-[185px] rounded-full overflow-hidden shadow-lg border-2 sm:border-4 border-white">
             <img
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
+              src="https://globaldisciples.org/wp-content/uploads/2022/01/361e396fcf60989dd41f30661e23001a-768x512.jpg"
               alt="Woman in traditional hat and woven poncho"
               className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+              onError={(e) => {
+                e.currentTarget.src =
+                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80';
+              }}
             />
           </div>
 
           {/* 4. Center-Top Circle: Smiling children sitting on porch */}
           <div className="absolute left-[50%] sm:left-[45%] lg:left-[41%] top-[8%] sm:top-[8%] w-[100px] h-[100px] sm:w-[145px] sm:h-[145px] md:w-[195px] md:h-[195px] lg:w-[225px] lg:h-[225px] rounded-full overflow-hidden shadow-xl border-3 sm:border-4 border-white">
             <img
-              src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=600&q=80"
+              src="https://globaldisciples.org/wp-content/uploads/2022/01/1c094c232bd723d3a96e3f53d9f4bc11-768x512.jpg"
               alt="Children smiling on porch"
               className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+              onError={(e) => {
+                e.currentTarget.src =
+                  'https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=600&q=80';
+              }}
             />
           </div>
 
           {/* 5. Center-Right Circle: Elderly man with cross necklace & cardigan */}
           <div className="absolute right-[22%] sm:right-[26%] lg:right-[28%] top-[45%] sm:top-[44%] w-[85px] h-[85px] sm:w-[125px] sm:h-[125px] md:w-[160px] md:h-[160px] lg:w-[185px] lg:h-[185px] rounded-full overflow-hidden shadow-lg border-2 sm:border-4 border-white">
             <img
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80"
+              src="https://globaldisciples.org/wp-content/uploads/2022/01/948f93bc3cd5ab872d2ca36717d7b6f7-768x512.jpg"
               alt="Elderly gentleman with cross necklace"
               className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+              onError={(e) => {
+                e.currentTarget.src =
+                  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80';
+              }}
             />
           </div>
 
           {/* 6. Far Right Large Circle: Ancient church fresco mural of Mary & Child */}
           <div className="absolute right-[-20px] sm:right-[-10px] lg:right-0 top-[10%] sm:top-[5%] w-[160px] h-[160px] sm:w-[240px] sm:h-[240px] md:w-[320px] md:h-[320px] lg:w-[370px] lg:h-[370px] rounded-full overflow-hidden shadow-xl border-4 border-white">
             <img
-              src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=700&q=80"
+              src="https://globaldisciples.org/wp-content/uploads/2022/01/ec9c786792eccfbf040e23c13e798230-768x512.jpg"
               alt="Historic fresco mural dome"
               className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+              onError={(e) => {
+                e.currentTarget.src =
+                  'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=700&q=80';
+              }}
             />
           </div>
         </div>
@@ -410,7 +452,7 @@ export const AboutPage: React.FC = () => {
       {/* ========================================================= */}
       {/* SECTION 5: CAREERS & CHURCH RESOURCES (Image 5)           */}
       {/* ========================================================= */}
-      <section className="pt-12 pb-24 lg:pt-16 lg:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-24">
+      <section className="pt-12 pb-20 lg:pt-16 lg:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-24">
         {/* Row 1: Careers */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left Text */}
@@ -436,10 +478,14 @@ export const AboutPage: React.FC = () => {
           <div className="w-full">
             <div className="rounded-2xl overflow-hidden shadow-lg border border-slate-200/60 bg-white aspect-[4/3]">
               <img
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80"
+                src="https://globaldisciples.org/wp-content/uploads/2022/04/Assistant_GettyImages-638601928-1024x683.jpg"
                 alt="Global Disciples team member at office desk"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 ease-out"
                 loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.src =
+                    'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80';
+                }}
               />
             </div>
           </div>
@@ -462,6 +508,206 @@ export const AboutPage: React.FC = () => {
           >
             {t('Learn More', 'ተጨማሪ ይወቁ')}
           </Link>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* SECTION 6: "CONSIDER BECOMING A MONTHLY PARTNER" (Exact UI/UX & Curve)     */}
+      {/* Matches user's uploaded reference: media_1792229835340_d5d62a2b.png       */}
+      {/* ========================================================================= */}
+      <section
+        ref={partnerRef}
+        className="relative bg-[#F4F9FB] pt-24 sm:pt-32 lg:pt-40 overflow-hidden select-none"
+        aria-label="Consider becoming a monthly partner"
+      >
+        {/* Floating Circular Portraits (Overlapping the light area above & the blue area below) */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+          <div className="relative h-[240px] sm:h-[320px] md:h-[380px] lg:h-[420px] flex items-center justify-center">
+            
+            {/* 1. Portrait 1: Far Left (Large - Smiling young girl with scarf in community) */}
+            <div
+              className={`absolute left-[0%] sm:left-[2%] lg:left-[5%] top-[8%] sm:top-[4%] w-44 h-44 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-84 lg:h-84 xl:w-[350px] xl:h-[350px] rounded-full overflow-hidden border-4 sm:border-[5px] border-white shadow-2xl transition-all duration-1000 ease-out transform ${
+                isPartnerVisible
+                  ? 'opacity-100 translate-y-0 scale-100'
+                  : 'opacity-0 translate-y-12 scale-90'
+              }`}
+              style={{ transitionDelay: '100ms' }}
+            >
+              <img
+                src="https://globaldisciples.org/wp-content/uploads/2022/01/44e83e780bfc4be259d57c958a2d8e8a-1-768x768.jpg"
+                alt="Smiling young girl with scarf"
+                className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+                onError={(e) => {
+                  e.currentTarget.src =
+                    'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=85';
+                }}
+              />
+            </div>
+
+            {/* 2. Portrait 2: Center-Left Top (Medium - Asian woman praying with eyes closed & hands clasped) */}
+            <div
+              className={`absolute left-[33%] sm:left-[35%] lg:left-[36%] top-[2%] sm:top-[0%] w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 rounded-full overflow-hidden border-3 sm:border-4 border-white shadow-2xl transition-all duration-1000 ease-out transform ${
+                isPartnerVisible
+                  ? 'opacity-100 translate-y-0 scale-100'
+                  : 'opacity-0 translate-y-12 scale-90'
+              }`}
+              style={{ transitionDelay: '250ms' }}
+            >
+              <img
+                src="https://globaldisciples.org/wp-content/uploads/2022/03/NepalGirlWorship.jpg"
+                alt="Woman praying with hands clasped"
+                className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+                onError={(e) => {
+                  e.currentTarget.src =
+                    'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=85';
+                }}
+              />
+            </div>
+
+            {/* 3. Portrait 3: Center-Left Low (Small - African woman stretching arms in prayer room) */}
+            <div
+              className={`absolute left-[30%] sm:left-[32%] lg:left-[33%] bottom-[10%] sm:bottom-[8%] w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full overflow-hidden border-2 sm:border-3 border-white shadow-xl transition-all duration-1000 ease-out transform ${
+                isPartnerVisible
+                  ? 'opacity-100 translate-y-0 scale-100'
+                  : 'opacity-0 translate-y-12 scale-90'
+              }`}
+              style={{ transitionDelay: '350ms' }}
+            >
+              <img
+                src="https://globaldisciples.org/wp-content/uploads/2022/03/AfricanWomanPrayer-5.jpg"
+                alt="Woman stretching arms in prayer"
+                className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+                onError={(e) => {
+                  e.currentTarget.src =
+                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80';
+                }}
+              />
+            </div>
+
+            {/* 4. Portrait 4: Center-Right High (Small - Ethiopian women praying together) */}
+            <div
+              className={`absolute left-[50%] sm:left-[51%] lg:left-[52%] top-[8%] sm:top-[6%] w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22 lg:w-24 lg:h-24 rounded-full overflow-hidden border-2 sm:border-3 border-white shadow-xl transition-all duration-1000 ease-out transform ${
+                isPartnerVisible
+                  ? 'opacity-100 translate-y-0 scale-100'
+                  : 'opacity-0 translate-y-12 scale-90'
+              }`}
+              style={{ transitionDelay: '450ms' }}
+            >
+              <img
+                src="https://globaldisciples.org/wp-content/uploads/2022/03/EthiopianWomenPraying-768x510.jpg"
+                alt="Women praying together"
+                className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+                onError={(e) => {
+                  e.currentTarget.src =
+                    'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80';
+                }}
+              />
+            </div>
+
+            {/* 5. Portrait 5: Center-Right Low (Medium-Small - Children with hands raised in worship) */}
+            <div
+              className={`absolute left-[46%] sm:left-[47%] lg:left-[48%] bottom-[12%] sm:bottom-[10%] w-18 h-18 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden border-2 sm:border-3 border-white shadow-xl transition-all duration-1000 ease-out transform ${
+                isPartnerVisible
+                  ? 'opacity-100 translate-y-0 scale-100'
+                  : 'opacity-0 translate-y-12 scale-90'
+              }`}
+              style={{ transitionDelay: '550ms' }}
+            >
+              <img
+                src="https://globaldisciples.org/wp-content/uploads/2022/03/NepalDTWorship.jpg"
+                alt="Children worshipping with hands raised"
+                className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+                onError={(e) => {
+                  e.currentTarget.src =
+                    'https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=500&q=80';
+                }}
+              />
+            </div>
+
+            {/* 6. Portrait 6: Far Right (Extra Large - Joyful girl holding wooden post in leopard dress) */}
+            <div
+              className={`absolute right-[0%] sm:right-[1%] lg:right-[3%] top-[0%] w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[410px] lg:h-[410px] xl:w-[460px] xl:h-[460px] rounded-full overflow-hidden border-4 sm:border-[5px] border-white shadow-2xl transition-all duration-1000 ease-out transform ${
+                isPartnerVisible
+                  ? 'opacity-100 translate-y-0 scale-100'
+                  : 'opacity-0 translate-y-12 scale-90'
+              }`}
+              style={{ transitionDelay: '200ms' }}
+            >
+              <img
+                src="https://globaldisciples.org/wp-content/uploads/2022/01/3f22043cd9f2780cb8dfa11d0477340f-1-768x768.jpg"
+                alt="Smiling young girl holding wooden pole"
+                className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+                onError={(e) => {
+                  e.currentTarget.src =
+                    'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=800&q=85';
+                }}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Solid Blue Section: Exact Horizon Line, Typography & Distances */}
+        <div className="relative bg-[#0073E6] pt-24 sm:pt-32 lg:pt-36 pb-28 sm:pb-36 lg:pb-40 -mt-28 sm:-mt-36 md:-mt-44 lg:-mt-52 z-10">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white relative z-20">
+            
+            {/* Bold Headline matching screenshot */}
+            <h2
+              className={`font-sans font-bold text-2xl sm:text-4xl md:text-[44px] lg:text-[48px] tracking-tight leading-tight mb-4 transition-all duration-1000 transform ${
+                isPartnerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: '400ms' }}
+            >
+              {t(
+                'Consider becoming a monthly partner',
+                'የወርሃዊ አጋር ለመሆን ያስቡበት'
+              )}
+            </h2>
+
+            {/* Subtitle */}
+            <p
+              className={`text-xs sm:text-sm md:text-[15px] text-white/90 leading-relaxed max-w-xl mx-auto mb-8 font-normal transition-all duration-1000 transform ${
+                isPartnerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: '600ms' }}
+            >
+              {t(
+                'It\'s easy and convenient. Consistent giving enables Global Disciples to continue training all year long.',
+                'ቀላል እና አመቺ ነው። ተከታታይነት ያለው ስጦታ ግሎባል ዲሳይፕልስ ዓመቱን ሙሉ ስልጠናውን እንዲቀጥል ያስችለዋል።'
+              )}
+            </p>
+
+            {/* Golden Yellow Button */}
+            <div
+              className={`transition-all duration-1000 transform ${
+                isPartnerVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'
+              }`}
+              style={{ transitionDelay: '800ms' }}
+            >
+              <Link
+                to="/give"
+                className="inline-block bg-[#FFC72C] hover:bg-[#e6b325] text-[#002855] font-extrabold text-xs sm:text-sm px-8 py-3.5 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all focus:outline-none uppercase tracking-wider"
+              >
+                {t('Join Us Today', 'ዛሬ ይቀላቀሉን')}
+              </Link>
+            </div>
+          </div>
+
+          {/* Bottom Downward Convex Arch Wave Dipping into the Agricultural Footer */}
+          {/* Matches exactly the gentle dip visible in media_1792229835340_d5d62a2b.png */}
+          <div className="absolute -bottom-1 left-0 right-0 w-full overflow-hidden leading-none z-10 pointer-events-none">
+            <svg
+              viewBox="0 0 1440 90"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-full h-12 sm:h-20 lg:h-24 block text-[#0073E6]"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M0,0 L1440,0 L1440,25 Q720,95 0,25 Z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
         </div>
       </section>
     </div>
