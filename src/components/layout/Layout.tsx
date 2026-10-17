@@ -4,6 +4,7 @@ import { AnnouncementBar } from './AnnouncementBar';
 import { Header } from './Header';
 import { MobileMenu } from './MobileMenu';
 import { Footer } from './Footer';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -11,16 +12,12 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState<'en' | 'am'>('en');
+  const { language, setLanguage } = useLanguage();
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
-  const handleLanguageToggle = (lang: 'en' | 'am') => {
-    setCurrentLang(lang);
-  };
-
   return (
-    <div className={`min-h-screen flex flex-col bg-[#FAF7F2] ${currentLang === 'am' ? 'font-ethiopic' : 'font-sans'}`}>
+    <div className={`min-h-screen flex flex-col bg-[#FAF7F2] ${language === 'am' ? 'font-ethiopic' : 'font-sans'}`}>
       {/* Skip to Main Content Link for WCAG 2.2 AA Accessibility */}
       <a
         href="#main-content"
@@ -34,15 +31,15 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Header
         onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
         isMobileMenuOpen={isMobileMenuOpen}
-        currentLang={currentLang}
+        currentLang={language}
       />
 
       {/* Off-canvas Mobile Menu */}
       <MobileMenu
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
-        currentLang={currentLang}
-        onLanguageToggle={handleLanguageToggle}
+        currentLang={language}
+        onLanguageToggle={setLanguage}
       />
 
       {/* Main Content Area */}

@@ -5,6 +5,7 @@ import { MAIN_NAVIGATION } from '../../data/navigation';
 import { SITE_CONFIG } from '../../data/siteData';
 import { CTAButton } from '../ui/CTAButton';
 import { Logo } from '../ui/Logo';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -16,11 +17,10 @@ interface MobileMenuProps {
 export const MobileMenu: React.FC<MobileMenuProps> = ({
   isOpen,
   onClose,
-  currentLang = 'en',
-  onLanguageToggle,
 }) => {
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
   const location = useLocation();
+  const { language, toggleLanguage, t } = useLanguage();
 
   if (!isOpen) return null;
 
@@ -132,13 +132,13 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
         <div className="flex items-center justify-between pt-2 text-xs text-slate-300">
           <span className="flex items-center gap-1.5">
             <Globe2 className="w-4 h-4 text-brand-gold" />
-            <span>Language</span>
+            <span>{t('Language', 'ቋንቋ')}</span>
           </span>
           <button
-            onClick={() => onLanguageToggle && onLanguageToggle(currentLang === 'en' ? 'am' : 'en')}
+            onClick={toggleLanguage}
             className="px-3 py-1 rounded bg-white/10 hover:bg-white/20 text-white font-semibold transition-colors"
           >
-            {currentLang === 'en' ? 'Switch to አማርኛ' : 'Switch to English'}
+            {language === 'en' ? 'Switch to አማርኛ' : 'Switch to English'}
           </button>
         </div>
 

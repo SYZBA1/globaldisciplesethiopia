@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Globe } from 'lucide-react';
 import { Logo } from '../ui/Logo';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface HeaderProps {
   onOpenMobileMenu: () => void;
@@ -12,13 +13,13 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   onOpenMobileMenu,
   isMobileMenuOpen,
-  currentLang = 'en',
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const headerRef = useRef<HTMLElement | null>(null);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  const { language, toggleLanguage, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,10 +78,10 @@ export const Header: React.FC<HeaderProps> = ({
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+        <div className="relative flex items-center justify-between w-full">
           
           {/* Left Pill Menu (Why Least-reached, About Us, Stories/Blog) */}
-          <nav className="hidden lg:flex items-center gap-2.5" aria-label="Left Navigation">
+          <nav className="hidden lg:flex items-center gap-2.5 z-10" aria-label="Left Navigation">
             
             {/* 1. Why Least-reached Pill matching Reference Image 1 */}
             <div
@@ -94,7 +95,7 @@ export const Header: React.FC<HeaderProps> = ({
                 className={getPillClass('why')}
                 aria-expanded={activeDropdown === 'why'}
               >
-                <span>Why Least-reached</span>
+                <span>{t('Why Least-reached', 'ያልተዳረሱት ለምን?')}</span>
                 {activeDropdown === 'why' ? (
                   <X className="w-3.5 h-3.5 text-white" />
                 ) : (
@@ -117,21 +118,21 @@ export const Header: React.FC<HeaderProps> = ({
                       onClick={() => setActiveDropdown(null)}
                       className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
                     >
-                      One Third
+                      {t('One Third', 'አንድ ሦስተኛ')}
                     </Link>
                     <Link
                       to="/approach"
                       onClick={() => setActiveDropdown(null)}
                       className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
                     >
-                      Our Approach
+                      {t('Our Approach', 'አካሄዳችን')}
                     </Link>
                     <Link
-                      to="/about/story"
+                      to="/why-least-reached/our-beginnings"
                       onClick={() => setActiveDropdown(null)}
                       className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
                     >
-                      Our Beginnings
+                      {t('Our Beginnings', 'ጅማሬያችን')}
                     </Link>
                   </div>
                 </div>
@@ -150,7 +151,7 @@ export const Header: React.FC<HeaderProps> = ({
                 className={getPillClass('about')}
                 aria-expanded={activeDropdown === 'about'}
               >
-                <span>About Us</span>
+                <span>{t('About Us', 'ስለ እኛ')}</span>
                 {activeDropdown === 'about' ? (
                   <X className="w-3.5 h-3.5 text-white" />
                 ) : (
@@ -172,35 +173,35 @@ export const Header: React.FC<HeaderProps> = ({
                       onClick={() => setActiveDropdown(null)}
                       className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
                     >
-                      Alliance Overview
+                      {t('Alliance Overview', 'የሕብረት አጠቃላይ እይታ')}
                     </Link>
                     <Link
-                      to="/about/story"
+                      to="/why-least-reached/our-beginnings"
                       onClick={() => setActiveDropdown(null)}
                       className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
                     >
-                      Our Story & Timeline
+                      {t('Our Story & Timeline', 'ታሪካችንና የጊዜ ሰሌዳ')}
                     </Link>
                     <Link
                       to="/about/vision-mission"
                       onClick={() => setActiveDropdown(null)}
                       className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
                     >
-                      Vision, Mission & Values
+                      {t('Vision, Mission & Values', 'ራዕይ፣ ተልዕኮና እሴቶች')}
                     </Link>
                     <Link
                       to="/about/leadership"
                       onClick={() => setActiveDropdown(null)}
                       className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
                     >
-                      Leadership & Trustees
+                      {t('Leadership & Trustees', 'አመራርና ቦርድ')}
                     </Link>
                     <Link
                       to="/about/partners"
                       onClick={() => setActiveDropdown(null)}
                       className="block px-6 py-3.5 text-[13px] font-bold text-slate-900 hover:text-[#0073E6] hover:bg-slate-50 transition-colors"
                     >
-                      Partner Denominations
+                      {t('Partner Denominations', 'አጋር አብያተ ክርስቲያናት')}
                     </Link>
                   </div>
                 </div>
@@ -212,12 +213,12 @@ export const Header: React.FC<HeaderProps> = ({
               to="/stories"
               className={isScrolled || !isHomePage ? pillClassLight : pillClassDark}
             >
-              <span>Blog</span>
+              <span>{t('Blog', 'ብሎግ')}</span>
             </Link>
           </nav>
 
-          {/* Center: Global Disciples Logo matching Image 1 */}
-          <div className="flex items-center justify-center shrink-0">
+          {/* Center: Global Disciples Logo - strictly centered on screen across all pages */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto z-20 flex items-center justify-center">
             <Logo
               theme={isScrolled || !isHomePage ? 'light' : 'dark'}
               compact={isScrolled}
@@ -225,8 +226,8 @@ export const Header: React.FC<HeaderProps> = ({
             />
           </div>
 
-          {/* Right Pill Menu (Get Involved & Bright Yellow Give Button) */}
-          <div className="flex items-center gap-2.5">
+          {/* Right Controls: Get Involved, Give Button & Language Switch */}
+          <div className="flex items-center gap-2.5 z-10 ml-auto">
             
             {/* 4. Get Involved Pill matching Reference Image 2 */}
             <div
@@ -240,7 +241,7 @@ export const Header: React.FC<HeaderProps> = ({
                 className={getPillClass('involved')}
                 aria-expanded={activeDropdown === 'involved'}
               >
-                <span>Get Involved</span>
+                <span>{t('Get Involved', 'ይሳተፉ')}</span>
                 {activeDropdown === 'involved' ? (
                   <X className="w-3.5 h-3.5 text-white" />
                 ) : (
@@ -258,58 +259,47 @@ export const Header: React.FC<HeaderProps> = ({
 
                   {/* Clean White Card with Horizontal Dividers */}
                   <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden divide-y divide-slate-100 text-left">
-                    {/* Item 1: Pray (Highlighted in Brand Blue) */}
                     <Link
                       to="/get-involved/pray"
                       onClick={() => setActiveDropdown(null)}
                       className="block px-6 py-3 text-[13px] font-bold text-[#0073E6] hover:bg-slate-50 transition-colors"
                     >
-                      Pray
+                      {t('Pray', 'ይጸልዩ')}
                     </Link>
-
-                    {/* Item 2: Give (Muted Slate) */}
                     <Link
                       to="/give"
                       onClick={() => setActiveDropdown(null)}
                       className="block px-6 py-3 text-[13px] font-bold text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
                     >
-                      Give
+                      {t('Give', 'ይስጡ')}
                     </Link>
-
-                    {/* Item 3: Events (Muted Slate) */}
                     <Link
                       to="/events"
                       onClick={() => setActiveDropdown(null)}
                       className="block px-6 py-3 text-[13px] font-bold text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
                     >
-                      Events
+                      {t('Events', 'ዝግጅቶች')}
                     </Link>
-
-                    {/* Item 4: Pledge (Muted Slate) */}
                     <Link
                       to="/give#pledge"
                       onClick={() => setActiveDropdown(null)}
                       className="block px-6 py-3 text-[13px] font-bold text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
                     >
-                      Pledge
+                      {t('Pledge', 'ቃል ኪዳን')}
                     </Link>
-
-                    {/* Item 5: Join Us (Muted Slate) */}
                     <Link
                       to="/get-involved/volunteer"
                       onClick={() => setActiveDropdown(null)}
                       className="block px-6 py-3 text-[13px] font-bold text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
                     >
-                      Join Us
+                      {t('Join Us', 'ይቀላቀሉን')}
                     </Link>
-
-                    {/* Item 6: Discover More (Muted Slate) */}
                     <Link
                       to="/resources"
                       onClick={() => setActiveDropdown(null)}
                       className="block px-6 py-3 text-[13px] font-bold text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
                     >
-                      Discover More
+                      {t('Discover More', 'ተጨማሪ ይመልከቱ')}
                     </Link>
                   </div>
                 </div>
@@ -319,10 +309,28 @@ export const Header: React.FC<HeaderProps> = ({
             {/* The signature bright golden-yellow Give pill button */}
             <Link
               to="/give"
-              className="px-6 py-2 rounded-full text-xs font-extrabold tracking-wider uppercase bg-gd-yellow hover:bg-gd-yellow-hover text-slate-950 transition-all shadow-sm hover:scale-105 active:scale-95"
+              className="px-5 sm:px-6 py-2 rounded-full text-xs font-extrabold tracking-wider uppercase bg-gd-yellow hover:bg-gd-yellow-hover text-slate-950 transition-all shadow-sm hover:scale-105 active:scale-95"
             >
-              Give
+              {t('Give', 'ይስጡ')}
             </Link>
+
+            {/* Language Switcher Pill / Icon beside 'Give' */}
+            <button
+              type="button"
+              onClick={toggleLanguage}
+              className={`px-3 py-1.5 rounded-full text-xs font-bold tracking-wide transition-all duration-200 flex items-center gap-1.5 cursor-pointer shadow-sm hover:scale-105 active:scale-95 ${
+                language === 'am'
+                  ? 'bg-[#0073E6] text-white border border-[#0073E6]'
+                  : isScrolled || !isHomePage
+                  ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200'
+                  : 'bg-black/40 hover:bg-black/60 text-white border border-white/20'
+              }`}
+              title={language === 'en' ? 'ወደ አማርኛ ቀይር (Switch to Amharic)' : 'Switch to English (ወደ እንግሊዝኛ)'}
+              aria-label="Switch Language"
+            >
+              <Globe className="w-3.5 h-3.5 text-current shrink-0" />
+              <span className="font-bold tracking-normal">{language === 'en' ? 'አማርኛ' : 'EN'}</span>
+            </button>
 
             {/* Mobile Hamburger */}
             <button

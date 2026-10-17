@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, Check } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const Footer: React.FC = () => {
+  const { language, t } = useLanguage();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -149,18 +151,18 @@ export const Footer: React.FC = () => {
 
             {/* Ways to Give */}
             <div className="pt-2">
-              <span className="text-xs font-semibold text-slate-300 block mb-2 font-sans border-b border-white/20 pb-1 max-w-[120px]">
-                Ways to Give
+              <span className="text-xs font-semibold text-slate-300 block mb-2 font-sans border-b border-white/20 pb-1 max-w-[140px]">
+                {t('Ways to Give', 'የመስጠት መንገዶች')}
               </span>
               <ul className="space-y-1.5 text-xs sm:text-sm text-slate-200">
                 <li>
                   <Link to="/give" className="hover:text-[#1EA5FC] transition-colors">
-                    Sponsor an Event
+                    {t('Sponsor an Event', 'ዝግጅትን ይደግፉ')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/give#bank-details" className="hover:text-[#1EA5FC] transition-colors">
-                    Planned Giving
+                    {t('Planned Giving', 'የታቀደ ስጦታ')}
                   </Link>
                 </li>
               </ul>
@@ -229,27 +231,27 @@ export const Footer: React.FC = () => {
             {/* Get to Know Us */}
             <div>
               <span className="text-xs font-semibold text-slate-300 block mb-1.5 font-sans border-b border-white/20 pb-1 max-w-[130px]">
-                Get to Know Us
+                {t('Get to Know Us', 'ስለ እኛ ይወቁ')}
               </span>
               <ul className="space-y-1 text-xs sm:text-sm text-slate-200">
                 <li>
                   <Link to="/about" className="hover:text-[#1EA5FC] transition-colors">
-                    About Us
+                    {t('About Us', 'ስለ እኛ')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/give#transparency" className="hover:text-[#1EA5FC] transition-colors">
-                    Financials
+                    {t('Financials', 'የፋይናንስ መረጃ')}
                   </Link>
                 </li>
                 <li>
-                  <Link to="/about/story" className="hover:text-[#1EA5FC] transition-colors">
-                    Our Origin
+                  <Link to="/why-least-reached/our-beginnings" className="hover:text-[#1EA5FC] transition-colors">
+                    {t('Our Origin', 'ጅማሬያችን')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/stories" className="hover:text-[#1EA5FC] transition-colors">
-                    Blog
+                    {t('Blog', 'ብሎግ')}
                   </Link>
                 </li>
               </ul>
@@ -258,22 +260,22 @@ export const Footer: React.FC = () => {
             {/* Connect */}
             <div>
               <span className="text-xs font-semibold text-slate-300 block mb-1.5 font-sans border-b border-white/20 pb-1 max-w-[130px]">
-                Connect
+                {t('Connect', 'ይገናኙ')}
               </span>
               <ul className="space-y-1 text-xs sm:text-sm text-slate-200">
                 <li>
                   <Link to="/contact" className="hover:text-[#1EA5FC] transition-colors">
-                    Contact Us
+                    {t('Contact Us', 'ያግኙን')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/contact" className="hover:text-[#1EA5FC] transition-colors">
-                    Request a Speaker
+                    {t('Request a Speaker', 'ተናጋሪ ይጠይቁ')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/faq" className="hover:text-[#1EA5FC] transition-colors">
-                    FAQ
+                    {t('FAQ', 'ተደጋጋሚ ጥያቄዎች')}
                   </Link>
                 </li>
               </ul>
@@ -282,22 +284,22 @@ export const Footer: React.FC = () => {
             {/* Participate */}
             <div>
               <span className="text-xs font-semibold text-slate-300 block mb-1.5 font-sans border-b border-white/20 pb-1 max-w-[130px]">
-                Participate
+                {t('Participate', 'ይሳተፉ')}
               </span>
               <ul className="space-y-1 text-xs sm:text-sm text-slate-200">
                 <li>
                   <Link to="/resources" className="hover:text-[#1EA5FC] transition-colors">
-                    Overseas
+                    {t('Overseas', 'ዓለም አቀፍ')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/about/partners" className="hover:text-[#1EA5FC] transition-colors">
-                    Church Resources
+                    {t('Church Resources', 'የቤተክርስቲያን ግብዓቶች')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/get-involved/volunteer" className="hover:text-[#1EA5FC] transition-colors">
-                    Join Our Team
+                    {t('Join Our Team', 'ቡድናችንን ይቀላቀሉ')}
                   </Link>
                 </li>
               </ul>
@@ -315,19 +317,24 @@ export const Footer: React.FC = () => {
               }}
             >
               <h3 className="font-serif font-bold text-xl sm:text-2xl text-white mb-4">
-                Sign up for our Newsletter
+                {t('Sign up for our Newsletter', 'ለዜና መጽሔታችን ይመዝገቡ')}
               </h3>
 
               {submitted ? (
                 <div className="p-4 rounded-xl bg-emerald-950/80 border border-emerald-500/50 text-emerald-200 text-xs flex items-center gap-2">
                   <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                  <span>Thank you for subscribing to Global Disciples frontline updates!</span>
+                  <span>
+                    {t(
+                      'Thank you for subscribing to Global Disciples frontline updates!',
+                      'ለግሎባል ዲሳይፕልስ የግንባር ቀደም ዜናዎች ስለተመዘገቡ እናመሰግናለን!'
+                    )}
+                  </span>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-3">
                   <div>
                     <label className="block text-xs font-medium text-slate-200 mb-1">
-                      First Name<span className="text-red-400">*</span>
+                      {t('First Name', 'ስም')}<span className="text-red-400">*</span>
                     </label>
                     <input
                       type="text"
@@ -340,7 +347,7 @@ export const Footer: React.FC = () => {
 
                   <div>
                     <label className="block text-xs font-medium text-slate-200 mb-1">
-                      Last Name<span className="text-red-400">*</span>
+                      {t('Last Name', 'የአባት ስም')}<span className="text-red-400">*</span>
                     </label>
                     <input
                       type="text"
@@ -353,7 +360,7 @@ export const Footer: React.FC = () => {
 
                   <div>
                     <label className="block text-xs font-medium text-slate-200 mb-1">
-                      Email<span className="text-red-400">*</span>
+                      {t('Email', 'ኢሜይል')}<span className="text-red-400">*</span>
                     </label>
                     <input
                       type="email"
@@ -373,7 +380,7 @@ export const Footer: React.FC = () => {
                         onChange={(e) => setFormData({ ...formData, eNewsletter: e.target.checked })}
                         className="rounded border-slate-300 text-[#0073E6] focus:ring-[#0073E6]"
                       />
-                      <span>E-Newsletter</span>
+                      <span>{t('E-Newsletter', 'የኢሜይል ዜና መጽሔት')}</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer select-none">
                       <input
@@ -382,7 +389,7 @@ export const Footer: React.FC = () => {
                         onChange={(e) => setFormData({ ...formData, newsletterMail: e.target.checked })}
                         className="rounded border-slate-300 text-[#0073E6] focus:ring-[#0073E6]"
                       />
-                      <span>Newsletter Mail</span>
+                      <span>{t('Newsletter Mail', 'የፖስታ ዜና መጽሔት')}</span>
                     </label>
                   </div>
 
@@ -401,7 +408,7 @@ export const Footer: React.FC = () => {
                       type="submit"
                       className="px-6 py-2 rounded bg-[#0073E6] hover:bg-[#005bb5] text-white font-bold text-xs uppercase tracking-wide transition-colors shadow-md"
                     >
-                      Submit
+                      {t('Submit', 'ይላኩ')}
                     </button>
                   </div>
                 </form>
@@ -413,10 +420,10 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Site Info Bar */}
         <div className="mt-14 pt-6 border-t border-white/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-300">
-          <p>©2026 Global Disciples International</p>
+          <p>{t('©2026 Global Disciples International', '©2026 ግሎባል ዲሳይፕልስ ኢንተርናሽናል')}</p>
           <p>
             <Link to="/privacy-policy" className="hover:text-white transition-colors">
-              Privacy Policy
+              {t('Privacy Policy', 'የግላዊነት ፖሊሲ')}
             </Link>
           </p>
           <p>

@@ -42,6 +42,7 @@ export const App: React.FC = () => {
         <Route path="/about/partners" element={<AboutPartnersPage />} />
 
         {/* Why Least-Reached */}
+        <Route path="/why-least-reached/our-beginnings" element={<AboutStoryPage />} />
         <Route path="/why-least-reached/one-third" element={<WhyLeastReachedPage />} />
         <Route path="/why/least-reached" element={<WhyLeastReachedPage />} />
         <Route path="/why/ethiopia-context" element={<EthiopiaContextPage />} />
