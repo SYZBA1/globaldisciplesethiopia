@@ -56,8 +56,9 @@ export const App: React.FC = () => {
         <Route path="/programs" element={<ProgramsPage />} />
         <Route path="/programs/:slug" element={<ProgramDetailPage />} />
 
-        {/* Stories */}
+        {/* Stories & Blog */}
         <Route path="/stories" element={<StoriesPage />} />
+        <Route path="/blog" element={<StoriesPage />} />
         <Route path="/stories/:slug" element={<StoryDetailPage />} />
 
         {/* Events */}
