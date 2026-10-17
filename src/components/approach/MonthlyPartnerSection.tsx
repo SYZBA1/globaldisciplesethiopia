@@ -130,7 +130,7 @@ export const MonthlyPartnerSection: React.FC = () => {
       </div>
 
       {/* 2. Vibrant Royal Blue Banner Section */}
-      <div className="relative bg-[#0073E6] pt-24 pb-28 sm:pt-32 sm:pb-36 -mt-28 sm:-mt-36 lg:-mt-44 z-10">
+      <div className="relative bg-[#0073E6] pt-36 sm:pt-48 md:pt-60 lg:pt-72 xl:pt-80 pb-24 sm:pb-32 lg:pb-36 -mt-28 sm:-mt-36 lg:-mt-44 z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white relative z-20">
           
           {/* Headline matching screenshot 5 */}

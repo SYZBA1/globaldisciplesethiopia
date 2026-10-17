@@ -626,7 +626,7 @@ export const AboutPage: React.FC = () => {
 
             {/* 6. Portrait 6: Far Right (Extra Large - Joyful girl holding wooden post in leopard dress) */}
             <div
-              className={`absolute right-[0%] sm:right-[1%] lg:right-[3%] top-[0%] w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[410px] lg:h-[410px] xl:w-[460px] xl:h-[460px] rounded-full overflow-hidden border-4 sm:border-[5px] border-white shadow-2xl transition-all duration-1000 ease-out transform ${
+              className={`absolute right-[0%] sm:right-[1%] lg:right-[3%] top-[2%] w-44 h-44 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-[360px] lg:h-[360px] xl:w-[400px] xl:h-[400px] rounded-full overflow-hidden border-4 sm:border-[5px] border-white shadow-2xl transition-all duration-1000 ease-out transform ${
                 isPartnerVisible
                   ? 'opacity-100 translate-y-0 scale-100'
                   : 'opacity-0 translate-y-12 scale-90'
@@ -647,7 +647,7 @@ export const AboutPage: React.FC = () => {
         </div>
 
         {/* Solid Blue Section: Exact Horizon Line, Typography & Distances */}
-        <div className="relative bg-[#0073E6] pt-24 sm:pt-32 lg:pt-36 pb-28 sm:pb-36 lg:pb-40 -mt-28 sm:-mt-36 md:-mt-44 lg:-mt-52 z-10">
+        <div className="relative bg-[#0073E6] pt-36 sm:pt-48 md:pt-60 lg:pt-72 xl:pt-80 pb-24 sm:pb-32 lg:pb-36 -mt-28 sm:-mt-36 md:-mt-44 lg:-mt-52 z-10">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white relative z-20">
             
             {/* Bold Headline matching screenshot */}
