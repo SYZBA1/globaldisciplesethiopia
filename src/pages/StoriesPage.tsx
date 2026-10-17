@@ -150,7 +150,6 @@ const ARTICLES: Article[] = [
     image:
       'https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=700&q=80',
     slug: 'undaunted-courage',
-    hasButton: true,
   },
   {
     id: 'the-right-fit',
@@ -169,6 +168,8 @@ const ARTICLES: Article[] = [
       'WITNESS',
     ],
     tagsAm: ['ተልዕኮ', 'ዓላማ', 'አነስተኛ ንግድ', 'ስልጠና', 'እሴቶች', 'ምስክር'],
+    image:
+      'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=700&q=80',
     slug: 'the-right-fit',
   },
   {
@@ -251,7 +252,7 @@ const ARTICLES: Article[] = [
     ],
     tagsAm: ['የፋይናንስ እቅድ', 'ልግስና', 'መስጠት', 'ውርስ', 'አገልግሎት'],
     image:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=700&q=80',
     slug: 'has-your-will-kept-up',
   },
   {
@@ -271,9 +272,8 @@ const ARTICLES: Article[] = [
     ],
     tagsAm: ['ቤተክርስቲያን ተከላ', 'ያልተዳረሱ ሰዎች', 'ሚሽን', 'ማባዛት', 'ዘላኖች'],
     image:
-      'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=700&q=80',
     slug: 'least-of-these',
-    hasButton: true,
   },
   {
     id: 'amritas-new-kitchen',
@@ -293,7 +293,7 @@ const ARTICLES: Article[] = [
     ],
     tagsAm: ['ፈውስ', 'እንግዳ ተቀባይነት', 'ሚሽን', 'ጸሎት', 'መንፈሳዊ ነፃነት', 'ሴቶች'],
     image:
-      'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=700&q=80',
     slug: 'amritas-new-kitchen',
   },
 ];
@@ -519,61 +519,66 @@ export const StoriesPage: React.FC = () => {
           </div>
         </div>
 
-        {/* 9 Articles Grid matching Images 3 & 4 */}
+        {/* 9 Articles Grid matching Images 1, 2, 3 & 4 */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
           {filteredArticles.slice(0, visibleCount).map((article) => (
             <div
               key={article.id}
-              className="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group"
+              className="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group justify-between"
             >
-              {/* Optional Article Top Image */}
-              {article.image && (
-                <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
-                  <img
-                    src={article.image}
-                    alt={article.titleEn}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    loading="lazy"
-                  />
-                </div>
-              )}
+              <div>
+                {/* Article Top Image */}
+                {article.image && (
+                  <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
+                    <img
+                      src={article.image}
+                      alt={article.titleEn}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
 
-              {/* Article Content */}
-              <div className="p-6 sm:p-7 flex flex-col flex-grow justify-between">
-                <div>
+                {/* Article Content */}
+                <div className="p-6 sm:p-7">
                   {/* Article Title */}
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#0c2340] mb-3 leading-snug group-hover:text-[#0073E6] transition-colors">
+                  <h3 className="font-bold text-xl sm:text-[22px] text-[#0c2340] mb-3 leading-snug group-hover:text-[#0073E6] transition-colors">
                     {language === 'am' ? article.titleAm : article.titleEn}
                   </h3>
 
                   {/* Metadata: Date & Category */}
-                  <div className="text-[11px] sm:text-xs font-bold text-slate-500 mb-2 tracking-wide uppercase">
-                    <span>{t('DATE: ', 'ቀን፡ ')}{article.date}</span>
-                    <span className="mx-2">•</span>
-                    <span className="text-[#0073E6]">
+                  <div className="text-[11px] sm:text-xs font-bold text-slate-900 mb-2 tracking-wide uppercase flex flex-wrap items-center gap-y-1">
+                    <span>
+                      {t('DATE: ', 'ቀን፡ ')}
+                      <span className="text-[#0073E6] font-semibold">{article.date}</span>
+                    </span>
+                    <span className="mx-3 text-slate-300">•</span>
+                    <span>
                       {t('CATEGORY: ', 'ምድብ፡ ')}
-                      {language === 'am' ? article.categoryAm : article.category}
+                      <span className="text-[#0073E6] font-semibold">
+                        {language === 'am' ? article.categoryAm : article.category}
+                      </span>
                     </span>
                   </div>
 
                   {/* Metadata: Tags */}
-                  <p className="text-[10px] sm:text-[11px] font-semibold text-slate-400 leading-relaxed tracking-wider uppercase mb-5">
-                    <span className="text-slate-600 font-bold">{t('TAGS: ', 'መለያዎች፡ ')}</span>
-                    {(language === 'am' ? article.tagsAm : article.tags).join(', ')}
+                  <p className="text-[10px] sm:text-[11px] font-bold text-slate-900 leading-relaxed tracking-wider uppercase mb-2">
+                    <span>{t('TAGS: ', 'መለያዎች፡ ')}</span>
+                    <span className="text-[#0073E6] font-semibold">
+                      {(language === 'am' ? article.tagsAm : article.tags).join(', ')}
+                    </span>
                   </p>
                 </div>
+              </div>
 
-                {/* Optional Read More Button (matching Undaunted Courage & Least of These in Image 3 & 4) */}
-                {article.hasButton && (
-                  <div className="pt-2">
-                    <Link
-                      to={`/stories/${article.slug}`}
-                      className="inline-block px-5 py-1.5 rounded-full border border-[#0073E6] text-[#0073E6] hover:bg-[#0073E6] hover:text-white font-bold text-xs transition-colors shadow-sm"
-                    >
-                      {t('Read More', 'ተጨማሪ ያንብቡ')}
-                    </Link>
-                  </div>
-                )}
+              {/* Read More Button: Hidden by default, pops up smoothly on hover */}
+              <div className="px-6 sm:px-7 pb-6 sm:pb-7 min-h-[58px] flex items-center">
+                <Link
+                  to={`/stories/${article.slug}`}
+                  className="opacity-0 translate-y-3 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 ease-out inline-block px-6 py-2 rounded-full border-[1.5px] border-[#0073E6] bg-white text-[#0c2340] hover:bg-[#0073E6] hover:text-white font-bold text-xs sm:text-[13px] tracking-wide shadow-sm"
+                >
+                  {t('Read More', 'ተጨማሪ ያንብቡ')}
+                </Link>
               </div>
             </div>
           ))}
@@ -596,7 +601,7 @@ export const StoriesPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* SECTION 4: EQUIPPING PEOPLE TO REACH THEIR NATIONS (Image 5)              */}
       {/* ========================================================================= */}
-      <section className="relative bg-[#F4F9FB] pt-24 sm:pt-32 lg:pt-40 select-none overflow-hidden">
+      <section className="relative bg-[#F4F9FB] pt-20 sm:pt-28 lg:pt-36 select-none overflow-hidden">
         {/* Floating Circular Portraits (Overlapping light top & royal blue horizon) */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           <div className="relative h-[240px] sm:h-[320px] md:h-[380px] lg:h-[420px] flex items-center justify-center">
@@ -662,41 +667,43 @@ export const StoriesPage: React.FC = () => {
         </div>
 
         {/* Solid Blue Horizon Banner */}
-        <div className="relative bg-[#0073E6] h-28 sm:h-36 md:h-44 lg:h-52 -mt-28 sm:-mt-36 md:-mt-44 lg:-mt-52 z-10" />
+        <div className="relative bg-[#0073E6] h-24 sm:h-32 md:h-36 lg:h-40 -mt-24 sm:-mt-32 md:-mt-36 lg:-mt-40 z-10" />
 
-        {/* Lower Left Floating Circle (Sitting in white area below the blue band matching Image 5) */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-          <div className="relative -mt-10 sm:-mt-14 mb-4">
-            <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-white shadow-xl ml-6 sm:ml-12">
+        {/* Lower Left/Center Floating Circle (Boat on lake overlapping blue band matching Image 4) */}
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+          <div className="relative -mt-10 sm:-mt-14 mb-2">
+            <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-white shadow-xl ml-4 sm:ml-12 md:ml-16">
               <img
                 src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=400&q=80"
-                alt="Person on green ridge"
+                alt="Wooden boat on mountain lake"
                 className="w-full h-full object-cover object-center"
               />
             </div>
           </div>
         </div>
 
-        {/* Big Centered Headline: Equipping People to Reach Their Nations. */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-8 pb-20 sm:pb-28">
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold text-[#0c2340] tracking-tight leading-tight">
+        {/* Compact Centered Headline: Equipping People to Reach Their Nations (matching Image 4) */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-2 pb-10 sm:pb-14">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-bold text-[#0c2340] tracking-tight leading-tight">
             {language === 'am' ? (
               'ሰዎች ሀገራቸውን እንዲደርሱ ማስታጠቅ።'
             ) : (
               <>
-                Equipping People to Reach <em className="italic font-normal">Their</em> Nations.
+                Equipping People to Reach <em className="italic font-normal">Their</em>
+                <br />
+                Nations.
               </>
             )}
           </h2>
         </div>
 
-        {/* Bottom Convex Arch Wave Dipping into Footer (matching Image 5) */}
+        {/* Bottom Convex Arch Wave Dipping into Footer (matching Image 4 & 5) */}
         <div className="relative w-full overflow-hidden leading-none z-10 -mt-1">
           <svg
             viewBox="0 0 1440 90"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-12 sm:h-20 lg:h-24 block text-[#F4F9FB]"
+            className="w-full h-8 sm:h-12 lg:h-14 block text-[#F4F9FB]"
             preserveAspectRatio="none"
           >
             <path
