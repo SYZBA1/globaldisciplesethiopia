@@ -23,6 +23,7 @@ import { GetInvolvedPage } from './pages/GetInvolvedPage';
 import { PrayPage } from './pages/PrayPage';
 import { GivePage } from './pages/GivePage';
 import { PledgePage } from './pages/PledgePage';
+import { JoinUsPage } from './pages/JoinUsPage';
 import { ContactPage } from './pages/ContactPage';
 import { FAQPage } from './pages/FAQPage';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
@@ -78,6 +79,11 @@ export const App: React.FC = () => {
         <Route path="/give" element={<GivePage />} />
         <Route path="/get-involved/pledge" element={<PledgePage />} />
         <Route path="/pledge" element={<PledgePage />} />
+        <Route path="/get-involved/join-us" element={<JoinUsPage />} />
+        <Route path="/join-us" element={<JoinUsPage />} />
+        <Route path="/participate/join-our-team" element={<JoinUsPage />} />
+        <Route path="/careers" element={<JoinUsPage />} />
+        <Route path="/get-involved/volunteer" element={<JoinUsPage />} />
         <Route path="/get-involved" element={<GetInvolvedPage />} />
         <Route path="/get-involved/:action" element={<GetInvolvedPage />} />
 
