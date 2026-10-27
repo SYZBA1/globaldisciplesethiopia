@@ -56,6 +56,7 @@ export const MAIN_NAVIGATION: NavItem[] = [
     href: "/get-involved",
     children: [
       { label: "Pray With Us", href: "/get-involved/pray", description: "Join our intercession network for least-reached peoples" },
+      { label: "Sign the Pledge", href: "/get-involved/pledge", description: "Commit to reaching the least-reached" },
       { label: "Partner as a Church", href: "/get-involved/partner", description: "Equip your congregation for cross-cultural mission" },
       { label: "Serve & Volunteer", href: "/get-involved/volunteer", description: "Use your skills to advance the kingdom" },
     ],
@@ -91,6 +92,7 @@ export const FOOTER_LINKS = {
   ],
   getInvolved: [
     { label: "Pray for the Frontline", href: "/get-involved/pray" },
+    { label: "Sign the Pledge", href: "/get-involved/pledge" },
     { label: "Church Partnership", href: "/get-involved/partner" },
     { label: "Serve & Volunteer", href: "/get-involved/volunteer" },
     { label: "Support Frontline Workers", href: "/give" },

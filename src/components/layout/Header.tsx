@@ -226,7 +226,7 @@ export const Header: React.FC<HeaderProps> = ({
                       {t('Events', 'ዝግጅቶች')}
                     </Link>
                     <Link
-                      to="/give#pledge"
+                      to="/get-involved/pledge"
                       onClick={() => setActiveDropdown(null)}
                       className="block px-6 py-3 text-[13px] font-bold text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
                     >
