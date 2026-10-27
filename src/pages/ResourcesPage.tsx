@@ -4,12 +4,22 @@ import { Breadcrumb } from '../components/ui/Breadcrumb';
 import { RESOURCES } from '../data/resourcesData';
 import { ResourceCard } from '../components/ui/ResourceCard';
 import { Search, Filter, BookOpen } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export const ResourcesPage: React.FC = () => {
+  const { t } = useLanguage();
   const [selectedType, setSelectedType] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const types = ['All', 'Report', 'Guide', 'Download', 'Training Material', 'Video', 'Article'];
+  const types = [
+    { key: 'All', labelEn: 'All', labelAm: 'ሁሉም' },
+    { key: 'Report', labelEn: 'Report', labelAm: 'ሪፖርት' },
+    { key: 'Guide', labelEn: 'Guide', labelAm: 'መመሪያ' },
+    { key: 'Download', labelEn: 'Download', labelAm: 'ማውረጃ' },
+    { key: 'Training Material', labelEn: 'Training Material', labelAm: 'የስልጠና ማቴሪያል' },
+    { key: 'Video', labelEn: 'Video', labelAm: 'ቪዲዮ' },
+    { key: 'Article', labelEn: 'Article', labelAm: 'ጽሑፍ' },
+  ];
 
   const filteredResources = RESOURCES.filter((res) => {
     const matchesType = selectedType === 'All' || res.type === selectedType;
@@ -23,25 +33,31 @@ export const ResourcesPage: React.FC = () => {
   return (
     <>
       <SEO
-        title="Resource Library & Downloads"
-        description="Free training guides, ministry reports, prayer calendars, and missiological papers from Global Disciples Alliance Ethiopia."
+        title={t('Resource Library & Downloads | Global Disciples', 'የመረጃ እና የማውረጃ ቤተ-መጽሐፍት | ግሎባል ዲሳይፕልስ')}
+        description={t(
+          'Free training guides, ministry reports, prayer calendars, and missiological papers from Global Disciples Alliance Ethiopia.',
+          'ነፃ የስልጠና መመሪያዎች፣ የአገልግሎት ሪፖርቶች፣ የጸሎት የቀን መቁጠሪያዎች እና የጽሑፍ ማቴሪያሎች ከግሎባል ዲሳይፕልስ ኢትዮጵያ።'
+        )}
       />
 
       <section className="bg-brand-navy-dark text-white py-16 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumb
-            items={[{ label: 'Resources' }]}
+            items={[{ label: t('Resources', 'የመረጃ ማዕከል') }]}
             className="text-slate-400 mb-6"
           />
           <div className="max-w-3xl">
             <span className="text-xs font-bold uppercase tracking-widest text-brand-gold mb-3 block">
-              PUBLICATIONS & TOOLS
+              {t('PUBLICATIONS & TOOLS', 'ህትመቶች እና መሣሪያዎች')}
             </span>
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight mb-4">
-              Resource Library & Downloads
+              {t('Resource Library & Downloads', 'የመረጃ እና የማውረጃ ቤተ-መጽሐፍት')}
             </h1>
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-              Equip yourself and your congregation with field-tested guides, prayer calendars, annual financial reports, and discipleship curriculum materials.
+              {t(
+                'Equip yourself and your congregation with field-tested guides, prayer calendars, annual financial reports, and discipleship curriculum materials.',
+                'እራስዎን እና ማህበርዎን በተግባር በተፈተኑ መመሪያዎች፣ የጸሎት የቀን መቁጠሪያዎች፣ ዓመታዊ የፋይናንስ ሪፖርቶች እና የደቀመዝሙርነት ስርዓተ-ትምህርቶች ያስታጥቁ።'
+              )}
             </p>
           </div>
         </div>
@@ -54,15 +70,15 @@ export const ResourcesPage: React.FC = () => {
           <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 no-scrollbar">
             {types.map((type) => (
               <button
-                key={type}
-                onClick={() => setSelectedType(type)}
+                key={type.key}
+                onClick={() => setSelectedType(type.key)}
                 className={`px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap ${
-                  selectedType === type
+                  selectedType === type.key
                     ? 'bg-brand-navy text-white shadow-sm'
                     : 'bg-white text-brand-navy hover:bg-slate-100 border border-brand-sand'
                 }`}
               >
-                {type}
+                {t(type.labelEn, type.labelAm)}
               </button>
             ))}
           </div>
@@ -74,7 +90,7 @@ export const ResourcesPage: React.FC = () => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search resources, topics..."
+              placeholder={t('Search resources, topics...', 'መረጃዎችን፣ ርዕሶችን ይፈልጉ...')}
               className="w-full pl-10 pr-4 py-2 text-xs sm:text-sm bg-white border border-brand-sand rounded-full text-brand-navy placeholder-slate-400 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold shadow-subtle"
             />
           </div>
@@ -91,10 +107,10 @@ export const ResourcesPage: React.FC = () => {
           <div className="p-12 text-center bg-white rounded-2xl border border-brand-sand">
             <BookOpen className="w-12 h-12 text-slate-300 mx-auto mb-3" />
             <h3 className="font-display text-lg font-bold text-brand-navy mb-1">
-              No resources found
+              {t('No resources found', 'ምንም መረጃ አልተገኘም')}
             </h3>
             <p className="text-xs text-brand-muted">
-              Try adjusting your category selection or search keywords.
+              {t('Try adjusting your category selection or search keywords.', 'የምድብ ምርጫዎን ወይም የፍለጋ ቃላትን ይቀይሩ።')}
             </p>
           </div>
         )}

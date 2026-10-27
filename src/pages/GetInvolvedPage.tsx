@@ -4,8 +4,10 @@ import { SEO } from '../components/ui/SEO';
 import { Breadcrumb } from '../components/ui/Breadcrumb';
 import { CTAButton } from '../components/ui/CTAButton';
 import { Sparkles, Church, HandHeart, CheckCircle, ArrowRight, Heart } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export const GetInvolvedPage: React.FC = () => {
+  const { t } = useLanguage();
   const location = useLocation();
 
   // Determine active tab based on route if navigated via /get-involved/pray, etc.
@@ -46,25 +48,31 @@ export const GetInvolvedPage: React.FC = () => {
   return (
     <>
       <SEO
-        title="Get Involved — Pray, Partner, Serve"
-        description="Join what God is doing through Global Disciples Alliance Ethiopia: become an intercessor, partner your local church, or volunteer your professional skills."
+        title={t('Get Involved — Pray, Partner, Serve | Global Disciples', 'ይሳተፉ — ይጸልዩ፣ አጋር ይሁኑ፣ ያገልግሉ | ግሎባል ዲሳይፕልስ')}
+        description={t(
+          'Join what God is doing through Global Disciples Alliance Ethiopia: become an intercessor, partner your local church, or volunteer your professional skills.',
+          'እግዚአብሔር በግሎባል ዲሳይፕልስ ኢትዮጵያ በኩል በሚያደርገው ነገር ውስጥ ይሳተፉ፡ አማላጅ ይሁኑ፣ ቤተክርስቲያንዎን አጋር ያድርጉ፣ ወይም በሙያዎ በፈቃደኝነት ያገልግሉ።'
+        )}
       />
 
       <section className="bg-brand-navy-dark text-white py-16 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumb
-            items={[{ label: 'Get Involved' }]}
+            items={[{ label: t('Get Involved', 'ይሳተፉ') }]}
             className="text-slate-400 mb-6"
           />
           <div className="max-w-3xl">
             <span className="text-xs font-bold uppercase tracking-widest text-brand-gold mb-3 block">
-              PARTICIPATE IN THE MISSION
+              {t('PARTICIPATE IN THE MISSION', 'በተልዕኮው ውስጥ ይሳተፉ')}
             </span>
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight mb-4">
-              Step Into the Harvest in Ethiopia
+              {t('Step Into the Harvest in Ethiopia', 'በኢትዮጵያ ወደ መከሩ ይግቡ')}
             </h1>
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-              Every disciple of Jesus has a role in reaching the unreached. Choose how you want to stand with frontline Ethiopian workers.
+              {t(
+                'Every disciple of Jesus has a role in reaching the unreached. Choose how you want to stand with frontline Ethiopian workers.',
+                'እያንዳንዱ የኢየሱስ ደቀመዝሙር ወንጌል ላልደረሰበት ሕዝብ በመድረስ ረገድ ድርሻ አለው። ከግንባር ሠራተኞች ጋር እንዴት መቆም እንደሚፈልጉ ይምረጡ።'
+              )}
             </p>
           </div>
         </div>
@@ -82,9 +90,9 @@ export const GetInvolvedPage: React.FC = () => {
             }`}
           >
             <Sparkles className={`w-6 h-6 mb-3 ${activeTab === 'pray' ? 'text-brand-gold' : 'text-slate-400'}`} />
-            <h3 className="font-display font-extrabold text-lg mb-1">01. PRAY WITH US</h3>
+            <h3 className="font-display font-extrabold text-lg mb-1">{t('01. PRAY WITH US', '01. ከእኛ ጋር ይጸልዩ')}</h3>
             <p className={`text-xs ${activeTab === 'pray' ? 'text-slate-300' : 'text-brand-muted'}`}>
-              Join our nationwide intercession network for least-reached peoples.
+              {t('Join our nationwide intercession network for least-reached peoples.', 'በትንሹ ላልደረሱ ሕዝቦች አገር አቀፍ የጸሎት አውታረ መረባችንን ይቀላቀሉ።')}
             </p>
           </button>
 
@@ -97,9 +105,9 @@ export const GetInvolvedPage: React.FC = () => {
             }`}
           >
             <Church className={`w-6 h-6 mb-3 ${activeTab === 'partner' ? 'text-brand-gold' : 'text-slate-400'}`} />
-            <h3 className="font-display font-extrabold text-lg mb-1">02. PARTNER AS A CHURCH</h3>
+            <h3 className="font-display font-extrabold text-lg mb-1">{t('02. PARTNER AS A CHURCH', '02. እንደ ቤተክርስቲያን አጋር ይሁኑ')}</h3>
             <p className={`text-xs ${activeTab === 'partner' ? 'text-slate-300' : 'text-brand-muted'}`}>
-              Cluster your congregation to sponsor and send trained disciple-makers.
+              {t('Cluster your congregation to sponsor and send trained disciple-makers.', 'የሰለጠኑ ደቀመዝሙር አፍሪዎችን ለመደገፍ እና ለመላክ ቤተክርስቲያንዎን በክላስተር ያሳትፉ።')}
             </p>
           </button>
 
@@ -112,9 +120,9 @@ export const GetInvolvedPage: React.FC = () => {
             }`}
           >
             <HandHeart className={`w-6 h-6 mb-3 ${activeTab === 'volunteer' ? 'text-brand-gold' : 'text-slate-400'}`} />
-            <h3 className="font-display font-extrabold text-lg mb-1">03. SERVE & VOLUNTEER</h3>
+            <h3 className="font-display font-extrabold text-lg mb-1">{t('03. SERVE & VOLUNTEER', '03. በፈቃደኝነት ያገልግሉ')}</h3>
             <p className={`text-xs ${activeTab === 'volunteer' ? 'text-slate-300' : 'text-brand-muted'}`}>
-              Offer your professional, business, medical, or translation skills.
+              {t('Offer your professional, business, medical, or translation skills.', 'የሙያ፣ የቢዝነስ፣ የሕክምና ወይም የትርጉም ክህሎትዎን ያበርክቱ።')}
             </p>
           </button>
         </div>

@@ -5,8 +5,10 @@ import { SITE_CONFIG } from '../data/siteData';
 import { CTAButton } from '../components/ui/CTAButton';
 import { PlaceholderBadge } from '../components/ui/PlaceholderBadge';
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, ShieldCheck, MessageSquare, AlertCircle } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export const ContactPage: React.FC = () => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -46,25 +48,31 @@ export const ContactPage: React.FC = () => {
   return (
     <>
       <SEO
-        title="Contact Us"
-        description="Get in touch with Global Disciples Alliance Ethiopia secretariat, regional offices, and church mobilization team in Addis Ababa."
+        title={t('Contact Us | Global Disciples', 'ያግኙን | ግሎባል ዲሳይፕልስ')}
+        description={t(
+          'Get in touch with Global Disciples Alliance Ethiopia secretariat, regional offices, and church mobilization team in Addis Ababa.',
+          'ከግሎባል ዲሳይፕልስ ኢትዮጵያ ሴክሬተሪያት፣ የክልል ቢሮዎች እና የአብያተ ክርስቲያናት አስተባባሪ ቡድን ጋር በአዲስ አበባ ይገናኙ።'
+        )}
       />
 
       <section className="bg-brand-navy-dark text-white py-16 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumb
-            items={[{ label: 'Contact Us' }]}
+            items={[{ label: t('Contact Us', 'ያግኙን') }]}
             className="text-slate-400 mb-6"
           />
           <div className="max-w-3xl">
             <span className="text-xs font-bold uppercase tracking-widest text-brand-gold mb-3 block">
-              WE'D LOVE TO CONNECT
+              {t("WE'D LOVE TO CONNECT", 'እርስዎን ማግኘት እንወዳለን')}
             </span>
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight mb-4">
-              Get in Touch with Our Team
+              {t('Get in Touch with Our Team', 'ከቡድናችን ጋር ይገናኙ')}
             </h1>
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-              Have questions about church clustering, training programs, giving, or partnership in Ethiopia? Reach out to our secretariat.
+              {t(
+                'Have questions about church clustering, training programs, giving, or partnership in Ethiopia? Reach out to our secretariat.',
+                'በኢትዮጵያ ውስጥ ስለ አብያተ ክርስቲያናት ክላስተር፣ የስልጠና መርሃ ግብሮች፣ ስጦታ ወይም አጋርነት ጥያቄ አለዎት? ሴክሬተሪያታችንን ያነጋግሩ።'
+              )}
             </p>
           </div>
         </div>
@@ -77,10 +85,13 @@ export const ContactPage: React.FC = () => {
             <div className="p-8 sm:p-10 rounded-3xl bg-white border border-brand-sand shadow-card">
               <div className="mb-6 pb-4 border-b border-brand-sand">
                 <h2 className="font-display text-2xl font-bold text-brand-navy">
-                  Send Us a Direct Message
+                  {t('Send Us a Direct Message', 'ቀጥተኛ መልእክት ይላኩልን')}
                 </h2>
                 <p className="text-xs text-brand-muted mt-1">
-                  Our communications team typically responds within 1 business day.
+                  {t(
+                    'Our communications team typically responds within 1 business day.',
+                    'የኮሙኒኬሽን ቡድናችን በአንድ የሥራ ቀን ውስጥ ምላሽ ይሰጣል።'
+                  )}
                 </p>
               </div>
 
@@ -96,10 +107,13 @@ export const ContactPage: React.FC = () => {
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
                   <h3 className="font-display font-bold text-xl text-emerald-950">
-                    Message Sent Successfully!
+                    {t('Message Sent Successfully!', 'መልእክትዎ በተሳካ ሁኔታ ተልኳል!')}
                   </h3>
                   <p className="text-sm text-emerald-800 leading-relaxed max-w-md mx-auto">
-                    Thank you, <strong>{formData.name}</strong>. Your message regarding <em>"{formData.subject}"</em> has been received by our Secretariat. A team member will reply to <strong>{formData.email}</strong> shortly.
+                    {t(
+                      `Thank you, ${formData.name}. Your message regarding "${formData.subject}" has been received by our Secretariat. A team member will reply to ${formData.email} shortly.`,
+                      `እናመሰግናለን ${formData.name}። ስለ "${formData.subject}" የላኩት መልእክት በሴክሬተሪያታችን ደርሷል። የቡድናችን አባል በቅርቡ ወደ ${formData.email} ምላሽ ይሰጥዎታል።`
+                    )}
                   </p>
                   <button
                     onClick={() => {
@@ -117,12 +131,12 @@ export const ContactPage: React.FC = () => {
                     }}
                     className="text-xs font-bold text-emerald-900 underline mt-2"
                   >
-                    Send another message
+                    {t('Send another message', 'ሌላ መልእክት ይላኩ')}
                   </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  {/* Honeypot field for spam prevention (PRD Section 35) */}
+                  {/* Honeypot field for spam prevention */}
                   <input
                     type="text"
                     name="website_url"
@@ -136,7 +150,7 @@ export const ContactPage: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-bold text-brand-navy uppercase mb-1">
-                        Your Full Name *
+                        {t('Your Full Name *', 'ሙሉ ስም *')}
                       </label>
                       <input
                         type="text"
@@ -150,7 +164,7 @@ export const ContactPage: React.FC = () => {
 
                     <div>
                       <label className="block text-xs font-bold text-brand-navy uppercase mb-1">
-                        Email Address *
+                        {t('Email Address *', 'ኢሜይል አድራሻ *')}
                       </label>
                       <input
                         type="email"
@@ -166,7 +180,7 @@ export const ContactPage: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-bold text-brand-navy uppercase mb-1">
-                        Phone (Ethiopia)
+                        {t('Phone (Ethiopia)', 'ስልክ (ኢትዮጵያ)')}
                       </label>
                       <input
                         type="tel"
@@ -179,13 +193,13 @@ export const ContactPage: React.FC = () => {
 
                     <div>
                       <label className="block text-xs font-bold text-brand-navy uppercase mb-1">
-                        Church or Organization
+                        {t('Church or Organization', 'ቤተክርስቲያን ወይም ድርጅት')}
                       </label>
                       <input
                         type="text"
                         value={formData.organization}
                         onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
-                        placeholder="e.g. Local Church or Denomination"
+                        placeholder={t('e.g. Local Church or Denomination', 'ለምሳሌ፡ የአካባቢ ቤተክርስቲያን')}
                         className="w-full px-4 py-2.5 rounded-lg border border-brand-sand text-sm focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold"
                       />
                     </div>
@@ -193,33 +207,33 @@ export const ContactPage: React.FC = () => {
 
                   <div>
                     <label className="block text-xs font-bold text-brand-navy uppercase mb-1">
-                      Subject
+                      {t('Subject', 'ጉዳይ')}
                     </label>
                     <select
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                       className="w-full px-4 py-2.5 rounded-lg border border-brand-sand text-sm focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold"
                     >
-                      <option>General Inquiry</option>
-                      <option>Church Cluster Partnership</option>
-                      <option>Discipleship Training Information</option>
-                      <option>Small Business Program Inquiries</option>
-                      <option>Giving, Receipts & Financials</option>
-                      <option>Intercessory Prayer Network</option>
-                      <option>Media, Press & Stories</option>
+                      <option value="General Inquiry">{t('General Inquiry', 'አጠቃላይ ጥያቄ')}</option>
+                      <option value="Church Cluster Partnership">{t('Church Cluster Partnership', 'የአብያተ ክርስቲያናት ክላስተር አጋርነት')}</option>
+                      <option value="Discipleship Training Information">{t('Discipleship Training Information', 'የደቀመዝሙርነት ስልጠና መረጃ')}</option>
+                      <option value="Small Business Program Inquiries">{t('Small Business Program Inquiries', 'የአነስተኛ ንግድ ፕሮግራም ጥያቄዎች')}</option>
+                      <option value="Giving, Receipts & Financials">{t('Giving, Receipts & Financials', 'ስጦታ፣ ደረሰኝ እና ፋይናንስ')}</option>
+                      <option value="Intercessory Prayer Network">{t('Intercessory Prayer Network', 'የአማላጅ ጸሎት አውታረ መረብ')}</option>
+                      <option value="Media, Press & Stories">{t('Media, Press & Stories', 'ሚዲያ እና ታሪኮች')}</option>
                     </select>
                   </div>
 
                   <div>
                     <label className="block text-xs font-bold text-brand-navy uppercase mb-1">
-                      Message *
+                      {t('Message *', 'መልእክት *')}
                     </label>
                     <textarea
                       required
                       rows={5}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Please write your message or inquiry here..."
+                      placeholder={t('Please write your message or inquiry here...', 'እባክዎ መልእክትዎን እዚህ ይጻፉ...')}
                       className="w-full px-4 py-2.5 rounded-lg border border-brand-sand text-sm focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold"
                     />
                   </div>
@@ -233,7 +247,10 @@ export const ContactPage: React.FC = () => {
                       className="mt-1 w-4 h-4 text-brand-gold rounded border-slate-300 focus:ring-brand-gold"
                     />
                     <label htmlFor="consent-checkbox" className="text-xs text-brand-muted leading-relaxed">
-                      I agree to the processing of my contact information to respond to this message in accordance with the Global Disciples Alliance Ethiopia privacy policy.
+                      {t(
+                        'I agree to the processing of my contact information to respond to this message in accordance with the Global Disciples Alliance Ethiopia privacy policy.',
+                        'ከግሎባል ዲሳይፕልስ ኢትዮጵያ የግላዊነት ፖሊሲ ጋር በተስማማ መልኩ የእውቂያ መረጃዬ መልስ ለመስጠት እንዲሰራበት እስማማለሁ።'
+                      )}
                     </label>
                   </div>
 
@@ -243,7 +260,7 @@ export const ContactPage: React.FC = () => {
                     size="md"
                     className="w-full font-bold shadow-accent mt-2"
                   >
-                    <span>Send Message</span>
+                    <span>{t('Send Message', 'መልእክት ይላኩ')}</span>
                     <Send className="w-4 h-4 ml-1.5" />
                   </CTAButton>
                 </form>
@@ -256,24 +273,23 @@ export const ContactPage: React.FC = () => {
             {/* Office Info Card */}
             <div className="p-8 rounded-3xl bg-brand-cream border border-brand-sand space-y-6">
               <h3 className="font-display text-xl font-bold text-brand-navy">
-                National Secretariat Office
+                {t('National Secretariat Office', 'ብሔራዊ የሴክሬተሪያት ቢሮ')}
               </h3>
 
               <div className="space-y-4 text-xs sm:text-sm text-brand-navy">
                 <div className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
                   <div>
-                    <strong className="block text-brand-navy">Physical Address:</strong>
+                    <strong className="block text-brand-navy">{t('Physical Address:', 'አድራሻ፡')}</strong>
                     <span className="text-brand-muted">{SITE_CONFIG.address.street}</span>
-                    <span className="text-brand-muted block">{SITE_CONFIG.address.city}, Ethiopia</span>
-                    <PlaceholderBadge label="Pending Exact Suite/Bole Building ID" className="mt-1" />
+                    <span className="text-brand-muted block">{SITE_CONFIG.address.city}, {t('Ethiopia', 'ኢትዮጵያ')}</span>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <Mail className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
                   <div>
-                    <strong className="block text-brand-navy">Email Addresses:</strong>
+                    <strong className="block text-brand-navy">{t('Email Addresses:', 'ኢሜይል አድራሻዎች፡')}</strong>
                     <a href={`mailto:${SITE_CONFIG.contact.email}`} className="text-brand-gold hover:underline block">
                       {SITE_CONFIG.contact.email}
                     </a>
@@ -286,18 +302,18 @@ export const ContactPage: React.FC = () => {
                 <div className="flex items-start gap-3">
                   <Phone className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
                   <div>
-                    <strong className="block text-brand-navy">Phone Numbers:</strong>
-                    <span className="text-brand-muted block">Office: {SITE_CONFIG.contact.phone}</span>
-                    <span className="text-brand-muted block">Mobile: {SITE_CONFIG.contact.mobile}</span>
+                    <strong className="block text-brand-navy">{t('Phone Numbers:', 'ስልክ ቁጥሮች፡')}</strong>
+                    <span className="text-brand-muted block">{t('Office:', 'ቢሮ፡')} {SITE_CONFIG.contact.phone}</span>
+                    <span className="text-brand-muted block">{t('Mobile:', 'ሞባይል፡')} {SITE_CONFIG.contact.mobile}</span>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <Clock className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
                   <div>
-                    <strong className="block text-brand-navy">Office Hours:</strong>
+                    <strong className="block text-brand-navy">{t('Office Hours:', 'የሥራ ሰዓታት፡')}</strong>
                     <span className="text-brand-muted block">{SITE_CONFIG.address.officeHours}</span>
-                    <span className="text-slate-400 text-xs block">Closed on Ethiopian Public Holidays</span>
+                    <span className="text-slate-400 text-xs block">{t('Closed on Ethiopian Public Holidays', 'በኢትዮጵያ የሕዝብ በዓላት ዝግ ነው')}</span>
                   </div>
                 </div>
               </div>
