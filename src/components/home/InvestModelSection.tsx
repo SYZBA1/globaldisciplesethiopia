@@ -1,12 +1,15 @@
 import React from 'react';
 import { Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface InvestModelSectionProps {
   onPlayVideo: (title?: string) => void;
 }
 
 export const InvestModelSection: React.FC<InvestModelSectionProps> = ({ onPlayVideo }) => {
+  const { t } = useLanguage();
+
   return (
     <section className="bg-[#F4F9FB] pt-8 pb-20 border-b border-slate-200/60">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
@@ -25,7 +28,7 @@ export const InvestModelSection: React.FC<InvestModelSectionProps> = ({ onPlayVi
                 global disciples
               </span>
               <span className="font-serif font-black text-3xl sm:text-4xl text-cyan-200 tracking-tight block leading-tight mt-1">
-                A SEASON <br className="sm:hidden" />OF GIVING
+                {t('A SEASON OF GIVING', 'የልግስና ወቅት')}
               </span>
             </div>
           </div>
@@ -36,13 +39,13 @@ export const InvestModelSection: React.FC<InvestModelSectionProps> = ({ onPlayVi
               FaithfulGive<span className="text-slate-400 text-sm">.org</span>
             </div>
             <div className="font-sans font-extrabold text-xs sm:text-sm text-pink-600 uppercase tracking-widest mt-1">
-              OCTOBER 18-20, 2026
+              {t('OCTOBER 18-20, 2026', 'ጥቅምት 8-10፣ 2026')}
             </div>
             <Link
               to="/give"
               className="mt-3 text-xs font-bold text-brand-navy hover:text-gd-blue underline"
             >
-              Learn more & support frontline workers →
+              {t('Learn more & support frontline workers →', 'ተጨማሪ ይወቁ እና የወንጌል አገልጋዮችን ይደግፉ →')}
             </Link>
           </div>
         </div>
@@ -69,15 +72,21 @@ export const InvestModelSection: React.FC<InvestModelSectionProps> = ({ onPlayVi
               </div>
               {/* Overlay text */}
               <div className="absolute bottom-4 left-5 right-5 text-white font-serif font-bold text-lg sm:text-xl drop-shadow-md">
-                Why should I invest in Global Disciples?
+                {t('Why should I invest in Global Disciples?', 'በግሎባል ደቀመዛሙርት ውስጥ ለምን ድጋፍ አደርጋለሁ?')}
               </div>
             </div>
 
             <h3 className="font-serif font-bold text-xl sm:text-2xl text-slate-900 mb-3 leading-snug">
-              Why should I invest or give to Global Disciples Alliance Ethiopia?
+              {t(
+                'Why should I invest or give to Global Disciples Alliance Ethiopia?',
+                'በግሎባል ደቀመዛሙርት አሊያንስ ኢትዮጵያ ውስጥ ለምን ድጋፍ አደርጋለሁ?'
+              )}
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              One reason people love to get involved with Global Disciples Alliance Ethiopia is that they can see the direct impact of their giving. Our financial investment equips local church clusters to train, send, and sustain frontline workers who plant reproducible fellowships in least-reached communities.
+              {t(
+                'One reason people love to get involved with Global Disciples Alliance Ethiopia is that they can see the direct impact of their giving. Our financial investment equips local church clusters to train, send, and sustain frontline workers who plant reproducible fellowships in least-reached communities.',
+                'ሰዎች ከግሎባል ደቀመዛሙርት ጋር መተባበርን ከሚመርጡባቸው ምክንያቶች አንዱ የስጦታቸውን ቀጥተኛ ውጤት ማየት መቻላቸው ነው። የእርስዎ ድጋፍ የአገር በቀል አብያተ ክርስቲያናት ክላስተሮች ባልተዳረሱ አካባቢዎች ቤተክርስቲያን የሚተክሉ አገልጋዮችን እንዲያሰለጥኑና እንዲያሰማሩ ያስችላቸዋል።'
+              )}
             </p>
           </div>
 
@@ -101,15 +110,18 @@ export const InvestModelSection: React.FC<InvestModelSectionProps> = ({ onPlayVi
               </div>
               {/* Overlay text */}
               <div className="absolute bottom-4 left-5 right-5 text-white font-serif font-bold text-lg sm:text-xl drop-shadow-md">
-                The Global Disciples Model
+                {t('The Global Disciples Model', 'የግሎባል ደቀመዛሙርት ሞዴል')}
               </div>
             </div>
 
             <h3 className="font-serif font-bold text-xl sm:text-2xl text-slate-900 mb-3 leading-snug">
-              The Global Disciples Model
+              {t('The Global Disciples Model', 'የግሎባል ደቀመዛሙርት ሞዴል')}
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Here's how we equip disciple-makers. We have three types of training available to local churches—discipleship, small business, and leadership. These churches prepare and send their own people to least-reached areas. It's simple. And it's multiplication. Take a look!
+              {t(
+                'A proven 4-year transition strategy towards 100% locally funded discipleship and church planting. We partner with clusters of indigenous churches, providing coaching and seed assistance that multiplies into sustainable mission movement.',
+                'ወደ 100% በአገር በቀል የሚደገፍ የደቀመዝሙር አፍሪነት እና ቤተክርስቲያን ተከላ የሚያሸጋግር የተረጋገጠ የ4-ዓመት ስትራቴጂ። ከአገር በቀል አብያተ ክርስቲያናት ክላስተሮች ጋር በመተባበር ዘላቂ የወንጌል እንቅስቃሴን የሚያባዛ ክትትልና የመጀመሪያ ድጋፍ እንሰጣለን።'
+              )}
             </p>
           </div>
         </div>

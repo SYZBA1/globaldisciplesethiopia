@@ -1,12 +1,15 @@
 import React from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const TransformationSection: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="bg-white pt-20 pb-16 overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title matching Screenshot 5 */}
         <h2 className="font-serif text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight leading-tight mb-14">
-          How communities are transformed
+          {t('How communities are transformed', 'ማህበረሰቦች እንዴት እንደሚለወጡ')}
         </h2>
 
         {/* 3 Columns matching Screenshot 5 */}
@@ -17,10 +20,16 @@ export const TransformationSection: React.FC = () => {
               1
             </span>
             <h3 className="font-sans font-bold text-lg sm:text-xl text-slate-900 mb-3 leading-snug">
-              We equip churches to launch local training programs
+              {t(
+                'We equip churches to launch local training programs',
+                'አብያተ ክርስቲያናት የአገር ውስጥ ስልጠናዎችን እንዲጀምሩ እናስታጥቃቸዋለን'
+              )}
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              We partner with local churches and equip them with practical training they provide for their own people and support through their own resources.
+              {t(
+                'We partner with local churches and equip them with practical training they provide for their own people and support through their own resources.',
+                'ከአገር በቀል አብያተ ክርስቲያናት ጋር በመተባበር ለራሳቸው ሰዎች የሚሰጡትንና በራሳቸው ሀብት የሚደግፉትን ተግባራዊ ስልጠና እናስታጥቃቸዋለን።'
+              )}
             </p>
           </div>
 
@@ -30,10 +39,16 @@ export const TransformationSection: React.FC = () => {
               2
             </span>
             <h3 className="font-sans font-bold text-lg sm:text-xl text-slate-900 mb-3 leading-snug">
-              They train and send their people to least-reached areas
+              {t(
+                'They train and send their people to least-reached areas',
+                'ሰዎቻቸውን አሰልጥነው ወደ ያልተዳረሱ አካባቢዎች ይልካሉ'
+              )}
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              It starts when a group of cooperating churches chooses a director to lead a phase of training in discipleship, small business, or leadership. Global Disciples Alliance Ethiopia then prepares each director to equip their people.
+              {t(
+                'It starts when a group of cooperating churches chooses a director to lead a phase of training in discipleship, small business, or leadership. Global Disciples Alliance Ethiopia then prepares each director to equip their people.',
+                'የሚጀምረው የተባበሩ አብያተ ክርስቲያናት በደቀመዝሙርነት፣ በአነስተኛ ንግድ ወይም በአመራር ስልጠና የሚመራ ዳይሬክተር ሲመርጡ ነው። ግሎባል ደቀመዛሙርት እያንዳንዱን ዳይሬክተር ሰዎቹን እንዲያስታጥቅ ያዘጋጀዋል።'
+              )}
             </p>
           </div>
 
@@ -43,10 +58,16 @@ export const TransformationSection: React.FC = () => {
               3
             </span>
             <h3 className="font-sans font-bold text-lg sm:text-xl text-slate-900 mb-3 leading-snug">
-              Disciples and locally sustainable fellowships are multiplied
+              {t(
+                'Disciples and locally sustainable fellowships are multiplied',
+                'ደቀመዛሙርት እና ራሳቸውን የቻሉ ህብረቶች ይባዛሉ'
+              )}
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              We see these three phases of training—discipleship, small business, or leadership—as interlocking parts in a greater strategy to multiply disciples and churches among least-reached people. When all three phases of training work together, we see significant and lasting multiplication.
+              {t(
+                'We see these three phases of training—discipleship, small business, or leadership—as interlocking parts in a greater strategy to multiply disciples and churches among least-reached people. When all three phases of training work together, we see significant and lasting multiplication.',
+                'ሦስቱን የስልጠና ዘርፎች—ደቀመዝሙርነት፣ አነስተኛ ንግድ እና አመራር—ባልተዳረሱ ሰዎች መካከል ደቀመዛሙርትንና አብያተ ክርስቲያናትን ለማባዛት እንደተያያዙ ቁልፍ ክፍሎች እንመለከታቸዋለን። ሦስቱም በጋራ ሲሠሩ ዘላቂ መባዛትን እናያለን።'
+              )}
             </p>
           </div>
         </div>

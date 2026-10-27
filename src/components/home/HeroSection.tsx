@@ -1,11 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface HeroSectionProps {
   onPlayVideo: () => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onPlayVideo }) => {
+  const { t } = useLanguage();
+
   return (
     <section className="relative min-h-[92vh] lg:min-h-[98vh] flex flex-col justify-between bg-slate-950 text-white overflow-hidden pt-32 sm:pt-36 lg:pt-40">
       {/* Background Video with Dark Scrims and Fallback Image */}
@@ -39,19 +42,29 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onPlayVideo }) => {
           <div className="lg:col-span-7 max-w-2xl">
             {/* Main Editorial Headline matching Screenshot 1 */}
             <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.12] mb-6 drop-shadow-md">
-              A Third of Our World <br />
-              has not yet heard the <br />
-              Good News of Jesus.
+              {t(
+                'A Third of Our World has not yet heard the Good News of Jesus.',
+                'የዓለማችን አንድ ሦስተኛ ሕዝብ ገና የኢየሱስን የምሥራች አልሰማም።'
+              )}
             </h1>
 
             {/* Paragraph 1 */}
             <p className="text-sm sm:text-base text-slate-200 leading-relaxed mb-4 drop-shadow">
-              <strong className="text-white font-semibold">Global Disciples Alliance Ethiopia</strong> refers to this third of the world as <em className="italic">least-reached</em>. We live in a time where many of these people are within reach of a local church. Through our simple and effective strategy of training and coaching, believers share the Gospel in their own nations and cultures.
+              <strong className="text-white font-semibold">
+                {t('Global Disciples Alliance Ethiopia', 'ግሎባል ደቀመዛሙርት አሊያንስ ኢትዮጵያ')}
+              </strong>{' '}
+              {t(
+                'refers to this third of the world as least-reached. We live in a time where many of these people are within reach of a local church. Through our simple and effective strategy of training and coaching, believers share the Gospel in their own nations and cultures.',
+                'ይህንን የዓለማችን አንድ ሦስተኛ ሕዝብ "ያልተዳረሰ" በማለት ይጠራዋል። በዘመናችን እነዚህ አብዛኞቹ ሕዝቦች ለአገር በቀል አብያተ ክርስቲያናት ተደራሽ በሆነ ርቀት ላይ ይገኛሉ። በቀላልና ውጤታማ በሆነው የስልጠና እና ክትትል ስልታችን፣ አማኞች በራሳቸው ሀገርና ባህል ውስጥ ወንጌልን ያካፍላሉ።'
+              )}
             </p>
 
             {/* Paragraph 2 */}
             <p className="text-sm sm:text-base text-slate-300 leading-relaxed mb-8 drop-shadow">
-              We understand it's impossible to accomplish this mission alone. That's why we partner with hundreds of clusters of churches across Ethiopia and 2,541 clusters globally.
+              {t(
+                "We understand it's impossible to accomplish this mission alone. That's why we partner with hundreds of clusters of churches across Ethiopia and 2,541 clusters globally.",
+                'ይህን ተልዕኮ ብቻችንን መወጣት እንደማይቻል እንረዳለን። ለዚህም ነው በመላው ኢትዮጵያ ከሚገኙ በመቶዎች ከሚቆጠሩ የአብያተ ክርስቲያናት ክላስተሮች እና በዓለም አቀፍ ደረጃ ከ2,541 ክላስተሮች ጋር የምንተባበረው።'
+              )}
             </p>
 
             {/* Two Signature Pill Buttons matching Screenshot 1 */}
@@ -60,14 +73,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onPlayVideo }) => {
                 onClick={onPlayVideo}
                 className="px-8 py-3 rounded-full text-sm font-extrabold bg-gd-yellow hover:bg-gd-yellow-hover text-slate-950 transition-all shadow-md hover:scale-105 active:scale-95"
               >
-                Play Video
+                {t('Play Video', 'ቪዲዮ ይመልከቱ')}
               </button>
 
               <Link
                 to="/stories"
                 className="px-8 py-3 rounded-full text-sm font-extrabold bg-gd-blue hover:bg-gd-blue-dark text-white transition-all shadow-md hover:scale-105 active:scale-95"
               >
-                Stories
+                {t('Stories', 'ታሪኮች')}
               </Link>
             </div>
           </div>

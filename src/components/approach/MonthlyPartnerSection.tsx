@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const MonthlyPartnerSection: React.FC = () => {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
@@ -140,7 +142,7 @@ export const MonthlyPartnerSection: React.FC = () => {
             }`}
             style={{ transitionDelay: '400ms' }}
           >
-            Consider becoming a monthly partner
+            {t('Consider becoming a monthly partner', 'ወርሃዊ አጋር ለመሆን ያስቡበት')}
           </h2>
 
           {/* Subtitle */}
@@ -150,7 +152,10 @@ export const MonthlyPartnerSection: React.FC = () => {
             }`}
             style={{ transitionDelay: '600ms' }}
           >
-            It's easy and convenient. Consistent giving enables Global Disciples to continue training all year long.
+            {t(
+              "It's easy and convenient. Consistent giving enables Global Disciples to continue training all year long.",
+              'ቀላል እና ምቹ ነው። ቀጣይነት ያለው ድጋፍ ግሎባል ዲሳይፕልስ ዓመቱን ሙሉ ስልጠናውን እንዲቀጥል ያስችለዋል።'
+            )}
           </p>
 
           {/* Golden Yellow Button */}
@@ -164,7 +169,7 @@ export const MonthlyPartnerSection: React.FC = () => {
               to="/give"
               className="inline-block bg-[#F79E1B] hover:bg-[#e68f14] text-slate-900 font-bold text-xs sm:text-sm px-7 py-3 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all focus:outline-none"
             >
-              Join Us Today
+              {t('Join Us Today', 'ዛሬ ይቀላቀሉን')}
             </Link>
           </div>
         </div>

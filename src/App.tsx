@@ -69,14 +69,13 @@ export const App: React.FC = () => {
         {/* Resources */}
         <Route path="/resources" element={<ResourcesPage />} />
 
-        {/* Get Involved & Pray */}
+        {/* Get Involved & Pray & Give */}
         <Route path="/get-involved/pray" element={<PrayPage />} />
         <Route path="/pray" element={<PrayPage />} />
+        <Route path="/get-involved/give" element={<GivePage />} />
+        <Route path="/give" element={<GivePage />} />
         <Route path="/get-involved" element={<GetInvolvedPage />} />
         <Route path="/get-involved/:action" element={<GetInvolvedPage />} />
-
-        {/* Give */}
-        <Route path="/give" element={<GivePage />} />
 
         {/* Contact */}
         <Route path="/contact" element={<ContactPage />} />

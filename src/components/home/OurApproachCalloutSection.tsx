@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const OurApproachCalloutSection: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="relative bg-[#0070E0] text-white pt-16 sm:pt-24 pb-20 sm:pb-28 overflow-hidden">
       {/* Overlapping Faces Collage cutting into the top curve matching Image 2 */}
@@ -65,17 +68,23 @@ export const OurApproachCalloutSection: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-4">
         {/* Label: Our Approach */}
         <span className="font-sans font-bold text-sm sm:text-base text-white/90 tracking-wide block">
-          Our Approach
+          {t('Our Approach', 'አካሄዳችን')}
         </span>
 
         {/* Headline: Equipping People to Reach Their Nations. */}
         <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight text-white max-w-3xl mx-auto">
-          Equipping People to Reach <em className="italic font-normal">Their</em> Nations.
+          {t(
+            'Equipping People to Reach Their Nations.',
+            'ሰዎች ሀገራቸውን እንዲደርሱ ማስታጠቅ።'
+          )}
         </h2>
 
         {/* Subtitle */}
         <p className="text-sm sm:text-base text-white/90 max-w-xl mx-auto font-normal leading-relaxed">
-          We train leaders living near least-reached communities to multiply disciples.
+          {t(
+            'We train leaders living near least-reached communities to multiply disciples.',
+            'ያልተዳረሱ ማህበረሰቦች አቅራቢያ የሚኖሩ መሪዎች ደቀመዛሙርትን እንዲያባዙ እናሰለጥናለን።'
+          )}
         </p>
 
         {/* Learn More Button matching Image 2 */}
@@ -84,7 +93,7 @@ export const OurApproachCalloutSection: React.FC = () => {
             to="/approach"
             className="inline-block px-9 py-3 rounded-full text-sm font-extrabold bg-[#F2BA13] hover:bg-[#DBA408] text-slate-950 transition-all shadow-md hover:scale-105 active:scale-95"
           >
-            Learn More
+            {t('Learn More', 'ተጨማሪ ይወቁ')}
           </Link>
         </div>
       </div>

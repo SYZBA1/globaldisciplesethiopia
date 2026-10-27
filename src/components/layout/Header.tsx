@@ -251,10 +251,14 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </div>
 
-            {/* The signature bright golden-yellow Give pill button */}
+            {/* The signature Give pill button: on Give page, white with dark text matching Image 1 */}
             <Link
               to="/give"
-              className="px-5 sm:px-6 py-2 rounded-full text-xs font-extrabold tracking-wider uppercase bg-gd-yellow hover:bg-gd-yellow-hover text-slate-950 transition-all shadow-sm hover:scale-105 active:scale-95"
+              className={`px-5 sm:px-6 py-2 rounded-full text-xs font-extrabold tracking-wider uppercase transition-all shadow-sm hover:scale-105 active:scale-95 ${
+                location.pathname === '/give' || location.pathname === '/get-involved/give'
+                  ? 'bg-white text-[#0c2340] hover:bg-slate-50 border border-slate-200/50'
+                  : 'bg-gd-yellow hover:bg-gd-yellow-hover text-slate-950'
+              }`}
             >
               {t('Give', 'ይስጡ')}
             </Link>

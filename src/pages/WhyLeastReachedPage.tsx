@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/ui/SEO';
+import { useLanguage } from '../context/LanguageContext';
 
 interface BlockData {
   id: string;
@@ -138,7 +139,45 @@ const DEFAULT_DATA: OneThirdContentData = {
   }
 };
 
+const AM_BLOCKS = [
+  {
+    eyebrow: 'የአንድ ሦስተኛው እውነታ',
+    title: 'የዓለማችን አንድ ሦስተኛ ገና የኢየሱስን የምስራች አልሰማም።',
+    paragraphs: [
+      'ግሎባል ዲሳይፕልስ ይህንን የዓለማችን አንድ ሦስተኛ "በትንሹ የተደረሱ" ብሎ ይጠራዋል። ከእነዚህ ሰዎች መካከል ብዙዎቹ በአካባቢ ቤተክርስቲያን ተደራሽነት ውስጥ ባሉበት ዘመን ላይ እንኖራለን።',
+      'በቀላል እና ውጤታማ የስልጠና እና የአሰልጣኝነት ስልታችን አማካኝነት አማኞች በራሳቸው ሀገራት እና ባህሎች ወንጌልን ያካፍላሉ።',
+      "ይህን ተልዕኮ ብቻችንን ማከናወን እንደማይቻል እንረዳለን። ለዚህም ነው በመላው ኢትዮጵያ ከሚገኙ በመቶዎች ከሚቆጠሩ የአብያተ ክርስቲያናት ስብስቦች እና በዓለም አቀፍ ደረጃ ከ2,541 ስብስቦች ጋር አጋርነት የምንፈጥረው።",
+    ],
+  },
+  {
+    eyebrow: 'ለምን በትንሹ የተደረሱ',
+    title: 'ለምን በትንሹ በተደረሱት ላይ ትኩረት እናደርጋለን',
+    paragraphs: [
+      'እያንዳንዱ ሰው የኢየሱስ ክርስቶስን ወንጌል የመስማት እና ምላሽ የመስጠት ዕድል ሊኖረው ይገባል ብለን እናምናለን። እናም በኢየሱስ የምስራች ቃል በትንሹ ከተደረሱት መካከል ብዙዎቹ በአካባቢ ቤተክርስቲያን ተደራሽነት ውስጥ ባሉበት ጊዜ ውስጥ እንኖራለን።',
+      "የቋንቋ እንቅፋት እና ከፍተኛ ወጪ የሚገጥማቸውን ባህር ማዶ ሚስዮናውያንን ከመላክ ይልቅ፣ በትንሹ ወደተደረሱት በጣም ቅርብ የሆነችው ቤተክርስቲያን ለእግዚአብሔር ለውጥ ዋነኛ መሣሪያ እንደሆነች እናምናለን።",
+    ],
+  },
+  {
+    eyebrow: 'የቅርብ ጎረቤቶችን ማስታጠቅ',
+    title: 'በትንሹ ወደተደረሱት እንዴት እንደርሳለን',
+    paragraphs: [
+      'ይህንን የምናደርገው "ተቀራራቢ ባህል" ያላቸውን ሚሽን ሠራተኞች በማስታጠቅ ነው - ለመድረስ ከሚሠሩባቸው ሰዎች ጋር ተመሳሳይ ወይም ተቀራራቢ ባህል የሚጋሩትን።',
+      'ተራ ወንዶችንና ሴቶችን ወንጌልን እንዲያካፍሉ፣ ደቀመዛሙርትን እንዲያፈሩ እና በራሳቸው ሀገር አብያተ ክርስቲያናትን እንዲተክሉ ከአካባቢው ቤተክርስቲያን ጋር አብረን እንቆማለን።',
+    ],
+  },
+  {
+    eyebrow: 'ቀጣይነት ያለው ብዜት',
+    title: 'አብያተ ክርስቲያናትን ለሚራቡ እንቅስቃሴዎች ማስታጠቅ',
+    paragraphs: [
+      'የግንባር ደቀመዝሙርነትን ከአነስተኛ ንግድ ልማት እና ከአገልጋይ አመራር ጋር በማጣመር፣ የአካባቢው ህብረቶች ያለማቋረጥ የውጭ ጥገኝነት ያብባሉ።',
+      'ወንጌል ባልደረሰባቸው ማህበረሰቦች ውስጥ ሕያው ህብረቶችን የሚመሰርቱ ሠራተኞችን ለማሰልጠን፣ ለመላክ እና ለመደገፍ በ79 አገሮች ውስጥ ከ2,541 በላይ የአብያተ ክርስቲያናት ስብስቦች ጋር እንሰራለን።',
+    ],
+    buttonText: 'አካሄዳችን',
+  },
+];
+
 export const WhyLeastReachedPage: React.FC = () => {
+  const { t } = useLanguage();
   const [content, setContent] = useState<OneThirdContentData>(DEFAULT_DATA);
   const [activeBlock, setActiveBlock] = useState<number>(0);
   const [percentage, setPercentage] = useState<number>(29.0984);
@@ -237,18 +276,21 @@ export const WhyLeastReachedPage: React.FC = () => {
   return (
     <div className="bg-white text-slate-900 overflow-x-hidden selection:bg-gd-blue selection:text-white">
       <SEO
-        title="One Third | Why Least-Reached"
-        description="A third of our world has not yet heard the good news of Jesus. Explore how Global Disciples equips near-culture workers to reach zero-access communities."
+        title={t('One Third | Why Least-Reached', 'አንድ ሦስተኛ | ለምን በትንሹ የተደረሱ')}
+        description={t(
+          'A third of our world has not yet heard the good news of Jesus. Explore how Global Disciples equips near-culture workers to reach zero-access communities.',
+          'የዓለማችን አንድ ሦስተኛ ገና የኢየሱስን የምስራች አልሰማም። ግሎባል ዲሳይፕልስ ተቀራራቢ ባህል ያላቸውን ሠራተኞች ወንጌል ወዳልደረሰባቸው ማህበረሰቦች እንዲደርሱ እንዴት እንደሚያስታጥቅ ይወቁ።'
+        )}
       />
 
       {/* Top Title Banner matching Screenshot 3 */}
       <section className="bg-[#F4F9FB] pt-16 pb-20 sm:pt-20 sm:pb-24 border-b border-slate-200/50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#1EA5FC] mb-4 block">
-            {content.eyebrow}
+            {t(content.eyebrow, 'ለምን በትንሹ የተደረሱ')}
           </span>
           <h1 className="font-serif font-black text-5xl sm:text-6xl md:text-7xl text-slate-900 tracking-tight leading-none inline-flex items-baseline justify-center">
-            <span>{content.mainTitle}</span>
+            <span>{t(content.mainTitle, 'አንድ ሦስተኛ')}</span>
             {/* Signature sky-blue accent motif */}
             <span className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-tl-full bg-[#1EA5FC] ml-2 inline-block shrink-0 shadow-sm" />
           </h1>
@@ -277,19 +319,21 @@ export const WhyLeastReachedPage: React.FC = () => {
               <div className="flex items-center gap-2 mb-4">
                 <span className="inline-block w-2 h-2 rounded-full bg-[#1EA5FC]" />
                 <span className="text-xs font-extrabold uppercase tracking-widest text-[#1EA5FC]">
-                  {block.eyebrow}
+                  {t(block.eyebrow, AM_BLOCKS[index]?.eyebrow || block.eyebrow)}
                 </span>
               </div>
 
               {/* Main Headline */}
               <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold text-slate-900 tracking-tight leading-[1.18] mb-6">
-                {block.title}
+                {t(block.title, AM_BLOCKS[index]?.title || block.title)}
               </h2>
 
               {/* Narrative Paragraphs */}
               <div className="space-y-4 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
                 {block.paragraphs.map((p, pIdx) => (
-                  <p key={pIdx}>{p}</p>
+                  <p key={pIdx}>
+                    {t(p, AM_BLOCKS[index]?.paragraphs[pIdx] || p)}
+                  </p>
                 ))}
               </div>
 
@@ -300,7 +344,7 @@ export const WhyLeastReachedPage: React.FC = () => {
                     to={block.buttonLink}
                     className="inline-flex items-center justify-center px-8 py-3.5 rounded-full text-xs font-extrabold uppercase tracking-wider bg-gd-yellow hover:bg-gd-yellow-hover text-slate-950 transition-all shadow-sm hover:scale-105 active:scale-95"
                   >
-                    {block.buttonText}
+                    {t(block.buttonText, AM_BLOCKS[index]?.buttonText || block.buttonText)}
                   </Link>
                 </div>
               )}
@@ -400,19 +444,22 @@ export const WhyLeastReachedPage: React.FC = () => {
           {/* Centered Thematic Narrative */}
           <div className="relative z-10 text-center max-w-3xl mx-auto px-4">
             <span className="text-xs sm:text-sm font-extrabold uppercase tracking-[0.25em] text-white/90 mb-3 block">
-              {content.approachReveal.eyebrow}
+              {t(content.approachReveal.eyebrow, 'አካሄዳችን')}
             </span>
             <h2 className="font-serif font-black text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight mb-4 drop-shadow-sm">
-              Equipping People to Reach <em className="italic font-serif">Their</em> Nations.
+              {t('Equipping People to Reach', 'ሰዎች እንዲደርሱ ማስታጠቅ')} <em className="italic font-serif">{t('Their', 'ሀገራቸውን')}</em> {t('Nations.', '')}
             </h2>
             <p className="text-sm sm:text-base text-blue-100 leading-relaxed mb-8 max-w-xl mx-auto">
-              {content.approachReveal.subtitle}
+              {t(
+                content.approachReveal.subtitle,
+                'ደቀመዛሙርትን እንዲያባዙ በትንሹ በተደረሱ ማህበረሰቦች አቅራቢያ የሚኖሩ መሪዎችን እናሰለጥናለን።'
+              )}
             </p>
             <Link
               to={content.approachReveal.buttonLink}
               className="inline-flex items-center justify-center px-9 py-3.5 rounded-full text-xs font-extrabold uppercase tracking-wider bg-gd-yellow hover:bg-gd-yellow-hover text-slate-950 transition-all shadow-md hover:scale-105 active:scale-95"
             >
-              {content.approachReveal.buttonText}
+              {t(content.approachReveal.buttonText, 'ተጨማሪ ይወቁ')}
             </Link>
           </div>
         </div>
