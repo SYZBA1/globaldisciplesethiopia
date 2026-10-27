@@ -20,6 +20,7 @@ import { EventsPage } from './pages/EventsPage';
 import { EventDetailPage } from './pages/EventDetailPage';
 import { ResourcesPage } from './pages/ResourcesPage';
 import { GetInvolvedPage } from './pages/GetInvolvedPage';
+import { PrayPage } from './pages/PrayPage';
 import { GivePage } from './pages/GivePage';
 import { ContactPage } from './pages/ContactPage';
 import { FAQPage } from './pages/FAQPage';
@@ -68,7 +69,9 @@ export const App: React.FC = () => {
         {/* Resources */}
         <Route path="/resources" element={<ResourcesPage />} />
 
-        {/* Get Involved */}
+        {/* Get Involved & Pray */}
+        <Route path="/get-involved/pray" element={<PrayPage />} />
+        <Route path="/pray" element={<PrayPage />} />
         <Route path="/get-involved" element={<GetInvolvedPage />} />
         <Route path="/get-involved/:action" element={<GetInvolvedPage />} />
 
