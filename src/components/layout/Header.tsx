@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Globe } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Logo } from '../ui/Logo';
 import { EthiopiaFlag, USFlag } from '../ui/FlagIcons';
 import { useLanguage } from '../../context/LanguageContext';
@@ -15,20 +15,31 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenMobileMenu,
   isMobileMenuOpen,
 }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const [scrollDirection, setScrollDirection] = useState<'up' | 'down' | 'none'>('none');
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const headerRef = useRef<HTMLElement | null>(null);
+  const lastScrollY = useRef(0);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
   const { language, toggleLanguage, t } = useLanguage();
 
+  // Scroll tracking with directional hysteresis
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 15) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+      const currentScrollY = window.scrollY;
+      const diff = currentScrollY - lastScrollY.current;
+
+      if (Math.abs(diff) > 4) {
+        if (currentScrollY > lastScrollY.current && currentScrollY > 20) {
+          setScrollDirection('down');
+        } else if (currentScrollY < lastScrollY.current) {
+          setScrollDirection('up');
+        }
       }
+
+      lastScrollY.current = currentScrollY;
+      setScrollY(currentScrollY);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -51,40 +62,63 @@ export const Header: React.FC<HeaderProps> = ({
     return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, []);
 
-  // Pill style classes matching reference screenshots
-  const pillClassDark = "px-5 py-2 rounded-full text-xs font-bold tracking-wide transition-all bg-black/40 hover:bg-black/60 text-white border border-white/15 backdrop-blur-md flex items-center gap-1.5 cursor-pointer";
-  const pillClassLight = "px-5 py-2 rounded-full text-xs font-bold tracking-wide transition-all bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 shadow-sm flex items-center gap-1.5 cursor-pointer";
-  
-  // Signature Active Blue Pill matching Image 1 & Image 2: "bg-[#0073E6] text-white" with "×"
-  const pillClassActive = "px-5 py-2 rounded-full text-xs font-bold tracking-wide transition-all bg-[#0073E6] text-white shadow-md flex items-center gap-2 cursor-pointer";
+  // =========================================================================
+  // The Three States Definition:
+  // 1. Initial State: Top of Homepage on dark hero (spacious padding, dark pills)
+  // 2. Scroll Down State: Scrolling down anywhere (sticky, enlarged, dark blur overlay)
+  // 3. Scroll Up / Top Limit State: Scrolling back up or at top limit on light background
+  //    (clipped umbrella dome, dark text #111820)
+  // =========================================================================
+  const isInitialState = isHomePage && scrollY <= 25;
+  const isScrollDownState = scrollY > 25 && (scrollDirection === 'down' || scrollY > 250);
+  const isTopLimitState = !isInitialState && !isScrollDownState;
+
+  // Pill style classes matching reference screenshots across all 3 states
+  const pillClassInitial =
+    'px-5 py-2 rounded-full text-xs font-bold tracking-wide transition-all duration-300 bg-[rgba(0,0,0,0.25)] hover:bg-[rgba(0,0,0,0.4)] text-white border border-white/15 backdrop-blur-sm flex items-center gap-1.5 cursor-pointer select-none';
+
+  const pillClassScrollDown =
+    'transform scale-105 px-5 sm:px-6 py-2.5 text-xs sm:text-[13px] font-bold tracking-wide transition-all duration-300 bg-[rgba(0,0,0,0.35)] hover:bg-[rgba(0,0,0,0.55)] text-white border border-white/20 backdrop-blur-md flex items-center gap-1.5 cursor-pointer shadow-sm select-none';
+
+  const pillClassTopLimit =
+    'px-5 py-2 rounded-full text-xs font-bold tracking-wide transition-all duration-300 bg-black/[0.06] hover:bg-black/[0.12] text-[#111820] border border-black/5 flex items-center gap-1.5 cursor-pointer select-none';
+
+  // Active state when a dropdown is open
+  const pillClassActive =
+    'px-5 py-2 rounded-full text-xs font-bold tracking-wide transition-all duration-300 bg-[#0073E6] text-white shadow-md flex items-center gap-2 cursor-pointer select-none';
 
   const getPillClass = (dropdownKey: string) => {
     if (activeDropdown === dropdownKey) return pillClassActive;
-    return isScrolled || !isHomePage ? pillClassLight : pillClassDark;
+    if (isInitialState) return pillClassInitial;
+    if (isScrollDownState) return pillClassScrollDown;
+    return pillClassTopLimit;
   };
 
   const toggleDropdown = (key: string) => {
-    setActiveDropdown(prev => (prev === key ? null : key));
+    setActiveDropdown((prev) => (prev === key ? null : key));
   };
 
   return (
     <header
       ref={headerRef}
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-out ${
-        isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-md py-2 sm:py-2.5 border-b border-slate-100 text-slate-900'
-          : isHomePage
-          ? 'bg-gradient-to-b from-black/80 via-black/45 to-transparent py-4 sm:py-5 text-white'
-          : 'bg-white/95 backdrop-blur-sm py-4 sm:py-5 border-b border-slate-100/60 shadow-sm text-slate-900'
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-in-out ${
+        isInitialState
+          ? 'bg-gradient-to-b from-black/60 via-black/20 to-transparent py-7 sm:py-8 lg:py-9 text-white'
+          : isScrollDownState
+          ? 'bg-black/50 backdrop-blur-md border-b border-white/10 shadow-2xl py-6 sm:py-7 lg:py-8 text-white'
+          : 'bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm py-4 sm:py-4.5 lg:py-5 text-[#111820]'
       }`}
+      style={{ transition: 'all 0.3s ease' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative flex items-center justify-between w-full">
+        <div className="relative flex items-center justify-between w-full min-h-[46px]">
           
-          {/* Left Pill Menu (Why Least-reached, About Us, Stories/Blog) */}
+          {/* ========================================================================= */}
+          {/* LEFT GROUP: Pill-shaped buttons (Why Least-reached, About Us, Blog)        */}
+          {/* ========================================================================= */}
           <nav className="hidden lg:flex items-center gap-2.5 z-10" aria-label="Left Navigation">
             
-            {/* 1. Why Least-reached Pill matching Reference Image 1 */}
+            {/* 1. Why Least-reached Pill */}
             <div
               className="relative"
               onMouseEnter={() => setActiveDropdown('why')}
@@ -104,16 +138,16 @@ export const Header: React.FC<HeaderProps> = ({
                 )}
               </button>
 
-              {/* Dropdown Card matching Reference Image 1 */}
+              {/* Dropdown Card */}
               {activeDropdown === 'why' && (
-                <div className="absolute top-full left-0 pt-1.5 animate-fade-in z-50 min-w-[200px]">
+                <div className="absolute top-full left-0 pt-2 animate-fade-in z-50 min-w-[210px]">
                   {/* Top Caret Pointer Triangle */}
                   <div className="flex justify-center -mb-1 relative z-20">
                     <div className="w-2.5 h-2.5 bg-white rotate-45 border-l border-t border-slate-100" />
                   </div>
 
                   {/* Clean White Card with Horizontal Dividers */}
-                  <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden divide-y divide-slate-100 text-left">
+                  <div className="bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden divide-y divide-slate-100 text-left">
                     <Link
                       to="/why-least-reached/one-third"
                       onClick={() => setActiveDropdown(null)}
@@ -140,15 +174,17 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </div>
 
-            {/* 2. About Us Direct Pill (No mega menu, matches reference images) */}
+            {/* 2. About Us Direct Pill */}
             <Link
               to="/about"
               className={
                 location.pathname === '/about' || location.pathname === '/get-to-know-us/about-us'
                   ? pillClassActive
-                  : isScrolled || !isHomePage
-                  ? pillClassLight
-                  : pillClassDark
+                  : isInitialState
+                  ? pillClassInitial
+                  : isScrollDownState
+                  ? pillClassScrollDown
+                  : pillClassTopLimit
               }
             >
               <span>{t('About Us', 'ስለ እኛ')}</span>
@@ -157,25 +193,44 @@ export const Header: React.FC<HeaderProps> = ({
             {/* 3. Blog / Stories Pill */}
             <Link
               to="/stories"
-              className={isScrolled || !isHomePage ? pillClassLight : pillClassDark}
+              className={
+                isInitialState
+                  ? pillClassInitial
+                  : isScrollDownState
+                  ? pillClassScrollDown
+                  : pillClassTopLimit
+              }
             >
               <span>{t('Blog', 'ብሎግ')}</span>
             </Link>
           </nav>
 
-          {/* Center: Global Disciples Logo - strictly centered on screen across all pages */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto z-20 flex items-center justify-center">
+          {/* ========================================================================= */}
+          {/* CENTER: The global disciples stacked serif logo                            */}
+          {/* Top Limit State: Umbrella dome rises and clips at top edge, leaving line  */}
+          {/* Scroll Down State: Scaled up in white with subtle dark backdrop blur      */}
+          {/* ========================================================================= */}
+          <div
+            className={`absolute left-1/2 -translate-x-1/2 pointer-events-auto z-20 flex flex-col items-center justify-center transition-all duration-300 ease-out ${
+              isTopLimitState
+                ? 'top-0 h-full overflow-hidden justify-start pt-0'
+                : 'top-1/2 -translate-y-1/2'
+            }`}
+          >
             <Logo
-              theme={isScrolled || !isHomePage ? 'light' : 'dark'}
-              compact={isScrolled}
+              theme={isTopLimitState ? 'light' : 'dark'}
+              clipped={isTopLimitState}
+              scale={isScrollDownState ? 'enlarged' : 'normal'}
               showSubtitle={false}
             />
           </div>
 
-          {/* Right Controls: Get Involved, Give Button & Language Switch */}
+          {/* ========================================================================= */}
+          {/* RIGHT GROUP: Get Involved, Yellow Give (#FAD02C), and Ethiopia Flag       */}
+          {/* ========================================================================= */}
           <div className="flex items-center gap-2.5 z-10 ml-auto">
             
-            {/* 4. Get Involved Pill matching Reference Image 2 */}
+            {/* 4. Get Involved Pill */}
             <div
               className="relative hidden lg:block"
               onMouseEnter={() => setActiveDropdown('involved')}
@@ -195,16 +250,16 @@ export const Header: React.FC<HeaderProps> = ({
                 )}
               </button>
 
-              {/* Dropdown Card matching Reference Image 2 */}
+              {/* Dropdown Card */}
               {activeDropdown === 'involved' && (
-                <div className="absolute top-full right-0 pt-1.5 animate-fade-in z-50 min-w-[190px]">
+                <div className="absolute top-full right-0 pt-2 animate-fade-in z-50 min-w-[200px]">
                   {/* Top Caret Pointer Triangle */}
                   <div className="flex justify-center -mb-1 relative z-20">
                     <div className="w-2.5 h-2.5 bg-white rotate-45 border-l border-t border-slate-100" />
                   </div>
 
                   {/* Clean White Card with Horizontal Dividers */}
-                  <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden divide-y divide-slate-100 text-left">
+                  <div className="bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden divide-y divide-slate-100 text-left">
                     <Link
                       to="/get-involved/pray"
                       onClick={() => setActiveDropdown(null)}
@@ -215,35 +270,35 @@ export const Header: React.FC<HeaderProps> = ({
                     <Link
                       to="/give"
                       onClick={() => setActiveDropdown(null)}
-                      className="block px-6 py-3 text-[13px] font-bold text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
+                      className="block px-6 py-3 text-[13px] font-bold text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-colors"
                     >
                       {t('Give', 'ይስጡ')}
                     </Link>
                     <Link
                       to="/events"
                       onClick={() => setActiveDropdown(null)}
-                      className="block px-6 py-3 text-[13px] font-bold text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
+                      className="block px-6 py-3 text-[13px] font-bold text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-colors"
                     >
                       {t('Events', 'ዝግጅቶች')}
                     </Link>
                     <Link
                       to="/get-involved/pledge"
                       onClick={() => setActiveDropdown(null)}
-                      className="block px-6 py-3 text-[13px] font-bold text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
+                      className="block px-6 py-3 text-[13px] font-bold text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-colors"
                     >
                       {t('Pledge', 'ቃል ኪዳን')}
                     </Link>
                     <Link
                       to="/get-involved/join-us"
                       onClick={() => setActiveDropdown(null)}
-                      className="block px-6 py-3 text-[13px] font-bold text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
+                      className="block px-6 py-3 text-[13px] font-bold text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-colors"
                     >
                       {t('Join Us', 'ይቀላቀሉን')}
                     </Link>
                     <Link
                       to="/discover-more"
                       onClick={() => setActiveDropdown(null)}
-                      className="block px-6 py-3 text-[13px] font-bold text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
+                      className="block px-6 py-3 text-[13px] font-bold text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-colors"
                     >
                       {t('Discover More', 'ተጨማሪ ይመልከቱ')}
                     </Link>
@@ -252,26 +307,28 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </div>
 
-            {/* The signature Give pill button: on Give page, white with dark text matching Image 1 */}
+            {/* 5. High-contrast yellow pill CTA button: Give (#FAD02C with dark bold text) */}
             <Link
               to="/give"
-              className={`px-5 sm:px-6 py-2 rounded-full text-xs font-extrabold tracking-wider uppercase transition-all shadow-sm hover:scale-105 active:scale-95 ${
-                location.pathname === '/give' || location.pathname === '/get-involved/give'
-                  ? 'bg-white text-[#0c2340] hover:bg-slate-50 border border-slate-200/50'
-                  : 'bg-gd-yellow hover:bg-gd-yellow-hover text-slate-950'
+              className={`rounded-full font-extrabold tracking-wider uppercase transition-all duration-300 bg-[#FAD02C] hover:bg-[#eac020] text-[#111820] shadow-sm hover:scale-105 active:scale-95 ${
+                isScrollDownState
+                  ? 'transform scale-105 px-6 sm:px-7 py-2.5 text-xs shadow-md'
+                  : 'px-5 sm:px-6 py-2 text-xs'
               }`}
             >
               {t('Give', 'ይስጡ')}
             </Link>
 
-            {/* Language Switcher Pill: Small Size Ethiopia Flag (switching between EN and AM) */}
+            {/* 6. Language Switcher: Small Size Ethiopia Flag (switching between EN and AM) */}
             <button
               type="button"
               onClick={toggleLanguage}
-              className={`px-3 py-1.5 rounded-full text-xs font-bold tracking-wide transition-all duration-200 flex items-center justify-center cursor-pointer shadow-sm hover:scale-105 active:scale-95 ${
-                isScrolled || !isHomePage
-                  ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200'
-                  : 'bg-black/40 hover:bg-black/60 text-white border border-white/20'
+              className={`rounded-full transition-all duration-300 flex items-center justify-center cursor-pointer shadow-sm hover:scale-105 active:scale-95 ${
+                isInitialState
+                  ? 'px-2.5 py-1.5 bg-[rgba(0,0,0,0.25)] hover:bg-[rgba(0,0,0,0.4)] border border-white/15 backdrop-blur-sm'
+                  : isScrollDownState
+                  ? 'transform scale-105 px-3 py-2 bg-[rgba(0,0,0,0.35)] hover:bg-[rgba(0,0,0,0.55)] border border-white/20 backdrop-blur-md'
+                  : 'px-2.5 py-1.5 bg-black/[0.06] hover:bg-black/[0.12] border border-black/5'
               }`}
               title={language === 'en' ? 'ወደ አማርኛ ቀይር (Switch to Amharic)' : 'Switch to English (ወደ እንግሊዝኛ)'}
               aria-label={language === 'en' ? 'Switch to Amharic' : 'Switch to English'}
@@ -287,13 +344,17 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               onClick={onOpenMobileMenu}
               className={`lg:hidden p-2 rounded-full transition-colors ${
-                isScrolled || !isHomePage
-                  ? 'text-slate-800 hover:bg-slate-100'
+                isTopLimitState
+                  ? 'text-[#111820] hover:bg-black/5'
                   : 'text-white hover:bg-white/20'
               }`}
-              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6 text-brand-gold" /> : <Menu className="w-6 h-6" />}
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6 text-[#FAD02C]" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>
