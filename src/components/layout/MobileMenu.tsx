@@ -5,6 +5,7 @@ import { MAIN_NAVIGATION } from '../../data/navigation';
 import { SITE_CONFIG } from '../../data/siteData';
 import { CTAButton } from '../ui/CTAButton';
 import { Logo } from '../ui/Logo';
+import { EthiopiaFlag, USFlag } from '../ui/FlagIcons';
 import { useLanguage } from '../../context/LanguageContext';
 
 interface MobileMenuProps {
@@ -128,17 +129,27 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
           <span>GIVE TO ETHIOPIAN MISSIONS</span>
         </CTAButton>
 
-        {/* Amharic Toggle */}
+        {/* Language Toggle with Small Size Flag */}
         <div className="flex items-center justify-between pt-2 text-xs text-slate-300">
-          <span className="flex items-center gap-1.5">
-            <Globe2 className="w-4 h-4 text-brand-gold" />
+          <span className="flex items-center gap-2">
+            {language === 'en' ? <EthiopiaFlag className="w-5 h-3.5" /> : <USFlag className="w-5 h-3.5" />}
             <span>{t('Language', 'ቋንቋ')}</span>
           </span>
           <button
             onClick={toggleLanguage}
-            className="px-3 py-1 rounded bg-white/10 hover:bg-white/20 text-white font-semibold transition-colors"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold transition-colors cursor-pointer"
           >
-            {language === 'en' ? 'Switch to አማርኛ' : 'Switch to English'}
+            {language === 'en' ? (
+              <>
+                <EthiopiaFlag className="w-4 h-3" />
+                <span>ወደ አማርኛ</span>
+              </>
+            ) : (
+              <>
+                <USFlag className="w-4 h-3" />
+                <span>To English</span>
+              </>
+            )}
           </button>
         </div>
 

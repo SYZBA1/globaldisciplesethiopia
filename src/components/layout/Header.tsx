@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Globe } from 'lucide-react';
 import { Logo } from '../ui/Logo';
+import { EthiopiaFlag, USFlag } from '../ui/FlagIcons';
 import { useLanguage } from '../../context/LanguageContext';
 
 interface HeaderProps {
@@ -263,22 +264,23 @@ export const Header: React.FC<HeaderProps> = ({
               {t('Give', 'ይስጡ')}
             </Link>
 
-            {/* Language Switcher Pill / Icon beside 'Give' */}
+            {/* Language Switcher Pill: Small Size Ethiopia Flag (switching between EN and AM) */}
             <button
               type="button"
               onClick={toggleLanguage}
-              className={`px-3 py-1.5 rounded-full text-xs font-bold tracking-wide transition-all duration-200 flex items-center gap-1.5 cursor-pointer shadow-sm hover:scale-105 active:scale-95 ${
-                language === 'am'
-                  ? 'bg-[#0073E6] text-white border border-[#0073E6]'
-                  : isScrolled || !isHomePage
+              className={`px-3 py-1.5 rounded-full text-xs font-bold tracking-wide transition-all duration-200 flex items-center justify-center cursor-pointer shadow-sm hover:scale-105 active:scale-95 ${
+                isScrolled || !isHomePage
                   ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200'
                   : 'bg-black/40 hover:bg-black/60 text-white border border-white/20'
               }`}
               title={language === 'en' ? 'ወደ አማርኛ ቀይር (Switch to Amharic)' : 'Switch to English (ወደ እንግሊዝኛ)'}
-              aria-label="Switch Language"
+              aria-label={language === 'en' ? 'Switch to Amharic' : 'Switch to English'}
             >
-              <Globe className="w-3.5 h-3.5 text-current shrink-0" />
-              <span className="font-bold tracking-normal">{language === 'en' ? 'አማርኛ' : 'EN'}</span>
+              {language === 'en' ? (
+                <EthiopiaFlag className="w-6 h-4" />
+              ) : (
+                <USFlag className="w-6 h-4" />
+              )}
             </button>
 
             {/* Mobile Hamburger */}
