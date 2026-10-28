@@ -24,6 +24,7 @@ import { PrayPage } from './pages/PrayPage';
 import { GivePage } from './pages/GivePage';
 import { PledgePage } from './pages/PledgePage';
 import { JoinUsPage } from './pages/JoinUsPage';
+import { DiscoverMorePage } from './pages/DiscoverMorePage';
 import { ContactPage } from './pages/ContactPage';
 import { FAQPage } from './pages/FAQPage';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
@@ -69,8 +70,10 @@ export const App: React.FC = () => {
         <Route path="/get-involved/events" element={<EventsPage />} />
         <Route path="/events/:slug" element={<EventDetailPage />} />
 
-        {/* Resources */}
+        {/* Resources & Discover More */}
         <Route path="/resources" element={<ResourcesPage />} />
+        <Route path="/discover-more" element={<DiscoverMorePage />} />
+        <Route path="/get-involved/discover-more" element={<DiscoverMorePage />} />
 
         {/* Get Involved & Pray & Give & Pledge */}
         <Route path="/get-involved/pray" element={<PrayPage />} />

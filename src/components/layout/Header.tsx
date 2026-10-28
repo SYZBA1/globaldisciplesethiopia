@@ -240,7 +240,7 @@ export const Header: React.FC<HeaderProps> = ({
                       {t('Join Us', 'ይቀላቀሉን')}
                     </Link>
                     <Link
-                      to="/resources"
+                      to="/discover-more"
                       onClick={() => setActiveDropdown(null)}
                       className="block px-6 py-3 text-[13px] font-bold text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
                     >

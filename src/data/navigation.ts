@@ -60,6 +60,7 @@ export const MAIN_NAVIGATION: NavItem[] = [
       { label: "Partner as a Church", href: "/get-involved/partner", description: "Equip your congregation for cross-cultural mission" },
       { label: "Join Our Team (Careers)", href: "/get-involved/join-us", description: "Use your professional skills to spread the Good News" },
       { label: "Serve & Volunteer", href: "/get-involved/volunteer", description: "Use your skills to advance the kingdom" },
+      { label: "Discover More", href: "/discover-more", description: "Testimonies of God at work & God’s Stories" },
     ],
   },
   {
@@ -90,6 +91,7 @@ export const FOOTER_LINKS = {
     { label: "Stories & Testimonies", href: "/stories" },
     { label: "Conferences & Events", href: "/events" },
     { label: "Resource Library", href: "/resources" },
+    { label: "Discover More", href: "/discover-more" },
   ],
   getInvolved: [
     { label: "Pray for the Frontline", href: "/get-involved/pray" },
