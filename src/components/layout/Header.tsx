@@ -15,31 +15,23 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenMobileMenu,
   isMobileMenuOpen,
 }) => {
-  const [scrollY, setScrollY] = useState(0);
-  const [scrollDirection, setScrollDirection] = useState<'up' | 'down' | 'none'>('none');
+  const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const headerRef = useRef<HTMLElement | null>(null);
-  const lastScrollY = useRef(0);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
   const { language, toggleLanguage, t } = useLanguage();
 
-  // Scroll tracking with directional hysteresis
+  // Scroll detection:
+  // Instant view at top (Reference 1) vs Scrolled down view (Reference 2)
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const diff = currentScrollY - lastScrollY.current;
-
-      if (Math.abs(diff) > 4) {
-        if (currentScrollY > lastScrollY.current && currentScrollY > 20) {
-          setScrollDirection('down');
-        } else if (currentScrollY < lastScrollY.current) {
-          setScrollDirection('up');
-        }
+      if (currentScrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
       }
-
-      lastScrollY.current = currentScrollY;
-      setScrollY(currentScrollY);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -62,26 +54,18 @@ export const Header: React.FC<HeaderProps> = ({
     return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, []);
 
-  // =========================================================================
-  // The Three States Definition:
-  // 1. Initial State: Top of Homepage on dark hero (spacious padding, dark pills)
-  // 2. Scroll Down State: Scrolling down anywhere (sticky, enlarged, dark blur overlay)
-  // 3. Scroll Up / Top Limit State: Scrolling back up or at top limit on light background
-  //    (clipped umbrella dome, dark text #111820)
-  // =========================================================================
-  const isInitialState = isHomePage && scrollY <= 25;
-  const isScrollDownState = scrollY > 25 && (scrollDirection === 'down' || scrollY > 250);
-  const isTopLimitState = !isInitialState && !isScrollDownState;
+  // On pages with dark hero (homepage), start transparent/dark (Ref 1).
+  // On inner pages with white background, show clean white header (Ref 2).
+  const isStateScrolled = isScrolled || !isHomePage;
 
-  // Pill style classes matching reference screenshots across all 3 states
-  const pillClassInitial =
-    'px-5 py-2 rounded-full text-xs font-bold tracking-wide transition-all duration-300 bg-[rgba(0,0,0,0.25)] hover:bg-[rgba(0,0,0,0.4)] text-white border border-white/15 backdrop-blur-sm flex items-center gap-1.5 cursor-pointer select-none';
+  // Pill styling:
+  // State 1 (Top / Instant - Reference 1): Dark semi-transparent with white text
+  // State 2 (Scrolled Down - Reference 2): Light gray with dark #111820 text
+  const pillClassDark =
+    'px-5 py-2 rounded-full text-xs font-bold tracking-wide transition-all duration-300 bg-[rgba(0,0,0,0.35)] hover:bg-[rgba(0,0,0,0.5)] text-white border border-white/10 backdrop-blur-sm flex items-center gap-1.5 cursor-pointer select-none';
 
-  const pillClassScrollDown =
-    'transform scale-105 px-5 sm:px-6 py-2.5 text-xs sm:text-[13px] font-bold tracking-wide transition-all duration-300 bg-[rgba(0,0,0,0.35)] hover:bg-[rgba(0,0,0,0.55)] text-white border border-white/20 backdrop-blur-md flex items-center gap-1.5 cursor-pointer shadow-sm select-none';
-
-  const pillClassTopLimit =
-    'px-5 py-2 rounded-full text-xs font-bold tracking-wide transition-all duration-300 bg-black/[0.06] hover:bg-black/[0.12] text-[#111820] border border-black/5 flex items-center gap-1.5 cursor-pointer select-none';
+  const pillClassLight =
+    'px-5 py-2 rounded-full text-xs font-bold tracking-wide transition-all duration-300 bg-[#F1F3F5] hover:bg-slate-200 text-[#111820] border border-black/5 flex items-center gap-1.5 cursor-pointer select-none';
 
   // Active state when a dropdown is open
   const pillClassActive =
@@ -89,9 +73,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   const getPillClass = (dropdownKey: string) => {
     if (activeDropdown === dropdownKey) return pillClassActive;
-    if (isInitialState) return pillClassInitial;
-    if (isScrollDownState) return pillClassScrollDown;
-    return pillClassTopLimit;
+    return isStateScrolled ? pillClassLight : pillClassDark;
   };
 
   const toggleDropdown = (key: string) => {
@@ -101,17 +83,15 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header
       ref={headerRef}
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-in-out ${
-        isInitialState
-          ? 'bg-gradient-to-b from-black/60 via-black/20 to-transparent py-7 sm:py-8 lg:py-9 text-white'
-          : isScrollDownState
-          ? 'bg-black/50 backdrop-blur-md border-b border-white/10 shadow-2xl py-6 sm:py-7 lg:py-8 text-white'
-          : 'bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm py-4 sm:py-4.5 lg:py-5 text-[#111820]'
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-out ${
+        isStateScrolled
+          ? 'bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm py-3.5 sm:py-4 text-[#111820]'
+          : 'bg-gradient-to-b from-black/70 via-black/30 to-transparent py-7 sm:py-8 lg:py-9 text-white'
       }`}
       style={{ transition: 'all 0.3s ease' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative flex items-center justify-between w-full min-h-[46px]">
+        <div className="relative flex items-center justify-between w-full min-h-[44px]">
           
           {/* ========================================================================= */}
           {/* LEFT GROUP: Pill-shaped buttons (Why Least-reached, About Us, Blog)        */}
@@ -180,11 +160,9 @@ export const Header: React.FC<HeaderProps> = ({
               className={
                 location.pathname === '/about' || location.pathname === '/get-to-know-us/about-us'
                   ? pillClassActive
-                  : isInitialState
-                  ? pillClassInitial
-                  : isScrollDownState
-                  ? pillClassScrollDown
-                  : pillClassTopLimit
+                  : isStateScrolled
+                  ? pillClassLight
+                  : pillClassDark
               }
             >
               <span>{t('About Us', 'ስለ እኛ')}</span>
@@ -193,34 +171,27 @@ export const Header: React.FC<HeaderProps> = ({
             {/* 3. Blog / Stories Pill */}
             <Link
               to="/stories"
-              className={
-                isInitialState
-                  ? pillClassInitial
-                  : isScrollDownState
-                  ? pillClassScrollDown
-                  : pillClassTopLimit
-              }
+              className={isStateScrolled ? pillClassLight : pillClassDark}
             >
               <span>{t('Blog', 'ብሎግ')}</span>
             </Link>
           </nav>
 
           {/* ========================================================================= */}
-          {/* CENTER: The global disciples stacked serif logo                            */}
-          {/* Top Limit State: Umbrella dome rises and clips at top edge, leaving line  */}
-          {/* Scroll Down State: Scaled up in white with subtle dark backdrop blur      */}
+          {/* CENTER: The global disciples logo                                         */}
+          {/* Top/Instant (Ref 1): Full blue umbrella dome, pure white text            */}
+          {/* Move down (Ref 2): Shifted upward, dome clipped at top edge, dark text   */}
           {/* ========================================================================= */}
           <div
             className={`absolute left-1/2 -translate-x-1/2 pointer-events-auto z-20 flex flex-col items-center justify-center transition-all duration-300 ease-out ${
-              isTopLimitState
+              isStateScrolled
                 ? 'top-0 h-full overflow-hidden justify-start pt-0'
                 : 'top-1/2 -translate-y-1/2'
             }`}
           >
             <Logo
-              theme={isTopLimitState ? 'light' : 'dark'}
-              clipped={isTopLimitState}
-              scale={isScrollDownState ? 'enlarged' : 'normal'}
+              theme={isStateScrolled ? 'light' : 'dark'}
+              clipped={isStateScrolled}
               showSubtitle={false}
             />
           </div>
@@ -310,25 +281,19 @@ export const Header: React.FC<HeaderProps> = ({
             {/* 5. High-contrast yellow pill CTA button: Give (#FAD02C with dark bold text) */}
             <Link
               to="/give"
-              className={`rounded-full font-extrabold tracking-wider uppercase transition-all duration-300 bg-[#FAD02C] hover:bg-[#eac020] text-[#111820] shadow-sm hover:scale-105 active:scale-95 ${
-                isScrollDownState
-                  ? 'transform scale-105 px-6 sm:px-7 py-2.5 text-xs shadow-md'
-                  : 'px-5 sm:px-6 py-2 text-xs'
-              }`}
+              className="px-5 sm:px-6 py-2 rounded-full font-extrabold tracking-wider uppercase text-xs transition-all duration-300 bg-[#FAD02C] hover:bg-[#eac020] text-[#111820] shadow-sm hover:scale-105 active:scale-95"
             >
               {t('Give', 'ይስጡ')}
             </Link>
 
-            {/* 6. Language Switcher: Small Size Ethiopia Flag (switching between EN and AM) */}
+            {/* 6. Language Switcher: Small Size Ethiopia Flag */}
             <button
               type="button"
               onClick={toggleLanguage}
-              className={`rounded-full transition-all duration-300 flex items-center justify-center cursor-pointer shadow-sm hover:scale-105 active:scale-95 ${
-                isInitialState
-                  ? 'px-2.5 py-1.5 bg-[rgba(0,0,0,0.25)] hover:bg-[rgba(0,0,0,0.4)] border border-white/15 backdrop-blur-sm'
-                  : isScrollDownState
-                  ? 'transform scale-105 px-3 py-2 bg-[rgba(0,0,0,0.35)] hover:bg-[rgba(0,0,0,0.55)] border border-white/20 backdrop-blur-md'
-                  : 'px-2.5 py-1.5 bg-black/[0.06] hover:bg-black/[0.12] border border-black/5'
+              className={`px-2.5 py-1.5 rounded-full transition-all duration-300 flex items-center justify-center cursor-pointer shadow-sm hover:scale-105 active:scale-95 ${
+                isStateScrolled
+                  ? 'bg-[#F1F3F5] hover:bg-slate-200 border border-black/5'
+                  : 'bg-[rgba(0,0,0,0.35)] hover:bg-[rgba(0,0,0,0.5)] border border-white/10 backdrop-blur-sm'
               }`}
               title={language === 'en' ? 'ወደ አማርኛ ቀይር (Switch to Amharic)' : 'Switch to English (ወደ እንግሊዝኛ)'}
               aria-label={language === 'en' ? 'Switch to Amharic' : 'Switch to English'}
@@ -344,7 +309,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               onClick={onOpenMobileMenu}
               className={`lg:hidden p-2 rounded-full transition-colors ${
-                isTopLimitState
+                isStateScrolled
                   ? 'text-[#111820] hover:bg-black/5'
                   : 'text-white hover:bg-white/20'
               }`}
