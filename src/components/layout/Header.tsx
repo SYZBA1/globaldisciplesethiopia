@@ -90,6 +90,16 @@ export const Header: React.FC<HeaderProps> = ({
       }`}
       style={{ transition: 'all 0.3s ease' }}
     >
+      {/* ========================================================================= */}
+      {/* When scrolled down (Ref 2): Thin blue horizontal line right at top border */}
+      {/* ========================================================================= */}
+      {isStateScrolled && (
+        <div
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-11 sm:w-12 h-[2.5px] bg-[#1EA5FC] rounded-b-[1px] z-30 pointer-events-none transition-all duration-300"
+          aria-hidden="true"
+        />
+      )}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-between w-full min-h-[44px]">
           
@@ -180,15 +190,9 @@ export const Header: React.FC<HeaderProps> = ({
           {/* ========================================================================= */}
           {/* CENTER: The global disciples logo                                         */}
           {/* Top/Instant (Ref 1): Full blue umbrella dome, pure white text            */}
-          {/* Move down (Ref 2): Shifted upward, dome clipped at top edge, dark text   */}
+          {/* Move down (Ref 2): Thin blue line at top border, dark text, FULL "global" */}
           {/* ========================================================================= */}
-          <div
-            className={`absolute left-1/2 -translate-x-1/2 pointer-events-auto z-20 flex flex-col items-center justify-center transition-all duration-300 ease-out ${
-              isStateScrolled
-                ? 'top-0 h-full overflow-hidden justify-start pt-0'
-                : 'top-1/2 -translate-y-1/2'
-            }`}
-          >
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto z-20 flex flex-col items-center justify-center">
             <Logo
               theme={isStateScrolled ? 'light' : 'dark'}
               clipped={isStateScrolled}
